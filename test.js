@@ -1,6 +1,6 @@
 var Terminal = require("./lib/terminal").Terminal;
 
-var term = new Terminal(80, 24);
+var term = new Terminal(5, 2);
 
-term.inject("Hello");
+term.inject("HelloHelloHello");
 console.log(term.toString(true));
