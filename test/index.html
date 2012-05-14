@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+  <head>
+    <title>node-webterminal tests</title>
+    <link rel="stylesheet" href="/support/mocha.css" media="all">
+
+    <script src="/dist/terminal-dev.js"></script>
+    <script src="/dist/termbuffer-dev.js"></script>
+
+    <script src="/support/jquery.js"></script>
+    <script src="/support/expect.js"></script>
+    <script src="/support/mocha.js"></script>
+    <script>mocha.setup('bdd');</script>
+
+    <!-- tests -->
+    <script src="/terminal.js"></script>
+    <script src="/termbuffer.js"></script>
+
+    <script>window.onload = mocha.run;</script>
+  </head>
+  <body>
+    <div id="mocha"></div>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+{
+    "name": "terminal"
+  , "version": "0.0.1"
+  , "private": true
+  , "dependencies": {
+  }
+  , "devDependencies": {
+      "mocha": "0.10.0"
+    , "should": "0.5.1"
+    , "browserbuild": "0.4.x"
+  }
+}
