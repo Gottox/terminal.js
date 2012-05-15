@@ -2,7 +2,7 @@
     "name": "terminal"
   , "version": "0.0.1"
   , "private": false
-  , "scripts":{"install": "make"}
+  , "scripts":{"install": "make BROWSERBUILD=browserbuild"}
   , "dependencies": {
       "browserbuild": "0.4.x"
   }

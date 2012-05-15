@@ -1,23 +1,26 @@
 REPORTER = dot
 
+BROWSERBUILD = ./node_modules/.bin/browserbuild
+MOCHA = ./node_modules/.bin/mocha
+
 all: build build-dev
 
 build:
 	mkdir -p dist
-	./node_modules/.bin/browserbuild \
+	$(BROWSERBUILD) \
 		-g terminal \
-		-m terminal -b terminal/ \
+		-m terminal -b lib/ \
 		lib/*js > dist/terminal.js
 
 build-dev:
 	mkdir -p dist
-	./node_modules/.bin/browserbuild \
+	$(BROWSERBUILD) \
 		-g terminal \
-		-d -m terminal -b terminal/ \
+		-d -m terminal -b lib/ \
 		lib/*js > dist/terminal-dev.js
 
 test:
-	./node_modules/.bin/mocha \
+	$(MOCHA) \
 		--require test/common \
 		--reporter $(REPORTER) \
 		$(TESTS)
