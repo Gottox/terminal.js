@@ -2,12 +2,32 @@
     "name": "terminal"
   , "version": "0.0.1"
   , "private": false
-  , "scripts":{"install": "make BROWSERBUILD=browserbuild"}
+  , "scripts": {
+      "install": "make BROWSERBUILD=browserbuild"
+    , "test": "make MOCHA=mocha test"
+  }
+  , "description": "terminal emulation library for javascript."
+  , "main": "./index"
+  , "repository": {
+      "type": "git"
+    , "url": "https://github.com/Gottox/terminal.js.git"
+  }
+  , "keywords": [
+      "vt100"
+    , "xterm"
+    , "vt"
+    , "terminal"
+  ]
   , "dependencies": {
       "browserbuild": "0.4.x"
   }
   , "devDependencies": {
       "mocha": "0.10.0"
     , "should": "0.5.1"
+    , "expect.js": "*"
+  }
+  , "license": "MIT"
+  , "engine": {
+    "node": ">=0.6"
   }
 }
