@@ -9,6 +9,7 @@ describe('Terminal', function() {
 		t.write("Hello World");
 		expect(t.toString()).to.be("Hello World");
 		t.write("\nHello World");
+		console.log(t.toString());
 		expect(t.toString()).to.be("Hello World\nHello World");
 		//t.write("\n");
 		//expect(t.toString()).to.be("Hello World\nHello World\n");
