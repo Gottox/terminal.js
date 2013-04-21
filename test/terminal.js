@@ -70,9 +70,7 @@ describe('Terminal', function() {
 	});
 	it("deletes lines", function() {
 		var t = newTerminal();
-		t.write("1\n2\n3\n4");
-		t.setCur({x:0, y:1});
-		t.deleteLines(2);
+		t.write("1\n2\n3\n4\x1b[2H\x1b[2M");
 		expect(t.toString()).to.be("1\n4");
 	});
 	it("shouldn't print non printables", function() {
@@ -80,4 +78,9 @@ describe('Terminal', function() {
 		t.write("\x0e\x0f");
 		expect(t.toString()).to.be("");
 	});
+	it("should clear", function() {
+		var t = newTerminal();
+		t.write("ABCDEF\n\nFOO\n\x1bH\x1b[2J");
+		expect(t.toString()).to.be("");
+	})
 });
