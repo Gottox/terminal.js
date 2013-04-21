@@ -74,6 +74,10 @@ describe('Terminal', function() {
 		t.setCur({x:0, y:1});
 		t.deleteLines(2);
 		expect(t.toString()).to.be("1\n4");
-
+	});
+	it("shouldn't print non printables", function() {
+		var t = newTerminal();
+		t.write("\x0e\x0f");
+		expect(t.toString()).to.be("");
 	});
 });
