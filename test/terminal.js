@@ -67,5 +67,13 @@ describe('Terminal', function() {
 		t.mvCur(1,0);
 		t.write("t");
 		expect(t.toString()).to.be("Tes t")
-	})
+	});
+	it("deletes lines", function() {
+		var t = newTerminal();
+		t.write("1\n2\n3\n4");
+		t.setCur({x:0, y:1});
+		t.deleteLines(2);
+		expect(t.toString()).to.be("1\n4");
+
+	});
 });
