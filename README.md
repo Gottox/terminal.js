@@ -14,19 +14,19 @@ It is written from scratch and supports most commonly used escape sequences.
 ## Usage
 ### Terminal Usage
 
-var Terminal = require('terminal.js').Terminal;
-var term = new Terminal(80,24);
-term.mod.crlf = true
-term.write("first test\n");
+    var Terminal = require('terminal.js').Terminal;
+    var term = new Terminal(80,24);
+    term.mod.crlf = true
+    term.write("first test\n");
 
 ### Termdiff Usage
 
-var Terminal = require('terminal.js').Terminal;
-var Termdiff = require('terminal.js').TermDiff;
-var term = new Terminal();
-var termDiff = new TermDiff(term);
-term.write("first test");
-console.log(termDiff.diff());
+    var Terminal = require('terminal.js').Terminal;
+    var Termdiff = require('terminal.js').TermDiff;
+    var term = new Terminal();
+    var termDiff = new TermDiff(term);
+    term.write("first test");
+    console.log(termDiff.diff());
 
 ## Terminal Functions
 
