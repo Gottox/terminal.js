@@ -19,7 +19,17 @@ It is written from scratch and supports most commonly used escape sequences.
     term.mod.crlf = true
     term.write("first test\n");
 
-### Termdiff Usage
+### Diffing two terminals
+
+    var Terminal = require('terminal.js').Terminal;
+    var term1 = new Terminal(80,24);
+    term1.write("first change");
+    var term2 = new Terminal(80,24);
+    var diff = term1.diff(term2);
+    // Apply the difference so term1 becomes equal to term2
+    term1.apply(diff);
+
+### Termdiff Usage (subject to change)
 
     var Terminal = require('terminal.js').Terminal;
     var Termdiff = require('terminal.js').TermDiff;
@@ -92,7 +102,7 @@ term.mode.crlf = true make a linefeed go the next line AND to the beginning of t
 
 Note: a line can be sparse => ``line: [ , , , , , , { ...char .... } ]``
 
-## Terminal Diff structure
+## TerminalDiff structure (subject to change)
 
     { '0': { act: '+', rm: 0, line: [ ... ], attr: {}, changed: true }, # If the line was added
       '1': { act: 'c', rm: 0, line: [.....], attr: {}, changed: true }, # If the line was changed
