@@ -1,23 +1,20 @@
 REPORTER = dot
 
-BROWSERBUILD = ./node_modules/.bin/browserbuild
+BROWSERIFY = ./node_modules/browserify/bin/cmd.js
 MOCHA = ./node_modules/.bin/mocha
 
 all: build build-dev
 
 build:
 	mkdir -p dist
-	$(BROWSERBUILD) \
-		-g terminal \
-		-m terminal -b lib/ \
-		lib/*js > dist/terminal.js
+	$(BROWSERIFY) \
+		 lib/browserify-terminal.js > dist/terminal.js
 
 build-dev:
 	mkdir -p dist
-	$(BROWSERBUILD) \
-		-g terminal \
-		-d -m terminal -b lib/ \
-		lib/*js > dist/terminal-dev.js
+	$(BROWSERIFY) \
+		-d \
+		lib/browserify-terminal.js > dist/terminal-dev.js
 
 test:
 	$(MOCHA) \

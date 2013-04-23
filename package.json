@@ -20,7 +20,7 @@
     , "terminal"
   ]
   , "dependencies": {
-      "browserbuild": "0.4.x"
+      "browserify": "2.13.x"
   }
   , "devDependencies": {
       "mocha": "0.10.0"

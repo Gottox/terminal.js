@@ -83,4 +83,11 @@ describe('Terminal', function() {
 		t.write("ABCDEF\n\nFOO\n\x1bH\x1b[2J");
 		expect(t.toString()).to.be("");
 	})
+	it("emits a inject event", function(done) {
+		var t = newTerminal();
+    t.on('inject', function(char) {
+      done();
+    });
+		t.inject("A");
+	})
 });
