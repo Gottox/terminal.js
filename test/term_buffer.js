@@ -1,4 +1,4 @@
-var TermBuffer = terminal.TermBuffer
+var TermBuffer = terminal.TermBuffer;
 function newTermBuffer(w, h) {
 	var t = new TermBuffer(w, h);
 	t.mode.crlf = true;

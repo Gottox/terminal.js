@@ -12,16 +12,8 @@ node_modules:
 dist:
 	mkdir dist;
 
-dist/terminal.js: node_modules dist $(SRC)
-	$(BROWSERIFY) \
-		-r "./index.js:terminal.js" \
-		-o $@ \
-		|| { rm $@; exit 1; }
-
-dist/terminal-dev.js: node_modules dist $(SRC)
-	$(BROWSERIFY) -d \
-		-r "./index.js:terminal.js" \
-		-o $@ \
+dist/terminal.js: index.js node_modules dist $(SRC)
+	$(BROWSERIFY) -s 'terminal'  $< > $@ \
 		|| { rm $@; exit 1; }
 
 test:
@@ -30,7 +22,7 @@ test:
 		--reporter $(REPORTER) \
 		$(TESTS)
 
-test-browser: dist/terminal-dev.js
+test-browser: dist/terminal.js
 	./node_modules/.bin/serve test/
 
 clean:
