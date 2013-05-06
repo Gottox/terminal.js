@@ -1,2 +1,2 @@
-terminal = require("../lib/terminal");
+terminal = require('../index.js');
 expect = require("expect.js")

@@ -1,2 +1,3 @@
-exports.Terminal = require("./lib/terminal").Terminal
-exports.TermDiff = require("./lib/termdiff").TermDiff
+exports.TermBuffer = require("./lib/term_buffer.js").TermBuffer
+exports.Terminal = exports.TermBuffer; // legacy 
+exports.TermDiff = require("./lib/termdiff.js").TermDiff

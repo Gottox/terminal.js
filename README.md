@@ -12,33 +12,33 @@ It is written from scratch and supports most commonly used escape sequences.
 - has a test framework
 
 ## Usage
-### Terminal Usage
+### TermBuffer Usage
 
-    var Terminal = require('terminal.js').Terminal;
-    var term = new Terminal(80,24);
+    var TermBuffer = require('terminal.js').TermBuffer;
+    var term = new TermBuffer(80,24);
     term.mod.crlf = true
     term.write("first test\n");
 
 ### Diffing two terminals
 
-    var Terminal = require('terminal.js').Terminal;
-    var term1 = new Terminal(80,24);
+    var TermBuffer = require('terminal.js').TermBuffer;
+    var term1 = new TermBuffer(80,24);
     term1.write("first change");
-    var term2 = new Terminal(80,24);
+    var term2 = new TermBuffer(80,24);
     var diff = term1.diff(term2);
     // Apply the difference so term1 becomes equal to term2
     term1.apply(diff);
 
 ### Termdiff Usage (subject to change)
 
-    var Terminal = require('terminal.js').Terminal;
+    var TermBuffer = require('terminal.js').TermBuffer;
     var Termdiff = require('terminal.js').TermDiff;
-    var term = new Terminal();
+    var term = new TermBuffer();
     var termDiff = new TermDiff(term);
     term.write("first test");
     console.log(termDiff.diff());
 
-## Terminal Functions
+## TermBuffer Functions
 
 - createChar
 - createLine
@@ -72,7 +72,7 @@ It is written from scratch and supports most commonly used escape sequences.
 - eventToKey
 
 
-## Terminal Object structure
+## TermBuffer Object structure
 
 - width: width of the terminal ``80``
 - height: height of the terminal ``24``
@@ -102,7 +102,7 @@ term.mode.crlf = true make a linefeed go the next line AND to the beginning of t
 
 Note: a line can be sparse => ``line: [ , , , , , , { ...char .... } ]``
 
-## TerminalDiff structure (subject to change)
+## TermBuffer structure (subject to change)
 
     { '0': { act: '+', rm: 0, line: [ ... ], attr: {}, changed: true }, # If the line was added
       '1': { act: 'c', rm: 0, line: [.....], attr: {}, changed: true }, # If the line was changed

@@ -1,4 +1,4 @@
-REPORTER = dot
+REPORTER = list
 
 BROWSERIFY = ./node_modules/browserify/bin/cmd.js
 MOCHA = ./node_modules/.bin/mocha
@@ -8,13 +8,15 @@ all: build build-dev
 build:
 	mkdir -p dist
 	$(BROWSERIFY) \
-		 lib/browserify-terminal.js > dist/terminal.js
+		-r "./index.js:terminal.js" \
+		> dist/terminal.js
 
 build-dev:
 	mkdir -p dist
 	$(BROWSERIFY) \
 		-d \
-		lib/browserify-terminal.js > dist/terminal-dev.js
+		-r "./index.js:terminal.js" \
+		> dist/terminal-dev.js
 
 test:
 	$(MOCHA) \
