@@ -1,18 +1,16 @@
 REPORTER = list
 
-BROWSERIFY = ./node_modules/browserify/bin/cmd.js
-MOCHA = ./node_modules/.bin/mocha
-SRC = lib/ansi.js lib/character.js lib/csi.js lib/osc.js lib/sgr.js lib/term_buffer.js lib/term_diff.js lib/util.js
+NPM ?= npm
+BROWSERIFY ?= ./node_modules/browserify/bin/cmd.js
+MOCHA ?= ./node_modules/.bin/mocha
+SRC = index.js lib/ansi.js lib/character.js lib/csi.js lib/osc.js lib/sgr.js lib/term_buffer.js lib/term_diff.js lib/util.js
 
 all: dist/terminal.js
-
-node_modules:
-	npm install
 
 dist:
 	mkdir dist;
 
-dist/terminal.js: index.js node_modules dist $(SRC)
+dist/terminal.js: $(SRC) node_modules dist
 	$(BROWSERIFY) -s 'terminal'  $< > $@ \
 		|| { rm $@; exit 1; }
 
@@ -22,13 +20,13 @@ test:
 		--reporter $(REPORTER) \
 		$(TESTS)
 
-test-browser: dist/terminal.js
+test-browser: dist/terminal.js node_modules
 	./node_modules/.bin/serve test/
 
 clean:
-	rm -r dist
+	rm -r dist || true
 
 mrproper: clean
-	rm -r node_modules
+	rm -r node_modules || true
 
 .PHONY: test test-browser clean mrproper
