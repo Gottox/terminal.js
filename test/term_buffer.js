@@ -85,9 +85,9 @@ describe('TermBuffer', function() {
 	})
 	it("emits a inject event", function(done) {
 		var t = newTermBuffer();
-    t.on('inject', function(char) {
-      done();
-    });
+		t.on('inject', function(char) {
+			done();
+		});
 		t.inject("A");
 	})
 });
