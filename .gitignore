@@ -1,4 +1,4 @@
 node_modules
-#dist
+dist
 *.swp
 .DS_Store
