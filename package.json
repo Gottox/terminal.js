@@ -6,7 +6,6 @@
   , "private": false
   , "scripts": {
       "prepublish": "make BROWSERIFY=browserify"
-    , "install": "make BROWSERIFY=browserify"
     , "test": "make MOCHA=mocha test"
   }
   , "main": "./index"
