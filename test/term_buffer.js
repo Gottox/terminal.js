@@ -88,6 +88,11 @@ describe('TermBuffer', function() {
 		t.write("ABCDEF\n\x1b[1;r");
 		expect(t.scrollRegion[1]).to.be(13);
 	});
+	it("should move Left", function() {
+		var t = newTermBuffer();
+		t.write("ABCDEF\x1b[DAA");
+		expect(t.toString()).to.be("ABCDEAA");
+	});
 	it("should clear", function() {
 		var t = newTermBuffer();
 		t.write("ABCDEF\n\nFOO\n\x1bH\x1b[2J");
