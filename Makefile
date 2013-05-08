@@ -16,6 +16,13 @@ SRC = index.js \
       lib/term_diff.js \
       lib/term_writer.js \
       lib/util.js
+# Workaround: include streams2 as long as they are not in browserify
+EXTERN = extern/_stream_duplex.js \
+         extern/_stream_passthrough.js \
+         extern/_stream_readable.js \
+         extern/_stream_transform.js \
+         extern/_stream_writable.js \
+         extern/stream.js
 
 all: dist/terminal.js
 
@@ -26,6 +33,7 @@ dist:
 dist/terminal.js: $(SRC) node_modules dist
 	@echo "BROWSERIFY $@"
 	@$(BROWSERIFY) -s 'terminal'  $< > $@ \
+		`echo "$(EXTERN)" | tr " " "\n" | sed 's#^\(extern/\(.*\).js\)#-r ./\1:\2#';` \
 		|| { rm $@; exit 1; }
 
 test:
