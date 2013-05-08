@@ -98,9 +98,9 @@ describe('TermBuffer', function() {
 		t.write("ABCDEF\n\nFOO\n\x1bH\x1b[2J");
 		expect(t.toString()).to.be("");
 	});
-	it("emits a inject event", function(done) {
+	it("emits a linechange event", function(done) {
 		var t = newTermBuffer();
-		t.on('inject', function(char) {
+		t.once('linechange', function(nbr, line) {
 			done();
 		});
 		t.inject("A");
