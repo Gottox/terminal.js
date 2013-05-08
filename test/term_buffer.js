@@ -100,14 +100,14 @@ describe('TermBuffer', function() {
 	});
 	it("resize correctly to smaller size", function() {
 		var t = newTermBuffer(80,24);
-    t.write("line1\n");
+		t.write("line1\n");
 		t.resize(2,2);
-    t.write("ab\n");
+		t.write("ab\n");
 		expect(t.toString()).to.be("ab\n");
 	});
 	it("resize correctly to bigger size", function() {
 		var t = newTermBuffer(80,24);
-    t.write("line1\n");
+		t.write("line1\n");
 		t.resize(80,28);
 		expect(t.toString()).to.be("\n\n\n\nline1");
 	});
