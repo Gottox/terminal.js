@@ -2,7 +2,7 @@ REPORTER = list
 
 BROWSERIFY ?= ./node_modules/browserify/bin/cmd.js
 MOCHA ?= ./node_modules/.bin/mocha
-SRC = index.js lib/ansi.js lib/character.js lib/csi.js lib/osc.js lib/sgr.js lib/term_buffer.js lib/term_diff.js lib/util.js
+SRC = index.js lib/ansi.js lib/csi.js lib/osc.js lib/sgr.js lib/term_buffer.js lib/term_diff.js lib/util.js
 
 all: dist/terminal.js
 
