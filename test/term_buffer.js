@@ -98,6 +98,13 @@ describe('TermBuffer', function() {
 		t.write("ABCDEF\n\nFOO\n\x1bH\x1b[2J");
 		expect(t.toString()).to.be("");
 	});
+	it("resize correctly", function() {
+		var t = newTermBuffer(80,24);
+    t.write("line1\n");
+		t.resize(2,2);
+    t.write("ab\n");
+		expect(t.toString()).to.be("ab\n");
+	});
 	it("emits a linechange event", function(done) {
 		var t = newTermBuffer();
 		t.once('linechange', function(nbr, line) {
