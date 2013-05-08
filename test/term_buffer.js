@@ -24,12 +24,12 @@ describe('TermBuffer', function() {
 		expect(t.toString()).to.be("1234567890\nabcdefghi")
 		t.write("j")
 		expect(t.toString()).to.be("1234567890\nabcdefghij")
-	})
+	});
 	it("scrolls", function() {
 		var t = newTermBuffer(10, 10);
 		t.write("1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20")
 		expect(t.toString()).to.be("11\n12\n13\n14\n15\n16\n17\n18\n19\n20")
-	})
+	});
 	it("moves cursor up", function() {
 		var t = newTermBuffer();
 		t.write("Test\nTest");
@@ -42,14 +42,14 @@ describe('TermBuffer', function() {
 		t.mvCur(0, -2);
 		t.write("!");
 		expect(t.toString()).to.be("Test!\nTest")
-	})
+	});
 	it("moves cursor down", function() {
 		var t = newTermBuffer();
 		t.write("Test\nTest");
 		t.mvCur(0,1);
 		t.write("!");
 		expect(t.toString()).to.be("Test\nTest\n    !")
-	})
+	});
 	it("moves cursor left", function() {
 		var t = newTermBuffer();
 		t.write("Tesd");
@@ -78,11 +78,21 @@ describe('TermBuffer', function() {
 		t.write("\x0e\x0f");
 		expect(t.toString()).to.be("");
 	});
+	it("should overwrite the previous line when moving the cursor up", function() {
+		var t = newTermBuffer();
+		t.write("ABCDEF\n\x1b[AGHIJKL");
+		expect(t.toString()).to.be("GHIJKL");
+	});
+	it("should set ScrollRegion correctly if no params specified", function() {
+		var t = newTermBuffer(80,13);
+		t.write("ABCDEF\n\x1b[1;r");
+		expect(t.scrollRegion[1]).to.be(13);
+	});
 	it("should clear", function() {
 		var t = newTermBuffer();
 		t.write("ABCDEF\n\nFOO\n\x1bH\x1b[2J");
 		expect(t.toString()).to.be("");
-	})
+	});
 	it("emits a inject event", function(done) {
 		var t = newTermBuffer();
 		t.on('inject', function(char) {
