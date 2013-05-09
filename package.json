@@ -26,7 +26,6 @@
   , "devDependencies": {
       "mocha": "*"
     , "jscoverage": "*"
-    , "html-file-cov": "*"
     , "should": "0.5.1"
     , "serve": "*"
     , "expect.js": "*"
