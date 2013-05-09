@@ -24,7 +24,8 @@
       "browserify": "2.13.x"
   }
   , "devDependencies": {
-      "mocha": "0.10.0"
+      "mocha2": "*"
+    , "jscoverage": "*"
     , "should": "0.5.1"
     , "serve": "*"
     , "expect.js": "*"
