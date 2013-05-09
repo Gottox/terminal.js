@@ -14,20 +14,26 @@ dist:
 
 dist/terminal.js: $(SRC) node_modules dist
 	@echo "BROWSERIFY $@"
-	@$(BROWSERIFY) -s 'terminal'  $< > $@ \
+	@$(BROWSERIFY) -s 'terminal'  $< -o $@ \
 		|| { rm $@; exit 1; }
 
-test: $(SRC) node_modules dist/terminal.js
+dist/terminal-dev.js: $(SRC) node_modules dist
+	@echo "BROWSERIFY $@"
+	@$(BROWSERIFY) -d -s 'terminal'  $< -o $@ \
+		|| { rm $@; exit 1; }
+
+
+test: $(SRC) node_modules dist
 	@$(MOCHA) \
 		--require test/common \
 		--reporter $(REPORTER) \
 		$(TESTS)
 
-test-browser: dist/terminal.js node_modules
+test-browser: node_modules dist/terminal.js
 	@echo visit http://127.0.0.1:3000/
 	@./node_modules/.bin/serve test/
 
-coverage: lib-cov dist/terminal.js
+coverage: lib-cov dist
 	@echo visit file://$$PWD/coverage.html
 	@COVERAGE=1 $(MOCHA) \
 		--require test/common \
