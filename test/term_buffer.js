@@ -9,6 +9,11 @@ describe('TermBuffer', function() {
 		expect(newTermBuffer()).to.have.property('buffer');
 		expect(newTermBuffer().toString()).to.be("");
 	});
+	it("creates TermBuffer with dimension", function() {
+		var t = newTermBuffer(100, 200);
+		expect(t.width).to.be(100);
+		expect(t.height).to.be(200);
+	});
 	it("writes to TermBuffer", function() {
 		var t = newTermBuffer();
 		t.write("Hello World");
