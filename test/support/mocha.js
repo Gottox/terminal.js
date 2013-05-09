@@ -1,1 +1,1 @@
-../../node_modules/mocha/mocha.js
+../../node_modules/mocha2/mocha.js
