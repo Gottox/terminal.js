@@ -127,4 +127,20 @@ describe('TermBuffer', function() {
 		});
 		t.inject("hello world");
 	});
+	it("works with wrap = false", function() {
+		var t = newTermBuffer(10,24);
+		t.mode.wrap = false;
+		t.inject("1234567890a");
+		expect(t.toString()).to.be("123456789a");
+		t.inject("b");
+		expect(t.toString()).to.be("123456789b");
+	})
+	it("works wrap = false and with lineFeed", function() {
+		var t = newTermBuffer(10,24);
+		t.mode.wrap = false;
+		t.inject("abc\n1234567890a");
+		expect(t.toString()).to.be("abc\n123456789a");
+		t.inject("b");
+		expect(t.toString()).to.be("abc\n123456789b");
+	})
 });

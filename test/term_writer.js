@@ -6,6 +6,18 @@ function newTermWriter(w, h) {
 	return tw;
 }
 describe('TermWriter', function() {
+	it("can handle splitted escape sequences", function() {
+		var t = newTermWriter();
+		t.write("\x1b");
+		t.write("[");
+		t.write("10");
+		t.write(";");
+		t.write("2");
+		t.write("0");
+		t.write("H");
+		expect(t.buffer.cursor.x).to.be(19);
+		expect(t.buffer.cursor.y).to.be(9);
+	})
 	it("shouldn't print non printables", function() {
 		var t = newTermWriter();
 		t.write("\x0e\x0f");
