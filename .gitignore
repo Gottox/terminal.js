@@ -2,3 +2,6 @@ node_modules
 dist
 *.swp
 .DS_Store
+coverage.html
+lib-cov
+index-cov.js

@@ -2,6 +2,8 @@ REPORTER = list
 
 BROWSERIFY ?= ./node_modules/browserify/bin/cmd.js
 MOCHA ?= ./node_modules/.bin/mocha
+JSCOVERAGE ?= ./node_modules/.bin/jscoverage
+
 SRC = index.js \
       lib/handler/chr.js \
       lib/handler/csi.js \
@@ -33,7 +35,7 @@ dist/terminal.js: $(SRC) node_modules dist
 		`echo "$(EXTERN)" | tr " " "\n" | sed 's#^\(extern/\(.*\).js\)#-r ./\1:\2#';` \
 		|| { rm $@; exit 1; }
 
-test:
+test: $(SRC) node_modules dist/terminal.js
 	@$(MOCHA) \
 		--require test/common \
 		--reporter $(REPORTER) \
@@ -43,12 +45,25 @@ test-browser: dist/terminal.js node_modules
 	@echo visit http://127.0.0.1:3000/
 	@./node_modules/.bin/serve test/
 
+coverage: lib-cov dist/terminal.js
+	@echo visit file://$$PWD/coverage.html
+	@COVERAGE=1 $(MOCHA) \
+		--require test/common \
+		--reporter html-cov \
+		$(TESTS) > coverage.html
+
+lib-cov: $(SRC) node_modules
+	@echo "JSCOVERAGE $@"
+	@$(JSCOVERAGE) lib $@
+	@echo "SED        index-cov.js"
+	@sed "s#lib/#lib-cov/#" index.js > index-cov.js
+
 clean:
-	@echo "RM         dist"
-	@rm -r dist || true
+	@echo "RM         dist lib-cov index-cov.js coverage.html"
+	@rm -rf dist lib-cov index-cov.js coverage.html || true
 
 mrproper: clean
 	@echo "RM         node_modules"
-	@rm -r node_modules || true
+	@rm -rf node_modules || true
 
-.PHONY: test test-browser clean mrproper
+.PHONY: test test-browser coverage clean mrproper
