@@ -1,4 +1,4 @@
-REPORTER = list
+REPORTER = dot
 
 BROWSERIFY ?= ./node_modules/browserify/bin/cmd.js
 MOCHA ?= ./node_modules/.bin/mocha
