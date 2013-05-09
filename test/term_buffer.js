@@ -11,111 +11,120 @@ describe('TermBuffer', function() {
 	});
 	it("writes to TermBuffer", function() {
 		var t = newTermBuffer();
-		t.write("Hello World");
+		t.inject("Hello World");
 		expect(t.toString()).to.be("Hello World");
-		t.write("\nHello World");
+		t.inject("\nHello World");
 		expect(t.toString()).to.be("Hello World\nHello World");
-		//t.write("\n");
-		//expect(t.toString()).to.be("Hello World\nHello World\n");
+		t.inject("\n");
+		expect(t.toString()).to.be("Hello World\nHello World\n");
 	});
 	it("breaks lines", function() {
 		var t = newTermBuffer(10, 10);
-		t.write("1234567890abcdefghi");
+		t.inject("1234567890abcdefghi");
 		expect(t.toString()).to.be("1234567890\nabcdefghi");
-		t.write("j");
+		t.inject("j");
 		expect(t.toString()).to.be("1234567890\nabcdefghij");
 	});
 	it("scrolls", function() {
 		var t = newTermBuffer(10, 10);
-		t.write("1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20");
+		t.inject("1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20");
 		expect(t.toString()).to.be("11\n12\n13\n14\n15\n16\n17\n18\n19\n20");
 	});
 	it("moves cursor up", function() {
 		var t = newTermBuffer();
-		t.write("Test\nTest");
+		t.inject("Test\nTest");
 		t.mvCur(0, -1);
-		t.write("!");
+		t.inject("!");
 		expect(t.toString()).to.be("Test!\nTest");
 
 		t = newTermBuffer();
-		t.write("Test\nTest");
+		t.inject("Test\nTest");
 		t.mvCur(0, -2);
-		t.write("!");
+		t.inject("!");
 		expect(t.toString()).to.be("Test!\nTest");
 	});
 	it("moves cursor down", function() {
 		var t = newTermBuffer();
-		t.write("Test\nTest");
+		t.inject("Test\nTest");
 		t.mvCur(0,1);
-		t.write("!");
+		t.inject("!");
 		expect(t.toString()).to.be("Test\nTest\n    !");
 	});
 	it("moves cursor left", function() {
 		var t = newTermBuffer();
-		t.write("Tesd");
+		t.inject("Tesd");
 		t.mvCur(-1,0);
-		t.write("t");
+		t.inject("t");
 
 		expect(t.toString()).to.be("Test");
 		t.mvCur(-100,0);
-		t.write("Hello World");
+		t.inject("Hello World");
 		expect(t.toString()).to.be("Hello World");
 	});
 	it("moves cursor right", function() {
 		var t = newTermBuffer();
-		t.write("Tes");
+		t.inject("Tes");
 		t.mvCur(1,0);
-		t.write("t");
+		t.inject("t");
 		expect(t.toString()).to.be("Tes t");
 	});
 	it("deletes lines", function() {
 		var t = newTermBuffer();
-		t.write("1\n2\n3\n4\x1b[2H\x1b[2M");
+		t.inject("1\n2\n3\n4");
+		t.setCur({y:1});
+		t.deleteLines(2)
 		expect(t.toString()).to.be("1\n4");
 	});
-	it("shouldn't print non printables", function() {
+	// Move this test to term_writer
+	/*it("shouldn't print non printables", function() {
 		var t = newTermBuffer();
-		t.write("\x0e\x0f");
+		t.inject("\x0e\x0f");
 		expect(t.toString()).to.be("");
-	});
+	});*/
 	it("should overwrite the previous line when moving the cursor up", function() {
 		var t = newTermBuffer();
-		t.write("ABCDEF\n\x1b[AGHIJKL");
-		expect(t.toString()).to.be("GHIJKL");
+		t.inject("ABCDEF\n");
+		t.mvCur(0,-1);
+		t.inject("GHIJKL");
+
+		expect(t.toString()).to.be("GHIJKL\n");
 	});
 	it("should set ScrollRegion correctly if no params specified", function() {
 		var t = newTermBuffer(80,13);
-		t.write("ABCDEF\n\x1b[1;r");
+		t.inject("ABCDEF\n\x1b[1;r");
 		expect(t.scrollRegion[1]).to.be(13);
 	});
 	it("should move Left", function() {
 		var t = newTermBuffer();
-		t.write("ABCDEF\x1b[DAA");
+		t.inject("ABCDEF")
+		t.mvCur(-1, 0);
+		t.inject("AA");
 		expect(t.toString()).to.be("ABCDEAA");
 	});
-	it("should clear", function() {
+	// Move this test to term_writer
+	/*it("should clear", function() {
 		var t = newTermBuffer();
 		t.write("ABCDEF\n\nFOO\n\x1bH\x1b[2J");
 		expect(t.toString()).to.be("");
-	});
+	});*/
 	it("resize correctly to smaller size", function() {
 		var t = newTermBuffer(80,24);
-		t.write("line1\n");
+		t.inject("line1\n");
 		t.resize(2,2);
-		t.write("ab\n");
+		t.inject("ab\n");
 		expect(t.toString()).to.be("ab\n");
 	});
 	it("resize correctly to bigger size", function() {
 		var t = newTermBuffer(80,24);
-		t.write("line1\n");
+		t.inject("line1\n");
 		t.resize(80,28);
-		expect(t.toString()).to.be("\n\n\n\nline1");
+		expect(t.toString()).to.be("\n\n\n\nline1\n");
 	});
 	it("emits a linechange event", function(done) {
 		var t = newTermBuffer();
 		t.once('linechange', function(nbr, line) {
 			done();
 		});
-		t.inject("A");
+		t.inject("hello world");
 	});
 });
