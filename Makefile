@@ -30,8 +30,7 @@ test: $(SRC) node_modules dist
 		$(TESTS)
 
 test-browser: node_modules dist/terminal.js
-	@echo visit http://127.0.0.1:3000/
-	@./node_modules/.bin/serve test/
+	@echo visit file://$$PWD/test/index.html
 
 coverage: lib-cov dist
 	@echo visit file://$$PWD/coverage.html

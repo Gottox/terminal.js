@@ -27,7 +27,6 @@
       "mocha": "*"
     , "jscoverage": "*"
     , "should": "0.5.1"
-    , "serve": "*"
     , "expect.js": "*"
   }
   , "license": "MIT"
