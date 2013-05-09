@@ -50,7 +50,7 @@ coverage: lib-cov dist/terminal.js
 	@COVERAGE=1 $(MOCHA) \
 		--require test/common \
 		--reporter html-cov \
-		$(TESTS) > coverage.html
+		$(TESTS) > coverage.html || true
 
 lib-cov: $(SRC) node_modules
 	@echo "JSCOVERAGE $@"
