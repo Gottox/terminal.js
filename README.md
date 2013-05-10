@@ -134,6 +134,12 @@ Note: a line can be sparse => ``line: [ , , , , , , { ...char .... } ]``
 - JUIx - <http://www.masswerk.at/jsuix/>
 - Termlib - <http://www.masswerk.at/termlib/>
 
+### Reference docs for vt100, csi , ... codes
+
+- <http://www.vt100.net/docs/vt510-rm/contents>
+- <http://www8.cs.umu.se/~isak/snippets/vt100.txt>
+- <http://linux.about.com/library/cmd/blcmdl4_console_codes.htm>
+
 ## Remarks
 
 - we should clone the defaultBuffer instead of equalling it (see reset function)
