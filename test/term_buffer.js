@@ -73,10 +73,15 @@ describe('TermBuffer', function() {
 		t.write("t");
 		expect(t.toString()).to.be("Tes t");
 	});
-	it("moves down", function() {
+	it("moves down and to beginning of line (NEL)", function() {
 		var t = newTermBuffer();
 		t.write("aaa\x1bEbbb")
 		expect(t.toString()).to.be("aaa\nbbb")
+	});
+	it("moves down and at current position (IND)", function() {
+		var t = newTermBuffer();
+		t.write("aaa\x1bDbbb")
+		expect(t.toString()).to.be("aaa\n   bbb")
 	});
 	it("deletes lines", function() {
 		var t = newTermBuffer();
@@ -122,7 +127,7 @@ describe('TermBuffer', function() {
 		t.write("ABCDEF\n\nFOO\n\x1bH\x1b[2J");
 		expect(t.toString()).to.be("");
 	});
-	it("should reset", function() {
+	it("should reset (RIS)", function() {
 		var t1 = new TermBuffer(80,24);
 		var t2 = new TermBuffer(80,24);
 		//change mode, led and write a char
