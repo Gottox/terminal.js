@@ -117,6 +117,13 @@ describe('TermBuffer', function() {
 		t.write("ABCDEF\n\nFOO\n\x1bH\x1b[2J");
 		expect(t.toString()).to.be("");
 	});
+	it("should reset", function() {
+		var t1 = new TermBuffer(80,24);
+		var t2 = new TermBuffer(80,24);
+		//change mode, led and write a char
+		t1.write("\x1b[?5h\x1b[1qABCD\x1bc");
+		expect(t1.diff(t2).length).to.be(0);
+	});
 	it("resize correctly to smaller size", function() {
 		var t = newTermBuffer(80,24);
 		t.write("line1\n");
