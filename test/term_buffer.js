@@ -93,6 +93,11 @@ describe('TermBuffer', function() {
 		t.write("ABCDEF\n\x1b[1;r");
 		expect(t.scrollRegion[1]).to.be(13);
 	});
+	it("should save and restore the cursor correctly", function() {
+		var t = newTermBuffer(80,24);
+		t.write("\x1b7ABCDE\x1b8FGH");
+		expect(t.toString()).to.be("FGHDE");
+	});
 	it("should move Left", function() {
 		var t = newTermBuffer();
 		t.write("ABCDEF\x1b[DAA");
