@@ -9,6 +9,11 @@ describe('TermBuffer', function() {
 		expect(newTermBuffer()).to.have.property('buffer');
 		expect(newTermBuffer().toString()).to.be("");
 	});
+	it("creates TermBuffer with dimension", function() {
+		var t = newTermBuffer(100, 200);
+		expect(t.width).to.be(100);
+		expect(t.height).to.be(200);
+	});
 	it("writes to TermBuffer", function() {
 		var t = newTermBuffer();
 		t.write("Hello World");
@@ -68,6 +73,16 @@ describe('TermBuffer', function() {
 		t.write("t");
 		expect(t.toString()).to.be("Tes t");
 	});
+	it("moves down and to beginning of line (NEL)", function() {
+		var t = newTermBuffer();
+		t.write("aaa\x1bEbbb")
+		expect(t.toString()).to.be("aaa\nbbb")
+	});
+	it("moves down and at current position (IND)", function() {
+		var t = newTermBuffer();
+		t.write("aaa\x1bDbbb")
+		expect(t.toString()).to.be("aaa\n   bbb")
+	});
 	it("deletes lines", function() {
 		var t = newTermBuffer();
 		t.write("1\n2\n3\n4\x1b[2H\x1b[2M");
@@ -88,6 +103,20 @@ describe('TermBuffer', function() {
 		t.write("ABCDEF\n\x1b[1;r");
 		expect(t.scrollRegion[1]).to.be(13);
 	});
+	it("should save and restore the cursor correctly (DECSC) and (DESCR)", function() {
+		var t = newTermBuffer(80,24);
+		t.write("\x1b7ABCDE\x1b8FGH");
+		expect(t.toString()).to.be("FGHDE");
+	});
+	it("should reverse the terminal correctly", function() {
+		var t = newTermBuffer(80,24);
+		expect(t.mode['reverse']).to.be(false);
+		t.write("\x1b[?5hABCDEFGH");
+		expect(t.mode['reverse']).to.be(true);
+		t.write("\x1b[?5l");
+		expect(t.mode['reverse']).to.be(false);
+		expect(t.toString()).to.be("ABCDEFGH");
+	});
 	it("should move Left", function() {
 		var t = newTermBuffer();
 		t.write("ABCDEF\x1b[DAA");
@@ -97,6 +126,13 @@ describe('TermBuffer', function() {
 		var t = newTermBuffer();
 		t.write("ABCDEF\n\nFOO\n\x1bH\x1b[2J");
 		expect(t.toString()).to.be("");
+	});
+	it("should reset (RIS)", function() {
+		var t1 = new TermBuffer(80,24);
+		var t2 = new TermBuffer(80,24);
+		//change mode, led and write a char
+		t1.write("\x1b[?5h\x1b[1qABCD\x1bc");
+		expect(t1.diff(t2).length).to.be(0);
 	});
 	it("resize correctly to smaller size", function() {
 		var t = newTermBuffer(80,24);
