@@ -73,6 +73,11 @@ describe('TermBuffer', function() {
 		t.write("t");
 		expect(t.toString()).to.be("Tes t");
 	});
+	it("moves down", function() {
+		var t = newTermBuffer();
+		t.write("aaa\x1bEbbb")
+		expect(t.toString()).to.be("aaa\nbbb")
+	});
 	it("deletes lines", function() {
 		var t = newTermBuffer();
 		t.write("1\n2\n3\n4\x1b[2H\x1b[2M");
