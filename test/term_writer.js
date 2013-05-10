@@ -18,6 +18,14 @@ describe('TermWriter', function() {
 		expect(t.buffer.cursor.x).to.be(19);
 		expect(t.buffer.cursor.y).to.be(9);
 	})
+	it("should handle mode changes correctly", function() {
+		var t = newTermWriter();
+		t.write("\x1b[?999h");
+		t.write("\x1b[?1047h");
+		t.write("\x1b[?1048h");
+		t.write("\x1b[?1046h");
+		expect(t.toString()).to.be("");
+	});
 	it("shouldn't print non printables", function() {
 		var t = newTermWriter();
 		t.write("\x0e\x0f");
