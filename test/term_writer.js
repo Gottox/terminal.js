@@ -28,4 +28,37 @@ describe('TermWriter', function() {
 		t.write("ABCDEF\n\nFOO\n\x1b[H\x1b[2J");
 		expect(t.toString()).to.be("");
 	});
+	it("moves down and to beginning of line (NEL)", function() {
+		var t = newTermWriter();
+		t.write("aaa\x1bEbbb")
+		expect(t.toString()).to.be("aaa\nbbb")
+	});
+	it("moves down and at current position (IND)", function() {
+		var t = newTermWriter();
+		t.write("aaa\x1bDbbb")
+		expect(t.toString()).to.be("aaa\n   bbb")
+	});
+	it("should save and restore the cursor correctly (DECSC) and (DESCR)", function() {
+		var t = newTermWriter(80,24);
+		t.write("\x1b7ABCDE\x1b8FGH");
+		expect(t.toString()).to.be("FGHDE");
+	});
+	it("should reverse the terminal correctly", function() {
+		var t = newTermWriter(80,24);
+		expect(t.buffer.mode['reverse']).to.be(false);
+		t.write("\x1b[?5hABCDEFGH");
+		expect(t.buffer.mode['reverse']).to.be(true);
+		t.write("\x1b[?5l");
+		expect(t.buffer.mode['reverse']).to.be(false);
+		expect(t.toString()).to.be("ABCDEFGH");
+	});
+	/* TODO reenable this test
+	it("should reset (RIS)", function() {
+		var t1 = new TermBuffer(80,24);
+		var t2 = new TermBuffer(80,24);
+		//change mode, led and write a char
+		t1.write("\x1b[?5h\x1b[1qABCD\x1bc");
+		expect(t1.diff(t2).length).to.be(0);
+	});
+	*/
 });

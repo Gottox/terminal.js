@@ -9,6 +9,11 @@ describe('TermBuffer', function() {
 		expect(newTermBuffer()).to.have.property('buffer');
 		expect(newTermBuffer().toString()).to.be("");
 	});
+	it("creates TermBuffer with dimension", function() {
+		var t = newTermBuffer(100, 200);
+		expect(t.width).to.be(100);
+		expect(t.height).to.be(200);
+	});
 	it("writes to TermBuffer", function() {
 		var t = newTermBuffer();
 		t.inject("Hello World");
@@ -101,12 +106,6 @@ describe('TermBuffer', function() {
 		t.inject("AA");
 		expect(t.toString()).to.be("ABCDEAA");
 	});
-	// Move this test to term_writer
-	/*it("should clear", function() {
-		var t = newTermBuffer();
-		t.write("ABCDEF\n\nFOO\n\x1bH\x1b[2J");
-		expect(t.toString()).to.be("");
-	});*/
 	it("resize correctly to smaller size", function() {
 		var t = newTermBuffer(80,24);
 		t.inject("line1\n");

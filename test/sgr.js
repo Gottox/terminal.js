@@ -5,7 +5,7 @@ function newTermWriter(w, h) {
 	t.mode.crlf = true;
 	return tw;
 }
-describe('TermWriter', function() {
+describe('TermWriter SGI', function() {
 	it("resets attributes", function() {
 		var t = newTermWriter();
 		t.write("\x1b[1mb\x1b[mn");
