@@ -4,7 +4,24 @@ BROWSERIFY ?= ./node_modules/browserify/bin/cmd.js
 MOCHA ?= ./node_modules/.bin/mocha
 JSCOVERAGE ?= ./node_modules/.bin/jscoverage
 
-SRC = index.js lib/ansi.js lib/csi.js lib/osc.js lib/sgr.js lib/term_buffer.js lib/term_diff.js lib/util.js
+SRC = index.js \
+      lib/handler/chr.js \
+      lib/handler/csi.js \
+      lib/handler/esc.js \
+      lib/handler/mode.js \
+      lib/handler/sgr.js \
+      lib/term_buffer.js \
+      lib/term_diff.js \
+      lib/term_writer.js \
+      lib/util.js
+
+# Workaround: include streams2 as long as they are not in browserify
+EXTERN = extern/_stream_duplex.js \
+         extern/_stream_passthrough.js \
+         extern/_stream_readable.js \
+         extern/_stream_transform.js \
+         extern/_stream_writable.js \
+         extern/stream.js
 
 all: dist/terminal.js
 
@@ -15,11 +32,13 @@ dist:
 dist/terminal.js: $(SRC) node_modules dist
 	@echo "BROWSERIFY $@"
 	@$(BROWSERIFY) -s 'terminal'  $< -o $@ \
+		`echo "$(EXTERN)" | tr " " "\n" | sed 's#^\(extern/\(.*\).js\)#-r ./\1:\2#';` \
 		|| { rm $@; exit 1; }
 
 dist/terminal-dev.js: $(SRC) node_modules dist
 	@echo "BROWSERIFY $@"
 	@$(BROWSERIFY) -d -s 'terminal'  $< -o $@ \
+		`echo "$(EXTERN)" | tr " " "\n" | sed 's#^\(extern/\(.*\).js\)#-r ./\1:\2#';` \
 		|| { rm $@; exit 1; }
 
 
