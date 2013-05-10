@@ -73,6 +73,16 @@ describe('TermBuffer', function() {
 		t.inject("t");
 		expect(t.toString()).to.be("Tes t");
 	});
+	it("moves down and to beginning of line (NEL)", function() {
+		var t = newTermBuffer();
+		t.write("aaa\x1bEbbb")
+		expect(t.toString()).to.be("aaa\nbbb")
+	});
+	it("moves down and at current position (IND)", function() {
+		var t = newTermBuffer();
+		t.write("aaa\x1bDbbb")
+		expect(t.toString()).to.be("aaa\n   bbb")
+	});
 	it("deletes lines", function() {
 		var t = newTermBuffer();
 		t.inject("1\n2\n3\n4");
@@ -98,6 +108,11 @@ describe('TermBuffer', function() {
 		var t = newTermBuffer(80,13);
 		t.inject("ABCDEF\n\x1b[1;r");
 		expect(t.scrollRegion[1]).to.be(13);
+	});
+	it("should save and restore the cursor correctly (DECSC) and (DESCR)", function() {
+		var t = newTermBuffer(80,24);
+		t.write("\x1b7ABCDE\x1b8FGH");
+		expect(t.toString()).to.be("FGHDE");
 	});
 	it("should move Left", function() {
 		var t = newTermBuffer();
