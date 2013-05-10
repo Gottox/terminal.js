@@ -98,6 +98,15 @@ describe('TermBuffer', function() {
 		t.write("\x1b7ABCDE\x1b8FGH");
 		expect(t.toString()).to.be("FGHDE");
 	});
+	it("should reverse the terminal correctly", function() {
+		var t = newTermBuffer(80,24);
+		expect(t.mode['reverse']).to.be(false);
+		t.write("\x1b[?5hABCDEFGH");
+		expect(t.mode['reverse']).to.be(true);
+		t.write("\x1b[?5l");
+		expect(t.mode['reverse']).to.be(false);
+		expect(t.toString()).to.be("ABCDEFGH");
+	});
 	it("should move Left", function() {
 		var t = newTermBuffer();
 		t.write("ABCDEF\x1b[DAA");
