@@ -21,6 +21,7 @@ describe('TermWriter', function() {
 	it("should handle mode changes correctly", function() {
 		var t = newTermWriter();
 		t.write("\x1b[?999h");
+		t.write("\x1b[?47h");
 		t.write("\x1b[?1047h");
 		t.write("\x1b[?1048h");
 		t.write("\x1b[?1046h");
