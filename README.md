@@ -3,6 +3,8 @@
 Terminal.js is a rendering engine for vt100-like terminals.
 It is written from scratch and supports most commonly used escape sequences.
 
+[![Build Status (c3ks)](https://travis-ci.org/c3ks/terminal.js.png?branch=master)](https://travis-ci.org/cs3ks/terminal.js) [c3ks/master](https://github.com/c3ks/terminal.js) - [![Build Status (jedi4ever)](https://travis-ci.org/jedi4ever/terminal.js.png?branch=master)](https://travis-ci.org/jedi4ever/terminal.js) - [jedi4ever/master](https://github.com/jedi4ever/terminal.js)
+
 ## Benefits
 
 - it can be used both in nodejs and as a javascript library in the browser
