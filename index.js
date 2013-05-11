@@ -3,5 +3,6 @@ module.exports.Terminal = exports.TermBuffer; // legacy
 module.exports.TermDiff = require("./lib/term_diff.js").TermDiff;
 module.exports.TermWriter = require("./lib/term_writer.js");
 module.exports.renderer = {
-	PlainRenderer: require("./lib/renderer/plain.js")
+	PlainRenderer: require("./lib/renderer/plain.js"),
+	AnsiRenderer: require("./lib/renderer/ansi.js")
 }
