@@ -46,6 +46,7 @@ dist/terminal-dev.js: $(SRC) node_modules dist
 
 
 test: lint $(SRC) node_modules dist
+	@echo "MOCHA      test"
 	@$(MOCHA) \
 		--require test/common \
 		--reporter $(REPORTER) \
