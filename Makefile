@@ -4,6 +4,9 @@ BROWSERIFY ?= ./node_modules/browserify/bin/cmd.js
 MOCHA ?= ./node_modules/.bin/mocha
 JSCOVERAGE ?= ./node_modules/.bin/jscoverage
 JSHINT ?= ./node_modules/.bin/jshint
+UGLIFYJS ?= ./node_modules/.bin/uglifyjs
+
+GLOBAL ?= terminal
 
 SRC = index.js \
       lib/handler/chr.js \
@@ -26,21 +29,19 @@ EXTERN = extern/_stream_duplex.js \
          extern/_stream_writable.js \
          extern/stream.js
 
-all: dist/terminal.js
+all: dist/terminal.min.js
 
 dist:
 	@echo "MKDIR      $@"
 	@mkdir dist;
 
+dist/terminal.min.js: dist/terminal.js
+	@echo "UGLIFYJS   $@"
+	@$(UGLIFYJS) $< -c -o $@
+
 dist/terminal.js: $(SRC) node_modules dist
 	@echo "BROWSERIFY $@"
-	@$(BROWSERIFY) -s 'terminal'  $< -o $@ \
-		`echo "$(EXTERN)" | tr " " "\n" | sed 's#^\(extern/\(.*\).js\)#-r ./\1:\2#';` \
-		|| { rm $@; exit 1; }
-
-dist/terminal-dev.js: $(SRC) node_modules dist
-	@echo "BROWSERIFY $@"
-	@$(BROWSERIFY) -d -s 'terminal'  $< -o $@ \
+	@$(BROWSERIFY) -s $(GLOBAL)  $< -o $@ \
 		`echo "$(EXTERN)" | tr " " "\n" | sed 's#^\(extern/\(.*\).js\)#-r ./\1:\2#';` \
 		|| { rm $@; exit 1; }
 

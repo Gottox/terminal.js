@@ -29,6 +29,7 @@
     , "should": "0.5.1"
     , "expect.js": "*"
     , "jshint": "*"
+    , "uglify-js": "*"
   }
   , "license": "MIT"
   , "engine": {
