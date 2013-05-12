@@ -45,7 +45,7 @@ dist/terminal-dev.js: $(SRC) node_modules dist
 		|| { rm $@; exit 1; }
 
 
-test: $(SRC) node_modules dist
+test: lint $(SRC) node_modules dist
 	@$(MOCHA) \
 		--require test/common \
 		--reporter $(REPORTER) \
