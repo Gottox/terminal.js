@@ -3,6 +3,7 @@ REPORTER = dot
 BROWSERIFY ?= ./node_modules/browserify/bin/cmd.js
 MOCHA ?= ./node_modules/.bin/mocha
 JSCOVERAGE ?= ./node_modules/.bin/jscoverage
+JSHINT ?= ./node_modules/.bin/jshint
 
 SRC = index.js \
       lib/handler/chr.js \
@@ -66,6 +67,12 @@ lib-cov: $(SRC) node_modules
 	@echo "SED        index-cov.js"
 	@sed "s#lib/#lib-cov/#" index.js > index-cov.js
 
+lint: $(SRC)
+	@echo "LINT       lib"
+	@$(JSHINT) lib
+	@echo "LINT       test"
+	@$(JSHINT) test/*.js
+
 clean:
 	@echo "RM         dist lib-cov index-cov.js coverage.html"
 	@rm -rf dist lib-cov index-cov.js coverage.html || true
@@ -74,4 +81,4 @@ mrproper: clean
 	@echo "RM         node_modules"
 	@rm -rf node_modules || true
 
-.PHONY: test test-browser coverage clean mrproper
+.PHONY: test test-browser coverage clean mrproper lint
