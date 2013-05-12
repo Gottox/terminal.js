@@ -13,7 +13,7 @@ describe('TermWriter SGI', function() {
 		expect(t.buffer.buffer[0].line[0].attr.bold).to.be(true);
 		expect(t.buffer.buffer[0].line[1].chr).to.be('n');
 		expect(t.buffer.buffer[0].line[1].attr.bold).to.be(false);
-	})
+	});
 	it("sets bold", function() {
 		var t = newTermWriter();
 		t.write("\x1b[1mb");

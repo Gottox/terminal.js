@@ -17,7 +17,7 @@ describe('TermWriter', function() {
 		t.write("H");
 		expect(t.buffer.cursor.x).to.be(19);
 		expect(t.buffer.cursor.y).to.be(9);
-	})
+	});
 	it("should handle mode changes correctly", function() {
 		var t = newTermWriter();
 		t.write("\x1b[?999h");
@@ -39,13 +39,13 @@ describe('TermWriter', function() {
 	});
 	it("moves down and to beginning of line (NEL)", function() {
 		var t = newTermWriter();
-		t.write("aaa\x1bEbbb")
-		expect(t.toString()).to.be("aaa\nbbb")
+		t.write("aaa\x1bEbbb");
+		expect(t.toString()).to.be("aaa\nbbb");
 	});
 	it("moves down and at current position (IND)", function() {
 		var t = newTermWriter();
-		t.write("aaa\x1bDbbb")
-		expect(t.toString()).to.be("aaa\n   bbb")
+		t.write("aaa\x1bDbbb");
+		expect(t.toString()).to.be("aaa\n   bbb");
 	});
 	it("should save and restore the cursor correctly (DECSC) and (DESCR)", function() {
 		var t = newTermWriter(80,24);
@@ -54,11 +54,11 @@ describe('TermWriter', function() {
 	});
 	it("should reverse the terminal correctly", function() {
 		var t = newTermWriter(80,24);
-		expect(t.buffer.mode['reverse']).to.be(false);
+		expect(t.buffer.mode.reverse).to.be(false);
 		t.write("\x1b[?5hABCDEFGH");
-		expect(t.buffer.mode['reverse']).to.be(true);
+		expect(t.buffer.mode.reverse).to.be(true);
 		t.write("\x1b[?5l");
-		expect(t.buffer.mode['reverse']).to.be(false);
+		expect(t.buffer.mode.reverse).to.be(false);
 		expect(t.toString()).to.be("ABCDEFGH");
 	});
 	/* TODO reenable this test
@@ -71,13 +71,13 @@ describe('TermWriter', function() {
 	});*/
 	it("moves down and to beginning of line (NEL)", function() {
 		var t = newTermWriter();
-		t.write("aaa\x1bEbbb")
-		expect(t.toString()).to.be("aaa\nbbb")
+		t.write("aaa\x1bEbbb");
+		expect(t.toString()).to.be("aaa\nbbb");
 	});
 	it("moves down and at current position (IND)", function() {
 		var t = newTermWriter();
-		t.write("aaa\x1bDbbb")
-		expect(t.toString()).to.be("aaa\n   bbb")
+		t.write("aaa\x1bDbbb");
+		expect(t.toString()).to.be("aaa\n   bbb");
 	});
 	it("should save and restore the cursor correctly (DECSC) and (DESCR)", function() {
 		var t = newTermWriter(80,24);

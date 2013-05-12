@@ -13,5 +13,5 @@ describe('AnsiRenderer', function() {
 		t.write("Hello");
 
 		expect(r.toString()).to.be('\u001b[mH\u001b[0m\u001b[me\u001b[0m\u001b[ml\u001b[0m\u001b[ml\u001b[0m\u001b[mo\u001b[0m');
-	})
+	});
 });

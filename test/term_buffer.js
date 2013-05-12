@@ -77,7 +77,7 @@ describe('TermBuffer', function() {
 		var t = newTermBuffer();
 		t.inject("1\n2\n3\n4");
 		t.setCur({y:1});
-		t.deleteLines(2)
+		t.deleteLines(2);
 		expect(t.toString()).to.be("1\n4");
 	});
 	// Move this test to term_writer
@@ -101,7 +101,7 @@ describe('TermBuffer', function() {
 	});
 	it("should move Left", function() {
 		var t = newTermBuffer();
-		t.inject("ABCDEF")
+		t.inject("ABCDEF");
 		t.mvCur(-1, 0);
 		t.inject("AA");
 		expect(t.toString()).to.be("ABCDEAA");
@@ -133,7 +133,7 @@ describe('TermBuffer', function() {
 		expect(t.toString()).to.be("123456789a");
 		t.inject("b");
 		expect(t.toString()).to.be("123456789b");
-	})
+	});
 	it("works wrap = false and with lineFeed", function() {
 		var t = newTermBuffer(10,24);
 		t.mode.wrap = false;
@@ -141,5 +141,5 @@ describe('TermBuffer', function() {
 		expect(t.toString()).to.be("abc\n123456789a");
 		t.inject("b");
 		expect(t.toString()).to.be("abc\n123456789b");
-	})
+	});
 });
