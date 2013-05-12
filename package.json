@@ -5,9 +5,9 @@
   , "description": "terminal emulation library for javascript."
   , "private": false
   , "scripts": {
-      "install": "make BROWSERIFY=browserify"
-    , "prepublish": "make BROWSERIFY=browserify"
-    , "test": "make MOCHA=mocha test"
+      "install": "make BROWSERIFY=browserify UGLIFY=uglify"
+    , "prepublish": "make BROWSERIFY=browserify UGLIFY=uglify"
+    , "test": "make MOCHA=mocha JSHINT=jshint test"
   }
   , "main": "./index"
   , "repository": {
@@ -22,6 +22,7 @@
   ]
   , "dependencies": {
       "browserify": "2.13.x"
+    , "uglify-js": "*"
   }
   , "devDependencies": {
       "mocha": "*"
@@ -29,7 +30,6 @@
     , "should": "0.5.1"
     , "expect.js": "*"
     , "jshint": "*"
-    , "uglify-js": "*"
   }
   , "license": "MIT"
   , "engine": {
