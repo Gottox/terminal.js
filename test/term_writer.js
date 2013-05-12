@@ -84,4 +84,12 @@ describe('TermWriter', function() {
 		t.write("\x1b7ABCDE\x1b8FGH");
 		expect(t.toString()).to.be("FGHDE");
 	});
+	it("rings bell", function(done) {
+		var t = newTermWriter();
+		t.on('bell', function() {
+			done();
+		});
+		t.write("\x07");
+		expect(t.toString()).to.be("");
+	});
 });
