@@ -124,6 +124,24 @@ describe('TermBuffer', function() {
 
 		expect(t.toString()).to.be("GHIJKL\n");
 	});
+	it("works in insertmode", function() {
+		var t = newTermBuffer();
+		t.setMode('insert', true);
+		t.inject("__");
+		t.setCursor(1, 0);
+		t.inject("AAAA");
+
+		expect(t.toString()).to.be("_AAAA_");
+	});
+	it("works in insertmode with linebreaks", function() {
+		var t = newTermBuffer(10,10);
+		t.setMode('insert', true);
+		t.inject("__");
+		t.setCursor(1, 0);
+		t.inject("1234567890");
+
+		expect(t.toString()).to.be("_123456789\n0");
+	});
 	it("should move Left", function() {
 		var t = newTermBuffer();
 		t.inject("ABCDEF");
