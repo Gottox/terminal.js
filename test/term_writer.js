@@ -92,4 +92,9 @@ describe('TermWriter', function() {
 		t.write("\x07");
 		expect(t.toString()).to.be("");
 	});
+	it("should set ScrollRegion correctly if no params specified", function() {
+		var t = newTermWriter(80,13);
+		t.write("ABCDEF\n\x1b[1;r");
+		expect(t.buffer.scrollRegion[1]).to.be(13);
+	});
 });

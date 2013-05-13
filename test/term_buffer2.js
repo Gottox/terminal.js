@@ -95,12 +95,11 @@ describe('TermBuffer2', function() {
 		t.inject("t");
 		expect(t.toString()).to.be("Tes t");
 	});
-	/*
 	it("deletes lines", function() {
 		var t = newTermBuffer();
 		t.inject("1\n2\n3\n4");
-		t.setCur({y:1});
-		t.deleteLines(2);
+		t.setCursor(null, 1);
+		t.removeLine(2);
 		expect(t.toString()).to.be("1\n4");
 	});
 	it("should overwrite the previous line when moving the cursor up", function() {
@@ -110,11 +109,6 @@ describe('TermBuffer2', function() {
 		t.inject("GHIJKL");
 
 		expect(t.toString()).to.be("GHIJKL\n");
-	});
-	it("should set ScrollRegion correctly if no params specified", function() {
-		var t = newTermBuffer(80,13);
-		t.inject("ABCDEF\n\x1b[1;r");
-		expect(t.scrollRegion[1]).to.be(13);
 	});
 	it("should move Left", function() {
 		var t = newTermBuffer();
@@ -134,18 +128,19 @@ describe('TermBuffer2', function() {
 		var t = newTermBuffer(80,24);
 		t.inject("line1\n");
 		t.resize(80,28);
-		expect(t.toString()).to.be("\n\n\n\nline1\n");
+		expect(t.toString()).to.be("line1\n");
 	});
 	it("emits a linechange event", function(done) {
 		var t = newTermBuffer();
-		t.once('linechange', function(nbr, line) {
+		t.inject("hello");
+		t.once('linechange', function(nbr, str, attr) {
 			done();
 		});
-		t.inject("hello world");
+		t.inject("world");
 	});
 	it("works with wrap = false", function() {
 		var t = newTermBuffer(10,24);
-		t.mode.wrap = false;
+		t.setMode('wrap', false);
 		t.inject("1234567890a");
 		expect(t.toString()).to.be("123456789a");
 		t.inject("b");
@@ -153,7 +148,7 @@ describe('TermBuffer2', function() {
 	});
 	it("works wrap = false and with lineFeed", function() {
 		var t = newTermBuffer(10,24);
-		t.mode.wrap = false;
+		t.setMode('wrap', false);
 		t.inject("abc\n1234567890a");
 		expect(t.toString()).to.be("abc\n123456789a");
 		t.inject("b");
@@ -161,9 +156,9 @@ describe('TermBuffer2', function() {
 	});
 	it("emits cursor move", function(done) {
 		var t = newTermBuffer();
-		t.on("cursormove", function(cur) {
-			expect(cur.x).to.be(12);
-			expect(cur.y).to.be(1);
+		t.on("cursormove", function(t, x, y) {
+			expect(x).to.be(12);
+			expect(y).to.be(1);
 			done();
 		});
 		t.inject("Hello World\nHow are you?");
@@ -171,7 +166,7 @@ describe('TermBuffer2', function() {
 	it("emits line insert events on inject", function(done) {
 		var t = newTermBuffer();
 		var i = 0;
-		t.on('lineinsert', function(number, line) {
+		t.on('lineinsert', function(term, number, line) {
 			expect(number).to.be(i);
 			if(++i === 2)
 				done();
@@ -180,10 +175,10 @@ describe('TermBuffer2', function() {
 	});
 	it("emits line remove events on inject", function(done) {
 		var t = newTermBuffer(80, 10);
-		t.on('lineremove', function(number, line) {
+		t.on('lineremove', function(term, number, line) {
 			expect(number).to.be(0);
 			done();
 		});
 		t.inject("1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11");
-	});*/
+	});
 });
