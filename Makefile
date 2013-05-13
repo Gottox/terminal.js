@@ -22,12 +22,12 @@ SRC = index.js \
       lib/util.js
 
 # Workaround: include streams2 as long as they are not in browserify
-EXTERN = extern/_stream_duplex.js \
-         extern/_stream_passthrough.js \
-         extern/_stream_readable.js \
-         extern/_stream_transform.js \
-         extern/_stream_writable.js \
+EXTERN = extern/_stream_writable.js \
          extern/stream.js
+EXTERN_DUMMY = _stream_passthrough \
+	       _stream_readable \
+	       _stream_transform \
+	       _stream_duplex
 
 all: dist/terminal.min.js
 
@@ -42,7 +42,8 @@ dist/terminal.min.js: dist/terminal.js
 dist/terminal.js: $(SRC) node_modules dist
 	@echo "BROWSERIFY $@"
 	@$(BROWSERIFY) -s $(GLOBAL)  $< -o $@ \
-		`echo "$(EXTERN)" | tr " " "\n" | sed 's#^\(extern/\(.*\).js\)#-r ./\1:\2#';` \
+		`echo "$(EXTERN)" | sed 's#\(extern/\([^ ]*\).js\)#-r ./\1:\2#g';` \
+		`echo "$(EXTERN_DUMMY)" | sed 's#\([^ ]*\)#-r ./extern/dummy.js:\1#g';` \
 		|| { rm $@; exit 1; }
 
 
