@@ -1,13 +1,14 @@
-describe('TermBuffer', function() {
-	var TermBuffer = terminal.TermBuffer;
+describe('TermBuffer2', function() {
+	var TermBuffer = terminal.TermBuffer2;
+
 	function newTermBuffer(w, h) {
 		var t = new TermBuffer(w, h);
-		t.mode.crlf = true;
+		t.setMode('crlf', true);
 		return t;
 	}
 
 	it("creates TermBuffer", function() {
-		expect(newTermBuffer()).to.have.property('buffer');
+		expect(newTermBuffer()).to.have.property('inject');
 		expect(newTermBuffer().toString()).to.be("");
 	});
 	it("creates TermBuffer with dimension", function() {
@@ -24,7 +25,11 @@ describe('TermBuffer', function() {
 		t.inject("\n");
 		expect(t.toString()).to.be("Hello World\nHello World\n");
 	});
-	it("breaks lines", function() {
+	it("creates series of blanks", function() {
+		var t = newTermBuffer();
+		expect(t._mkBlanks(10)).to.be("          ");
+	});
+	/*it("breaks lines", function() {
 		var t = newTermBuffer(10, 10);
 		t.inject("1234567890abcdefghi");
 		expect(t.toString()).to.be("1234567890\nabcdefghi");
@@ -173,5 +178,5 @@ describe('TermBuffer', function() {
 			done();
 		});
 		t.inject("1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11");
-	});
+	});*/
 });
