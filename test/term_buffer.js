@@ -35,6 +35,16 @@ describe('TermBuffer', function() {
 		t.inject("1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20");
 		expect(t.toString()).to.be("11\n12\n13\n14\n15\n16\n17\n18\n19\n20");
 	});
+	it("scrolls manually", function() {
+		var t = newTermBuffer(10, 10);
+		t.inject("1\n2\n3\n4\n5\n6\n7\n8\n9\n10");
+		t.scroll('down', 5);
+		expect(t.toString()).to.be("6\n7\n8\n9\n10\n\n\n\n\n");
+		t.reset();
+		t.inject("1\n2\n3\n4\n5\n6\n7\n8\n9\n10");
+		t.scroll('up', 5);
+		expect(t.toString()).to.be("\n\n\n\n\n1\n2\n3\n4\n5");
+	});
 	it("moves cursor up", function() {
 		var t = newTermBuffer();
 		t.inject("Test\nTest");
@@ -141,5 +151,32 @@ describe('TermBuffer', function() {
 		expect(t.toString()).to.be("abc\n123456789a");
 		t.inject("b");
 		expect(t.toString()).to.be("abc\n123456789b");
+	});
+	it("emits cursor move", function(done) {
+		var t = newTermBuffer();
+		t.on("cursormove", function(cur) {
+			expect(cur.x).to.be(12);
+			expect(cur.y).to.be(1);
+			done();
+		});
+		t.inject("Hello World\nHow are you?");
+	});
+	it("emits line insert events on inject", function(done) {
+		var t = newTermBuffer();
+		var i = 0;
+		t.on('lineinsert', function(number, line) {
+			expect(number).to.be(i);
+			if(++i === 2)
+				done();
+		});
+		t.inject("test\nbar");
+	});
+	it("emits line remove events on inject", function(done) {
+		var t = newTermBuffer(80, 10);
+		t.on('lineremove', function(number, line) {
+			expect(number).to.be(0);
+			done();
+		});
+		t.inject("1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11");
 	});
 });
