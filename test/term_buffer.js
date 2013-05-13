@@ -188,7 +188,7 @@ describe('TermBuffer', function() {
 	});
 	it("emits cursor move", function(done) {
 		var t = newTermBuffer();
-		t.on("cursormove", function(t, x, y) {
+		t.on("cursormove", function(x, y) {
 			expect(x).to.be(12);
 			expect(y).to.be(1);
 			done();
@@ -198,7 +198,7 @@ describe('TermBuffer', function() {
 	it("emits line insert events on inject", function(done) {
 		var t = newTermBuffer();
 		var i = 0;
-		t.on('lineinsert', function(term, number, line) {
+		t.on('lineinsert', function(number, line) {
 			expect(number).to.be(i);
 			if(++i === 2)
 				done();
@@ -207,10 +207,24 @@ describe('TermBuffer', function() {
 	});
 	it("emits line remove events on inject", function(done) {
 		var t = newTermBuffer(80, 10);
-		t.on('lineremove', function(term, number, line) {
+		t.on('lineremove', function(number, line) {
 			expect(number).to.be(0);
 			done();
 		});
 		t.inject("1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11");
+	});
+	it("erases below", function() {
+		var t = newTermBuffer(10, 10);
+		t.inject("1Line1234567890\n2\n3\n4\n5\n6\n7\n8\n9");
+		t.setCursor(1,0);
+		t.eraseInDisplay('below');
+		expect(t.toString()).to.be("1");
+	});
+	it("erases above", function() {
+		var t = newTermBuffer(10, 10);
+		t.inject("1Line1234567890\n2\n3\n4\n5\n6\n7000\n8\n9");
+		t.setCursor(3,7);
+		t.eraseInDisplay('above');
+		expect(t.toString()).to.be("\n\n\n\n\n\n6\n   0\n8\n9");
 	});
 });

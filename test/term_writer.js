@@ -32,7 +32,6 @@ describe('TermWriter', function() {
 		t.write("\x0e\x0f");
 		expect(t.toString()).to.be("");
 	});
-	/*
 	it("should clear", function() {
 		var t = newTermWriter();
 		t.write("ABCDEF\n\nFOO\n\x1b[H\x1b[2J");
@@ -55,11 +54,11 @@ describe('TermWriter', function() {
 	});
 	it("should reverse the terminal correctly", function() {
 		var t = newTermWriter(80,24);
-		expect(t.buffer.mode.reverse).to.be(false);
+		expect(t.buffer._modes.reverse).to.be(false);
 		t.write("\x1b[?5hABCDEFGH");
-		expect(t.buffer.mode.reverse).to.be(true);
+		expect(t.buffer._modes.reverse).to.be(true);
 		t.write("\x1b[?5l");
-		expect(t.buffer.mode.reverse).to.be(false);
+		expect(t.buffer._modes.reverse).to.be(false);
 		expect(t.toString()).to.be("ABCDEFGH");
 	});
 	/* TODO reenable this test
@@ -70,6 +69,7 @@ describe('TermWriter', function() {
 		t1.write("\x1b[?5h\x1b[1qABCD\x1bc");
 		expect(t1.diff(t2).length).to.be(0);
 	});
+	*/
 	it("moves down and to beginning of line (NEL)", function() {
 		var t = newTermWriter();
 		t.write("aaa\x1bEbbb");
@@ -96,7 +96,6 @@ describe('TermWriter', function() {
 	it("should set ScrollRegion correctly if no params specified", function() {
 		var t = newTermWriter(80,13);
 		t.write("ABCDEF\n\x1b[1;r");
-		expect(t.buffer.scrollRegion[1]).to.be(13);
+		expect(t.buffer._scrollRegion[1]).to.be(13);
 	});
-	*/
 });
