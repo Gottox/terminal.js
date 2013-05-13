@@ -41,7 +41,7 @@ describe('TermBuffer2', function() {
 		t.inject("1234\r56\r789");
 		expect(t.toString()).to.be("7894");
 	});
-	/*it("scrolls", function() {
+	it("scrolls", function() {
 		var t = newTermBuffer(10, 10);
 		t.inject("1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20");
 		expect(t.toString()).to.be("11\n12\n13\n14\n15\n16\n17\n18\n19\n20");
@@ -49,51 +49,53 @@ describe('TermBuffer2', function() {
 	it("scrolls manually", function() {
 		var t = newTermBuffer(10, 10);
 		t.inject("1\n2\n3\n4\n5\n6\n7\n8\n9\n10");
-		t.scroll('down', 5);
+		t.scroll(5);
 		expect(t.toString()).to.be("6\n7\n8\n9\n10\n\n\n\n\n");
 		t.reset();
+		t.setMode("crlf", true);
 		t.inject("1\n2\n3\n4\n5\n6\n7\n8\n9\n10");
-		t.scroll('up', 5);
+		t.scroll(-5);
 		expect(t.toString()).to.be("\n\n\n\n\n1\n2\n3\n4\n5");
 	});
 	it("moves cursor up", function() {
 		var t = newTermBuffer();
 		t.inject("Test\nTest");
-		t.mvCur(0, -1);
+		t.mvCursor(0, -1);
 		t.inject("!");
 		expect(t.toString()).to.be("Test!\nTest");
 
 		t = newTermBuffer();
 		t.inject("Test\nTest");
-		t.mvCur(0, -2);
+		t.mvCursor(0, -2);
 		t.inject("!");
 		expect(t.toString()).to.be("Test!\nTest");
 	});
 	it("moves cursor down", function() {
 		var t = newTermBuffer();
 		t.inject("Test\nTest");
-		t.mvCur(0,1);
+		t.mvCursor(0,1);
 		t.inject("!");
 		expect(t.toString()).to.be("Test\nTest\n    !");
 	});
 	it("moves cursor left", function() {
 		var t = newTermBuffer();
 		t.inject("Tesd");
-		t.mvCur(-1,0);
+		t.mvCursor(-1,0);
 		t.inject("t");
 
 		expect(t.toString()).to.be("Test");
-		t.mvCur(-100,0);
+		t.mvCursor(-100,0);
 		t.inject("Hello World");
 		expect(t.toString()).to.be("Hello World");
 	});
 	it("moves cursor right", function() {
 		var t = newTermBuffer();
 		t.inject("Tes");
-		t.mvCur(1,0);
+		t.mvCursor(1,0);
 		t.inject("t");
 		expect(t.toString()).to.be("Tes t");
 	});
+	/*
 	it("deletes lines", function() {
 		var t = newTermBuffer();
 		t.inject("1\n2\n3\n4");
@@ -104,7 +106,7 @@ describe('TermBuffer2', function() {
 	it("should overwrite the previous line when moving the cursor up", function() {
 		var t = newTermBuffer();
 		t.inject("ABCDEF\n");
-		t.mvCur(0,-1);
+		t.mvCursor(0,-1);
 		t.inject("GHIJKL");
 
 		expect(t.toString()).to.be("GHIJKL\n");
@@ -117,7 +119,7 @@ describe('TermBuffer2', function() {
 	it("should move Left", function() {
 		var t = newTermBuffer();
 		t.inject("ABCDEF");
-		t.mvCur(-1, 0);
+		t.mvCursor(-1, 0);
 		t.inject("AA");
 		expect(t.toString()).to.be("ABCDEAA");
 	});
