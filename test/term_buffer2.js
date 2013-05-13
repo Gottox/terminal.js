@@ -29,14 +29,14 @@ describe('TermBuffer2', function() {
 		var t = newTermBuffer();
 		expect(t._mkBlanks(10)).to.be("          ");
 	});
-	/*it("breaks lines", function() {
+	it("breaks lines", function() {
 		var t = newTermBuffer(10, 10);
 		t.inject("1234567890abcdefghi");
 		expect(t.toString()).to.be("1234567890\nabcdefghi");
 		t.inject("j");
 		expect(t.toString()).to.be("1234567890\nabcdefghij");
 	});
-	it("scrolls", function() {
+	/*it("scrolls", function() {
 		var t = newTermBuffer(10, 10);
 		t.inject("1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20");
 		expect(t.toString()).to.be("11\n12\n13\n14\n15\n16\n17\n18\n19\n20");
