@@ -102,6 +102,14 @@ describe('TermBuffer', function() {
 		t.removeLine(2);
 		expect(t.toString()).to.be("1\n4");
 	});
+	it("inserts lines", function() {
+		var t = newTermBuffer();
+		t.inject("1\n2\n3\n4");
+		t.setCursor(0, 1);
+		t.insertLine(2);
+		t.inject("a\nb");
+		expect(t.toString()).to.be("1\na\nb\n2\n3\n4");
+	});
 	it("should overwrite the previous line when moving the cursor up", function() {
 		var t = newTermBuffer();
 		t.inject("ABCDEF\n");
