@@ -110,6 +110,12 @@ describe('TermBuffer', function() {
 		t.inject("a\nb");
 		expect(t.toString()).to.be("1\na\nb\n2\n3\n4");
 	});
+	it("inserts out of scope of buffer", function() {
+		var t = newTermBuffer();
+		t.setCursor(4,4);
+		t.inject("AA");
+		expect(t.toString()).to.be("\n\n\n    AA");
+	});
 	it("should overwrite the previous line when moving the cursor up", function() {
 		var t = newTermBuffer();
 		t.inject("ABCDEF\n");
