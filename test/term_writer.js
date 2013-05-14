@@ -24,6 +24,7 @@ describe('TermWriter', function() {
 		t.write("\x1b[?47h");
 		t.write("\x1b[?1047h");
 		t.write("\x1b[?1048h");
+		t.write("\x1b[?1049h");
 		t.write("\x1b[?1046h");
 		expect(t.toString()).to.be("");
 	});
