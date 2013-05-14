@@ -15,8 +15,8 @@ describe('TermWriter', function() {
 		t.write("2");
 		t.write("0");
 		t.write("H");
-		expect(t.buffer.cursor.x).to.be(19);
-		expect(t.buffer.cursor.y).to.be(9);
+		expect(t.buffer.cursor.x).to.be(9);
+		expect(t.buffer.cursor.y).to.be(19);
 	});
 	it("should handle mode changes correctly", function() {
 		var t = newTermWriter();
