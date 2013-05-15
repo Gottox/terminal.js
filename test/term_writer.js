@@ -15,8 +15,8 @@ describe('TermWriter', function() {
 		t.write("2");
 		t.write("0");
 		t.write("H");
-		expect(t.buffer.cursor.x).to.be(9);
-		expect(t.buffer.cursor.y).to.be(19);
+		expect(t.buffer.cursor.x).to.be(19);
+		expect(t.buffer.cursor.y).to.be(9);
 	});
 	it("should handle mode changes correctly", function() {
 		var t = newTermWriter();
@@ -98,5 +98,10 @@ describe('TermWriter', function() {
 		var t = newTermWriter(80,13);
 		t.write("ABCDEF\n\x1b[1;r");
 		expect(t.buffer._scrollRegion[1]).to.be(13);
+	});
+	it("keeps correct size", function() {
+		var t = newTermWriter(80,24);
+		t.write("\x1b[24;1Hline1\nline2");
+		expect(t.buffer.getBufferHeight()).to.be(24);
 	});
 });

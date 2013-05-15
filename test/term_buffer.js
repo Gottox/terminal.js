@@ -114,7 +114,7 @@ describe('TermBuffer', function() {
 		var t = newTermBuffer();
 		t.setCursor(4,4);
 		t.inject("AA");
-		expect(t.toString()).to.be("\n\n\n    AA");
+		expect(t.toString()).to.be("\n\n\n\n    AA");
 	});
 	it("should overwrite the previous line when moving the cursor up", function() {
 		var t = newTermBuffer();
