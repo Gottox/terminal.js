@@ -11,11 +11,12 @@ GLOBAL ?= terminal
 SRC = index.js \
       lib/handler/chr.js \
       lib/handler/csi.js \
+      lib/handler/dcs.js \
       lib/handler/esc.js \
       lib/handler/mode.js \
       lib/handler/sgr.js \
-      lib/renderer/plain.js \
       lib/renderer/ansi.js \
+      lib/renderer/plain.js \
       lib/term_buffer.js \
       lib/term_diff.js \
       lib/term_writer.js \
