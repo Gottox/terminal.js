@@ -232,4 +232,14 @@ describe('TermBuffer', function() {
 		t.setCursor(0,23).inject("line1\nline2");
 		expect(t.getBufferHeight()).to.be(24);
 	});
+	it("keeps correct attributes", function() {
+		var t = newTermBuffer(80,24);
+		t.setAttribute("bold", true);
+		t.inject("Hello\nWorld");
+		t.setAttribute("bold", false);
+		t.insertLine(1); // Insert one line between Hello and World
+		t.setCursor(0, 1);
+		t.inject("TEST");
+		expect(t.getLine(2).attr[0].bold).to.be(true);
+	});
 });
