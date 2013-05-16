@@ -93,4 +93,9 @@ describe('TermWriter', function() {
 		t.write("\x07");
 		expect(t.toString()).to.be("");
 	});
+	it("keeps correct size", function() {
+		var t = newTermWriter(80,24);
+		t.write("\x1b[24;1Hline1\nline2");
+		expect(t.buffer.buffer.length).to.be(24);
+	});
 });
