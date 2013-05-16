@@ -53,6 +53,7 @@ test: lint $(SRC) node_modules dist
 	@$(MOCHA) \
 		--require test/common \
 		--reporter $(REPORTER) \
+		--growl \
 		$(TESTS)
 
 test-browser: node_modules dist/terminal.js
