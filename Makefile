@@ -53,6 +53,7 @@ test: lint $(SRC) node_modules dist
 	@$(MOCHA) \
 		--require test/common \
 		--reporter $(REPORTER) \
+		--growl \
 		$(TESTS)
 
 test-browser: node_modules dist/terminal.js
@@ -84,5 +85,8 @@ clean:
 mrproper: clean
 	@echo "RM         node_modules"
 	@rm -rf node_modules || true
+
+torture: 
+	@node bin/ansi.js sample-data/vt100test.txt
 
 .PHONY: test test-browser coverage clean mrproper lint
