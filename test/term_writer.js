@@ -126,4 +126,10 @@ describe('TermWriter', function() {
 		expect(t.buffer.getBufferHeight()).to.be(24);
 	});
 
+	it("enters graphicsmode", function() {
+		var t = newTermWriter(10,10);
+		t.write('\x1b(0');
+		expect(t.buffer.getMode('graphic')).to.be(true);
+	});
+
 });
