@@ -8,6 +8,7 @@
       "install": "make BROWSERIFY=browserify UGLIFY=uglify"
     , "prepublish": "make BROWSERIFY=browserify UGLIFY=uglify"
     , "test": "make MOCHA=mocha JSHINT=jshint test"
+    , "torture": "make torture"
   }
   , "main": "./index"
   , "repository": {

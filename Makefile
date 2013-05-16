@@ -86,4 +86,7 @@ mrproper: clean
 	@echo "RM         node_modules"
 	@rm -rf node_modules || true
 
+torture: 
+	@node bin/ansi.js sample-data/vt100test.txt
+
 .PHONY: test test-browser coverage clean mrproper lint
