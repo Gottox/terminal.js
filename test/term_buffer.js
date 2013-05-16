@@ -227,4 +227,9 @@ describe('TermBuffer', function() {
 		t.eraseInDisplay('above');
 		expect(t.toString()).to.be("\n\n\n\n\n\n6\n   0\n8\n9");
 	});
+	it("keeps correct size", function() {
+		var t = newTermBuffer(80,24);
+		t.setCursor(0,23).inject("line1\nline2");
+		expect(t.getBufferHeight()).to.be(24);
+	});
 });
