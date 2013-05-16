@@ -1,11 +1,11 @@
-var TermBuffer = terminal.TermBuffer;
-var TermWriter = terminal.TermWriter;
-function newTermWriter(w, h) {
-	var t = new TermBuffer(w, h), tw = new TermWriter(t);
-	t.mode.crlf = true;
-	return tw;
-}
 describe('TermWriter', function() {
+	var TermBuffer = terminal.TermBuffer;
+	var TermWriter = terminal.TermWriter;
+	function newTermWriter(w, h) {
+		var t = new TermBuffer(w, h), tw = new TermWriter(t);
+		t.setMode('crlf', true);
+		return tw;
+	}
 	it("can handle splitted escape sequences", function() {
 		var t = newTermWriter();
 		t.write("\x1b");
@@ -55,11 +55,11 @@ describe('TermWriter', function() {
 	});
 	it("should reverse the terminal correctly", function() {
 		var t = newTermWriter(80,24);
-		expect(t.buffer.mode.reverse).to.be(false);
+		expect(t.buffer._modes.reverse).to.be(false);
 		t.write("\x1b[?5hABCDEFGH");
-		expect(t.buffer.mode.reverse).to.be(true);
+		expect(t.buffer._modes.reverse).to.be(true);
 		t.write("\x1b[?5l");
-		expect(t.buffer.mode.reverse).to.be(false);
+		expect(t.buffer._modes.reverse).to.be(false);
 		expect(t.toString()).to.be("ABCDEFGH");
 	});
 	/* TODO reenable this test
@@ -69,7 +69,8 @@ describe('TermWriter', function() {
 		//change mode, led and write a char
 		t1.write("\x1b[?5h\x1b[1qABCD\x1bc");
 		expect(t1.diff(t2).length).to.be(0);
-	});*/
+	});
+	*/
 	it("moves down and to beginning of line (NEL)", function() {
 		var t = newTermWriter();
 		t.write("aaa\x1bEbbb");
@@ -92,5 +93,15 @@ describe('TermWriter', function() {
 		});
 		t.write("\x07");
 		expect(t.toString()).to.be("");
+	});
+	it("should set ScrollRegion correctly if no params specified", function() {
+		var t = newTermWriter(80,13);
+		t.write("ABCDEF\n\x1b[1;r");
+		expect(t.buffer._scrollRegion[1]).to.be(13);
+	});
+	it("keeps correct size", function() {
+		var t = newTermWriter(80,24);
+		t.write("\x1b[24;1Hline1\nline2");
+		expect(t.buffer.getBufferHeight()).to.be(24);
 	});
 });

@@ -2,21 +2,24 @@ var TermBuffer = terminal.TermBuffer;
 var TermWriter = terminal.TermWriter;
 function newTermWriter(w, h) {
 	var t = new TermBuffer(w, h), tw = new TermWriter(t);
-	t.mode.crlf = true;
+	t.setMode('crlf', true);
 	return tw;
 }
 describe('TermWriter SGI', function() {
 	it("resets attributes", function() {
 		var t = newTermWriter();
-		t.write("\x1b[1mb\x1b[mn");
-		expect(t.buffer.buffer[0].line[0].chr).to.be('b');
-		expect(t.buffer.buffer[0].line[0].attr.bold).to.be(true);
-		expect(t.buffer.buffer[0].line[1].chr).to.be('n');
-		expect(t.buffer.buffer[0].line[1].attr.bold).to.be(false);
+		t.write("\x1b[1mbb\x1b[mn");
+		var line = t.buffer.getLine(0);
+		expect(line.str).to.be('bbn');
+		expect(line.attr[0].bold).to.be(true);
+		expect(line.attr[1]).to.be(undefined);
+		expect(line.attr[2].bold).to.be(false);
 	});
 	it("sets bold", function() {
 		var t = newTermWriter();
 		t.write("\x1b[1mb");
-		expect(t.buffer.buffer[0].line[0].chr).to.be('b');
+		var line = t.buffer.getLine(0);
+		expect(line.str).to.be('b');
+		expect(line.attr[0].bold).to.be(true);
 	});
 });
