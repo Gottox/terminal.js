@@ -112,11 +112,18 @@ describe('TermWriter', function() {
 	it("should set ScrollRegion correctly if no params specified", function() {
 		var t = newTermWriter(80,13);
 		t.write("ABCDEF\n\x1b[1;r");
-		expect(t.buffer._scrollRegion[1]).to.be(13);
+		expect(t.buffer._scrollRegion[1]).to.be(12);
+	});
+	it("should set ScrollRegion correctly if params specified", function() {
+		var t = newTermWriter(80,13);
+		t.write("ABCDEF\n\x1b[1;20r");
+		expect(t.buffer._scrollRegion[0]).to.be(0);
+		expect(t.buffer._scrollRegion[1]).to.be(19);
 	});
 	it("keeps correct size", function() {
 		var t = newTermWriter(80,24);
 		t.write("\x1b[24;1Hline1\nline2");
 		expect(t.buffer.getBufferHeight()).to.be(24);
 	});
+
 });
