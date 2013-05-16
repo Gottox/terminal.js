@@ -132,4 +132,11 @@ describe('TermWriter', function() {
 		expect(t.buffer.getMode('graphic')).to.be(true);
 	});
 
+	it("emits finish after write", function(done) {
+		var t = newTermWriter(80,24);
+		t.once('finish', function() {
+			done();
+		});
+		t.write("foo");
+	});
 });
