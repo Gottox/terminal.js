@@ -142,6 +142,7 @@ describe('TermBuffer', function() {
 
 		expect(t.toString()).to.be("_123456789\n0");
 	});
+
 	it("should move Left", function() {
 		var t = newTermBuffer();
 		t.inject("ABCDEF");

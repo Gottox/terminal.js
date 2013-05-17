@@ -10,4 +10,4 @@ term_buffer.setMode('crlf',true);
 var vt100 = fs.readFileSync(process.argv[2]);
 term_writer.write(vt100);
 var ansi_renderer = new AnsiRenderer(term_buffer);
-console.log(ansi_renderer.toString());
+process.stdout.write(ansi_renderer.toString());

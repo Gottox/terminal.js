@@ -56,6 +56,14 @@ test: lint $(SRC) node_modules dist
 		--growl \
 		$(TESTS)
 
+test-watch: $(SRC) node_modules dist
+	@echo "MOCHA      test"
+	@$(MOCHA) \
+		--require test/common \
+		--reporter $(REPORTER) \
+		--growl -w\
+		$(TESTS)
+
 test-browser: node_modules dist/terminal.js
 	@echo visit file://$$PWD/test/index.html
 
