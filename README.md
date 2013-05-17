@@ -76,39 +76,18 @@ It is written from scratch and supports most commonly used escape sequences.
 
 ## TermBuffer Object structure
 
-- width: width of the terminal ``80``
-- height: height of the terminal ``24``
+## TermDiff structure
 
-- leds: ``{ '1': false, '2': false, '3': false, '4': false }``
-- mode: ``{ cursor: true, appKeypad: false, wrap: true, insert: false, crlf: false, mousebtn: false, mousemtn: false, reverse: false, graphic: false }``
-
-term.mode.crlf = true make a linefeed go the next line AND to the beginning of the line
-
-- cursor: ``{ x: 14, y: 1 }``
-- savedCursor: remembered location of previous cursor - `{ x: 0, y: 0 }``
-
-- defaultBuffer: when a new terminal gets created it has this buffer ``[]``
-- altBuffer: alternate to Default Buffer (for use in Xterm)
-- escapeBuffer: TODO - defaults to ``null``
-
-- tabs: ``[]``
-- scrollRegion: ``[ 0, 24 ]``
-- scrollBack: ``[]``
-
-- lineAttr: ``{ doubletop: false, doublebottom: false, doublewidth: false }``
-- defaultAttr: `` { fg: 15, bg: 0, bold: false, underline: false, blink: false, inverse: false }``
-
-- buffer: `` [ ...arrays of lines... ]``
-- line: ``line: [ ... arrays of chars... ] , attr:{}, changed: true }``
-- char: ``{ chr: 'r', attr: { fg: 15, bg: 0, bold: false, underline: false, blink: false, inverse: false } }``
-
-Note: a line can be sparse => ``line: [ , , , , , , { ...char .... } ]``
-
-## TermBuffer structure (subject to change)
-
-    { '0': { act: '+', rm: 0, line: [ ... ], attr: {}, changed: true }, # If the line was added
-      '1': { act: 'c', rm: 0, line: [.....], attr: {}, changed: true }, # If the line was changed
-      '2': { rm: ... },                                                 # If the line was removed
+diff = {
+  changes: [
+  { l: 0, '.': [ Object]},
+  ]
+  cursor: [
+   { from: { 'x': 0, 'y':10 }, to: { 'x': 0, 'y':12 } }
+  ],
+  modes: [ { 'graphics': true }, { 'insert': false } ],
+  leds: [ { '0': true }]
+}
 
 ## Alternatives & Related
 ### Jquery/Server side:
