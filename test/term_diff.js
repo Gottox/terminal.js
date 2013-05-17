@@ -24,13 +24,29 @@ describe('TermDiff', function() {
 		expect(d.toJSON().changes.length).to.be(4);
 	});
 
-  /* activate again when termdiff supports leds
+	/*
 	it("detects led changes", function() {
 		var t1 = newTermBuffer();
 		var t2 = newTermBuffer();
-		t1.setLed(0,true);
+		var d = new TermDiff(t1, t2);
+    console.log(d.toJSON());
+		expect(d.toJSON().changes.length).to.be(1);
+	});
+	*/
+
+	it("detects line changes in second buffer", function() {
+		var t1 = newTermBuffer();
+		var t2 = newTermBuffer();
+		t1.inject('lalal');
 		var d = new TermDiff(t1, t2);
 		expect(d.toJSON().changes.length).to.be(1);
 	});
-  */
+
+	it("detects line changes in first buffer", function() {
+		var t1 = newTermBuffer();
+		var t2 = newTermBuffer();
+		t2.inject('lalal');
+		var d = new TermDiff(t1, t2);
+		expect(d.toJSON().changes.length).to.be(1);
+	});
 });
