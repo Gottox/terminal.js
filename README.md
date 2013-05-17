@@ -80,8 +80,22 @@ It is written from scratch and supports most commonly used escape sequences.
 
 diff = {
   changes: [
-  { l: 0, '.': [ Object]},
-  ]
+    { l: 0, '.': {
+      str: 'test',
+      attr{
+      '0': { fg: null, bg:null, bold:false , underline: false, blink: false, inverse: false },
+      '2': { fg: null, bg:null, bold:false , underline: false, blink: false, inverse: true  }
+      }
+    },
+    { l: 1, '+': {
+      str: 'test',
+      attr{
+      '0': { fg: null, bg:null, bold:false , underline: false, blink: false, inverse: false },
+      '2': { fg: null, bg:null, bold:false , underline: false, blink: false, inverse: true  }
+      }
+    },
+    { l: 2, '-': 3 },
+  ],
   cursor: [
    { from: { 'x': 0, 'y':10 }, to: { 'x': 0, 'y':12 } }
   ],

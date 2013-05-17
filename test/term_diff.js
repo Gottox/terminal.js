@@ -69,6 +69,7 @@ describe('TermDiff', function() {
 		t1.inject('lalal');
 		var d = new TermDiff(t1, t2);
 		expect(d.toJSON().changes.length).to.be(1);
+		expect(d.toJSON().changes[0]['.'].str).to.be('');
 	});
 
 	it("detects line changes in first buffer", function() {
@@ -76,6 +77,27 @@ describe('TermDiff', function() {
 		var t2 = newTermBuffer();
 		t2.inject('lalal');
 		var d = new TermDiff(t1, t2);
+		expect(d.toJSON().changes[0]['.'].str).to.be('lalal');
+		expect(d.toJSON().changes.length).to.be(1);
+	});
+
+	it("detects line removed in the second buffer", function() {
+		var t1 = newTermBuffer();
+		var t2 = newTermBuffer();
+		t1.inject('lalal\n');
+		t2.inject('lalal');
+		var d = new TermDiff(t1, t2);
+		expect(d.toJSON().changes[0]['-']).to.be(1); // Remove of line
+		expect(d.toJSON().changes.length).to.be(1);
+	});
+
+	it("detects line added in the second buffer", function() {
+		var t1 = newTermBuffer();
+		var t2 = newTermBuffer();
+		t1.inject('lalal');
+		t2.inject('lalal\n');
+		var d = new TermDiff(t1, t2);
+		expect(d.toJSON().changes[0]['+'].str).to.be(''); // Remove of line
 		expect(d.toJSON().changes.length).to.be(1);
 	});
 });
