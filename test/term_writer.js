@@ -57,9 +57,9 @@ describe('TermWriter', function() {
 	/* Disable non working test
 	it("should keep attributes on pageup and newline", function() {
 		var t = newTermWriter(80,24);
-		t.write("\x1b[0;1;7mBold+Inverse\x1b[0m\nline2\x1b[A\n");
-		expect(t.buffer.getLine().attr['0'].bold).to.be(true);
-		expect(t.buffer.getLine().attr['0'].inverse).to.be(true);
+		t.write("\x1b[0;1mBold\x1b[0m\n\x1b[A\n");
+		expect(t.toString()).to.be("Bold\n");
+		expect(t.buffer.getLine(0).attr['0'].bold).to.be(true);
 	});
 	*/
 	it("should reverse the terminal correctly", function() {
