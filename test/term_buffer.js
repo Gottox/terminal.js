@@ -243,4 +243,14 @@ describe('TermBuffer', function() {
 		t.inject("TEST");
 		expect(t.getLine(2).attr[0].bold).to.be(true);
 	});
+
+	it("should keep attributes on reset", function() {
+		var t = newTermBuffer(80,24);
+		t.setAttribute('bold', true);
+		t.setAttribute('inverse', true);
+		t.inject("Bold+Inverse");
+		t.resetAttribute();
+		expect(t.getLine(0).attr[0].bold).to.be(true);
+		expect(t.getLine(0).attr[0].inverse).to.be(true);
+	});
 });

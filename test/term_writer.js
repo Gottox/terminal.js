@@ -54,14 +54,12 @@ describe('TermWriter', function() {
 		t.write("\x1b7ABCDE\x1b8FGH");
 		expect(t.toString()).to.be("FGHDE");
 	});
-	/* Disable non working test
 	it("should keep attributes on pageup and newline", function() {
 		var t = newTermWriter(80,24);
-		t.write("\x1b[0;1;7mBold+Inverse\x1b[0m\nline2\x1b[A\n");
+		t.write("\x1b[0;1;7mBold+Inverse\x1b[0m\nline2\x1b[A");
 		expect(t.buffer.getLine().attr['0'].bold).to.be(true);
 		expect(t.buffer.getLine().attr['0'].inverse).to.be(true);
 	});
-	*/
 	it("should reverse the terminal correctly", function() {
 		var t = newTermWriter(80,24);
 		expect(t.buffer._modes.reverse).to.be(false);
