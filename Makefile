@@ -56,7 +56,7 @@ test: lint $(SRC) node_modules dist
 		--growl \
 		$(TESTS)
 
-test-w: lint $(SRC) node_modules dist
+test-watch: $(SRC) node_modules dist
 	@echo "MOCHA      test"
 	@$(MOCHA) \
 		--require test/common \
