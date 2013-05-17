@@ -57,9 +57,9 @@ describe('TermWriter', function() {
 	/* Disable non working test
 	it("should keep attributes on pageup and newline", function() {
 		var t = newTermWriter(80,24);
-		t.write("\x1b[0;1;7mBold+Inverse\x1b[0m\nline2\x1b[A\n");
-		expect(t.buffer.getLine().attr['0'].bold).to.be(true);
-		expect(t.buffer.getLine().attr['0'].inverse).to.be(true);
+		t.write("\x1b[0;1mBold\x1b[0m\n\x1b[A\n");
+		expect(t.toString()).to.be("Bold\n");
+		expect(t.buffer.getLine(0).attr['0'].bold).to.be(true);
 	});
 	*/
 	it("should reverse the terminal correctly", function() {
@@ -123,10 +123,16 @@ describe('TermWriter', function() {
 		expect(t.buffer._scrollRegion[1]).to.be(12);
 	});
 	it("should set ScrollRegion correctly if params specified", function() {
-		var t = newTermWriter(80,13);
+		var t = newTermWriter(80,24);
 		t.write("ABCDEF\n\x1b[1;20r");
 		expect(t.buffer._scrollRegion[0]).to.be(0);
 		expect(t.buffer._scrollRegion[1]).to.be(19);
+	});
+	it("should scroll correctly when scrollregion is set", function() {
+		var t = newTermWriter(80,24);
+		t.write("line1\nline2\nline3\nline4\n\x1b[4;5r");
+		t.write("\n\n\n\n\n\n");
+		expect(t.buffer.toString()).to.be('line1\nline2\nline3\n\n');
 	});
 	it("keeps correct size", function() {
 		var t = newTermWriter(80,24);
