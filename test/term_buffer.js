@@ -253,4 +253,26 @@ describe('TermBuffer', function() {
 		expect(t.getLine(0).attr[0].bold).to.be(true);
 		expect(t.getLine(0).attr[0].inverse).to.be(true);
 	});
+
+	it("should not overwrite attributes", function() {
+		var t = newTermBuffer(80,24);
+		t.setAttribute('bold', true);
+		t.inject("ABCDEFGH");
+		t.resetAttribute();
+		t.setCursor(1, 0);
+		t.inject("b");
+		t.setCursor(3, 0);
+		t.inject("d");
+		t.setCursor(5, 0);
+		t.inject("f");
+		var a = t.getLine(0).attr;
+		expect(a[0].bold).to.be(true);  // A
+		expect(a[1].bold).to.be(false); // b
+		expect(a[2].bold).to.be(true);  // C
+		expect(a[3].bold).to.be(false); // d
+		expect(a[4].bold).to.be(true);  // E
+		expect(a[5].bold).to.be(false); // f
+		expect(a[6].bold).to.be(true);  // G
+		expect(a[7]).to.be(undefined);  // H
+	});
 });
