@@ -123,10 +123,16 @@ describe('TermWriter', function() {
 		expect(t.buffer._scrollRegion[1]).to.be(12);
 	});
 	it("should set ScrollRegion correctly if params specified", function() {
-		var t = newTermWriter(80,13);
+		var t = newTermWriter(80,24);
 		t.write("ABCDEF\n\x1b[1;20r");
 		expect(t.buffer._scrollRegion[0]).to.be(0);
 		expect(t.buffer._scrollRegion[1]).to.be(19);
+	});
+	it("should scroll correctly when scrollregion is set", function() {
+		var t = newTermWriter(80,24);
+		t.write("line1\nline2\nline3\nline4\n\x1b[4;5r");
+		t.write("\n\n\n\n\n\n");
+		expect(t.buffer.toString()).to.be('line1\nline2\nline3\n\n');
 	});
 	it("keeps correct size", function() {
 		var t = newTermWriter(80,24);
