@@ -14,31 +14,31 @@ It is written from scratch and supports most commonly used escape sequences.
 - has a test framework
 
 ## Usage
+### TermWriter Usage
+
+    var TermWriter = require('terminal').TermWriter;
+    var TermBuffer = require('terminal').TermBuffer;
+
+    var buffer = new TermBuffer(80,24);
+    var terminal = new TermWriter(termBuffer);
+    terminal.write("first test\n");
+    // termWriter.buffer is accessible
+
 ### TermBuffer Usage
 
-    var TermBuffer = require('terminal.js').TermBuffer;
-    var term = new TermBuffer(80,24);
-    term.mod.crlf = true
-    term.write("first test\n");
+    var TermBuffer = require('terminal').TermBuffer;
+    var buffer = new TermBuffer(80,24);
+    buffer.inject("first test\n");
 
-### Diffing two terminals
+### TermDiff Usage
 
-    var TermBuffer = require('terminal.js').TermBuffer;
-    var term1 = new TermBuffer(80,24);
-    term1.write("first change");
-    var term2 = new TermBuffer(80,24);
-    var diff = term1.diff(term2);
-    // Apply the difference so term1 becomes equal to term2
-    term1.apply(diff);
-
-### Termdiff Usage (subject to change)
-
-    var TermBuffer = require('terminal.js').TermBuffer;
-    var Termdiff = require('terminal.js').TermDiff;
-    var term = new TermBuffer();
-    var termDiff = new TermDiff(term);
-    term.write("first test");
-    console.log(termDiff.diff());
+    var TermDiff = require('terminal').TermDiff;
+    var TermBuffer = require('terminal').TermBuffer;
+    var buffer1 = new TermBuffer(80,24);
+    var buffer2 = new TermBuffer(80,24);
+    var terminal1 = new TermWriter(buffer1);
+    var terminal2 = new TermWriter(buffer2);
+    var diff = new TermDiff(terminal1.buffer,terminal2.buffer);
 
 ## TermBuffer Functions
 
