@@ -25,10 +25,6 @@ describe('TermBuffer', function() {
 		t.inject("\n");
 		expect(t.toString()).to.be("Hello World\nHello World\n");
 	});
-	it("creates series of blanks", function() {
-		var t = newTermBuffer();
-		expect(t._mkBlanks(10)).to.be("          ");
-	});
 	it("breaks lines", function() {
 		var t = newTermBuffer(10, 10);
 		t.inject("1234567890abcdefghi");
