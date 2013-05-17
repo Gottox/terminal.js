@@ -15,8 +15,9 @@ SRC = index.js \
       lib/handler/esc.js \
       lib/handler/mode.js \
       lib/handler/sgr.js \
+      lib/renderer/dom.js \
       lib/renderer/html.js \
-      lib/renderer/ansi.js \
+      lib/renderer/html.js \
       lib/renderer/plain.js \
       lib/term_buffer.js \
       lib/term_diff.js \
