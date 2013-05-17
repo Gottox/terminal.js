@@ -138,6 +138,19 @@ describe('TermWriter', function() {
 		expect(t.buffer.getMode('graphic')).to.be(true);
 	});
 
+	it("leaves graphicsmode", function() {
+		var t = newTermWriter(10,10);
+		t.write('\x1b(0a\x1b(B');
+		expect(t.buffer.getMode('graphic')).to.be(false);
+	});
+
+	it("should convert chars graphicsmode", function() {
+		var t = newTermWriter(10,10);
+		t.write('\x1b(0a\x1b(Ba');
+		expect(t.buffer.getMode('graphic')).to.be(false);
+		expect(t.buffer.toString()).to.be('▒a');
+	});
+
 	it("emits finish after write", function(done) {
 		var t = newTermWriter(80,24);
 		t.once('finish', function() {
