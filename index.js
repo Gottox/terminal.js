@@ -8,4 +8,4 @@ module.exports.renderer = {
 	AnsiRenderer: require("./lib/renderer/ansi.js"),
 	HtmlRenderer: require("./lib/renderer/html.js"),
 	DomRenderer: require("./lib/renderer/dom.js")
-}
+};
