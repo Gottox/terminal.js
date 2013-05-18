@@ -9,7 +9,7 @@
 			window.onload = function() {
 				var socket = io.connect();
 				var target = document.getElementById('term');
-				var terminal = new Terminal(target, 80, 24)
+				var terminal = new Terminal(target, 80, 24);
 
 				socket
 					.on('data', function (data) {

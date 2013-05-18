@@ -87,8 +87,8 @@ lib-cov: $(SRC) node_modules
 	@sed "s#lib/#lib-cov/#" index.js > index-cov.js
 
 lint: $(SRC)
-	@echo "LINT       lib"
-	@$(JSHINT) lib
+	@echo "LINT       lib index.js"
+	@$(JSHINT) lib index.js
 	@echo "LINT       test"
 	@$(JSHINT) test/*.js
 	@echo "LINT       samples"
