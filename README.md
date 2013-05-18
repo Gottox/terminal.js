@@ -78,30 +78,30 @@ It is written from scratch and supports most commonly used escape sequences.
 
 ## TermDiff structure
 
-diff = {
-  changes: [
-    { l: 0, '.': {
-      str: 'test',
-      attr{
-      '0': { fg: null, bg:null, bold:false , underline: false, blink: false, inverse: false },
-      '2': { fg: null, bg:null, bold:false , underline: false, blink: false, inverse: true  }
-      }
-    },
-    { l: 1, '+': {
-      str: 'test',
-      attr{
-      '0': { fg: null, bg:null, bold:false , underline: false, blink: false, inverse: false },
-      '2': { fg: null, bg:null, bold:false , underline: false, blink: false, inverse: true  }
-      }
-    },
-    { l: 2, '-': 3 },
-  ],
-  cursor: [
-   { from: { 'x': 0, 'y':10 }, to: { 'x': 0, 'y':12 } }
-  ],
-  modes: [ { 'graphics': true }, { 'insert': false } ],
-  leds: [ { '0': true }]
-}
+    diff = {
+      changes: [
+        { l: 0, '.': {
+          str: 'test',
+          attr{
+          '0': { fg: null, bg:null, bold:false , underline: false, blink: false, inverse: false },
+          '2': { fg: null, bg:null, bold:false , underline: false, blink: false, inverse: true  }
+          }
+        },
+        { l: 1, '+': {
+          str: 'test',
+          attr{
+          '0': { fg: null, bg:null, bold:false , underline: false, blink: false, inverse: false },
+          '2': { fg: null, bg:null, bold:false , underline: false, blink: false, inverse: true  }
+          }
+        },
+        { l: 2, '-': 3 },
+      ],
+      cursor: [ { from: { 'x': 0, 'y':10 }, to: { 'x': 0, 'y':12 } } ],
+      size: [ { from: { 'height': 80, 'width':24 }, to: { 'height': 30, 'width':12 } } ],
+      scrollregion: [ {from: [ 0, 10 ], to: [ 0, 12 ] } ],
+      modes: [ { 'graphics': true }, { 'insert': false } ],
+      leds: [ { '0': true }]
+    }
 
 ## Alternatives & Related
 ### Jquery/Server side:
