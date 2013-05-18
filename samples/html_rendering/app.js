@@ -1,6 +1,6 @@
-var TermBuffer = require("../lib/term_buffer.js");
-var TermWriter = require("../lib/term_writer.js");
-var HtmlRenderer = require("../lib/renderer/html.js");
+var TermBuffer = require("../../lib/term_buffer.js");
+var TermWriter = require("../../lib/term_writer.js");
+var HtmlRenderer = require("../../lib/renderer/html.js");
 var http = require('http');
 var fs = require('fs');
 
@@ -8,7 +8,7 @@ var term_buffer = new TermBuffer(80, 24, {bg:0, fg:7});
 var term_writer = new TermWriter(term_buffer);
 term_buffer.setMode('crlf',true);
 
-var vt100 = fs.readFileSync(__dirname + '/data/vt100test.txt');
+var vt100 = fs.readFileSync(__dirname + '/../data/vt100test.txt');
 term_writer.write(vt100);
 var html_renderer = new HtmlRenderer(term_buffer);
 

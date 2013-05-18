@@ -1,6 +1,6 @@
-var TermBuffer = terminal.TermBuffer;
-var TermWriter = terminal.TermWriter;
-var AnsiRenderer = terminal.renderer.AnsiRenderer;
+var TermBuffer = Terminal.TermBuffer;
+var TermWriter = Terminal.TermWriter;
+var AnsiRenderer = Terminal.renderer.AnsiRenderer;
 function newTermWriter(w, h) {
 	var t = new TermBuffer(w, h), tw = new TermWriter(t);
 	t.setMode('crlf', true);

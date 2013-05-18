@@ -1,7 +1,7 @@
 describe('HtmlRenderer', function() {
-	var TermBuffer = terminal.TermBuffer;
-	var TermWriter = terminal.TermWriter;
-	var HtmlRenderer = terminal.renderer.HtmlRenderer;
+	var TermBuffer = Terminal.TermBuffer;
+	var TermWriter = Terminal.TermWriter;
+	var HtmlRenderer = Terminal.renderer.HtmlRenderer;
 
 	function newTermWriter(w, h) {
 		var t = new TermBuffer(w, h), tw = new TermWriter(t);

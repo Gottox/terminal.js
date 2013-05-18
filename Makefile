@@ -6,7 +6,7 @@ JSCOVERAGE ?= ./node_modules/.bin/jscoverage
 JSHINT ?= ./node_modules/.bin/jshint
 UGLIFYJS ?= ./node_modules/.bin/uglifyjs
 
-GLOBAL ?= terminal
+GLOBAL ?= Terminal
 
 SRC = index.js \
       lib/handler/chr.js \
@@ -103,6 +103,6 @@ mrproper: clean
 	@rm -rf node_modules || true
 
 torture: 
-	@node samples/ansi.js samples/data/vt100test.txt
+	@node samples/ansi_rendering/app.js samples/data/vt100test.txt
 
 .PHONY: test test-browser coverage clean mrproper lint

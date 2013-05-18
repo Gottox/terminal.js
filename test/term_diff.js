@@ -1,6 +1,6 @@
 describe('TermDiff', function() {
-	var TermBuffer = terminal.TermBuffer;
-	var TermDiff = terminal.TermDiff;
+	var TermBuffer = Terminal.TermBuffer;
+	var TermDiff = Terminal.TermDiff;
 	function newTermBuffer(w, h) {
 		var t = new TermBuffer(w, h);
 		t.setMode('crlf', true);

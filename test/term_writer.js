@@ -1,7 +1,7 @@
 describe('TermWriter', function() {
-	var TermBuffer = terminal.TermBuffer;
-	var TermWriter = terminal.TermWriter;
-	var TermDiff = terminal.TermDiff;
+	var TermBuffer = Terminal.TermBuffer;
+	var TermWriter = Terminal.TermWriter;
+	var TermDiff = Terminal.TermDiff;
 	function newTermWriter(w, h) {
 		var t = new TermBuffer(w, h), tw = new TermWriter(t);
 		t.setMode('crlf', true);

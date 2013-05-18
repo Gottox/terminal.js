@@ -1,5 +1,5 @@
 describe('TermBuffer', function() {
-	var TermBuffer = terminal.TermBuffer;
+	var TermBuffer = Terminal.TermBuffer;
 
 	function newTermBuffer(w, h) {
 		var t = new TermBuffer(w, h);
