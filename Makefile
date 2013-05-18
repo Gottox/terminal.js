@@ -15,7 +15,9 @@ SRC = index.js \
       lib/handler/esc.js \
       lib/handler/mode.js \
       lib/handler/sgr.js \
-      lib/renderer/ansi.js \
+      lib/renderer/dom.js \
+      lib/renderer/html.js \
+      lib/renderer/html.js \
       lib/renderer/plain.js \
       lib/term_buffer.js \
       lib/term_diff.js \
@@ -53,6 +55,15 @@ test: lint $(SRC) node_modules dist
 	@$(MOCHA) \
 		--require test/common \
 		--reporter $(REPORTER) \
+		--growl \
+		$(TESTS)
+
+test-watch: $(SRC) node_modules dist
+	@echo "MOCHA      test"
+	@$(MOCHA) \
+		--require test/common \
+		--reporter $(REPORTER) \
+		--growl -w\
 		$(TESTS)
 
 test-browser: node_modules dist/terminal.js
@@ -84,5 +95,8 @@ clean:
 mrproper: clean
 	@echo "RM         node_modules"
 	@rm -rf node_modules || true
+
+torture: 
+	@node samples/ansi.js samples/data/vt100test.txt
 
 .PHONY: test test-browser coverage clean mrproper lint
