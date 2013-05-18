@@ -1,7 +1,7 @@
 var TermBuffer = require("../lib/term_buffer.js");
 var TermWriter = require("../lib/term_writer.js");
 var AnsiRenderer = require("../lib/renderer/ansi.js");
-var fs = require('fs')
+var fs = require('fs');
 
 var term_buffer = new TermBuffer(80, 24);
 var term_writer = new TermWriter(term_buffer);

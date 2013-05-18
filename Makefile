@@ -15,13 +15,16 @@ SRC = index.js \
       lib/handler/esc.js \
       lib/handler/mode.js \
       lib/handler/sgr.js \
+      lib/renderer/base.js \
       lib/renderer/dom.js \
       lib/renderer/html.js \
       lib/renderer/html.js \
+      lib/renderer/live_base.js \
       lib/renderer/plain.js \
       lib/term_buffer.js \
       lib/term_diff.js \
       lib/term_writer.js \
+      lib/terminal.js \
       lib/util.js
 
 # Workaround: include streams2 as long as they are not in browserify
@@ -87,6 +90,8 @@ lint: $(SRC)
 	@$(JSHINT) lib
 	@echo "LINT       test"
 	@$(JSHINT) test/*.js
+	@echo "LINT       samples"
+	@$(JSHINT) samples/*/*.js
 
 clean:
 	@echo "RM         dist lib-cov index-cov.js coverage.html"
