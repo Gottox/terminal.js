@@ -15,9 +15,13 @@ SRC = index.js \
       lib/handler/esc.js \
       lib/handler/mode.js \
       lib/handler/sgr.js \
+      lib/input/base.js \
+      lib/input/dom.js \
+      lib/pty/base.js \
+      lib/pty/emitter.js \
+      lib/renderer/ansi.js \
       lib/renderer/base.js \
       lib/renderer/dom.js \
-      lib/renderer/html.js \
       lib/renderer/html.js \
       lib/renderer/live_base.js \
       lib/renderer/plain.js \
@@ -25,7 +29,7 @@ SRC = index.js \
       lib/term_diff.js \
       lib/term_writer.js \
       lib/terminal.js \
-      lib/util.js
+      lib/util.js \
 
 # Workaround: include streams2 as long as they are not in browserify
 EXTERN = extern/_stream_writable.js \

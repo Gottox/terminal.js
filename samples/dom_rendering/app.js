@@ -26,12 +26,28 @@ socketio.listen(server)
 			cols: 80,
 			rows: 30
 		});
+
+		term.setEncoding('utf8');
 		term
 			.on('data', function(data) {
-				socket.emit('data', data.toString('utf-8'));
+				socket.emit('data', data.toString('utf8'));
 			})
 			.on('exit', function() {
 				socket.emit('exit');
+			});
+
+		socket
+			.on('write', function(data) {
+				pty.write(data);
+			})
+			.on('end', function() {
+				pty.end();
+			})
+			.on('resize', function(w, h) {
+				pty.resize(h, w);
+			})
+			.on('kill', function(signal) {
+				pty.kill(signal);
 			});
 	});
 

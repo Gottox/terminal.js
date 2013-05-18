@@ -158,11 +158,20 @@ describe('TermWriter', function() {
 		expect(t.buffer.toString()).to.be('▒a');
 	});
 
-	it("emits finish after write", function(done) {
+	it("emits ready after write", function(done) {
+		var t = newTermWriter(80,24);
+		t.once('ready', function() {
+			done();
+		});
+		t.write("foo");
+	});
+
+	it("emits finish after end()", function(done) {
 		var t = newTermWriter(80,24);
 		t.once('finish', function() {
 			done();
 		});
 		t.write("foo");
+		t.end();
 	});
 });
