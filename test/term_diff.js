@@ -59,8 +59,14 @@ describe('TermDiff', function() {
 		var t1 = newTermBuffer();
 		var t2 = newTermBuffer();
 		t1.inject('a');
+		t1.inject('\n');
+		t1.inject('a');
 		var d = new TermDiff(t1, t2);
 		expect(d.toJSON().cursor.length).to.be(1);
+		expect(d.toJSON().cursor[0].from.x).to.be(1);
+		expect(d.toJSON().cursor[0].from.y).to.be(1);
+		expect(d.toJSON().cursor[0].to.x).to.be(0);
+		expect(d.toJSON().cursor[0].to.y).to.be(0);
 	});
 
 	it("detects line changes in second buffer", function() {
@@ -100,4 +106,23 @@ describe('TermDiff', function() {
 		expect(d.toJSON().changes[0]['+'].str).to.be(''); // Remove of line
 		expect(d.toJSON().changes.length).to.be(1);
 	});
+
+	it("detects no size differences if the terminals are the same", function() {
+		var t1 = newTermBuffer();
+		var t2 = newTermBuffer();
+		var d = new TermDiff(t1, t2);
+		expect(d.toJSON().size.length).to.be(0);
+	});
+
+	it("detects size differences if the terminals are different", function() {
+		var t1 = newTermBuffer(10,20);
+		var t2 = newTermBuffer(12,30);
+		var d = new TermDiff(t1, t2);
+		expect(d.toJSON().size.length).to.be(1);
+		expect(d.toJSON().size[0].from.height).to.be(20);
+		expect(d.toJSON().size[0].from.width).to.be(10);
+		expect(d.toJSON().size[0].to.height).to.be(30);
+		expect(d.toJSON().size[0].to.width).to.be(12);
+	});
+
 });
