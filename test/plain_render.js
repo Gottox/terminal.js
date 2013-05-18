@@ -8,9 +8,9 @@ function newTermWriter(w, h) {
 }
 describe('PlainRenderer', function() {
 	it("basic write test", function() {
-		var t = newTermWriter();
+		var t = newTermWriter(80,4);
 		var r = new PlainRenderer(t.buffer);
 		t.write("Hello\ntest");
-		expect(r.toString()).to.be('Hello\ntest');
+		expect(r.toString()).to.be('Hello\ntest\n\n\n');
 	});
 });
