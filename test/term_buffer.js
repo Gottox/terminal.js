@@ -25,6 +25,12 @@ describe('TermBuffer', function() {
 		t.inject("\n");
 		expect(t.toString()).to.be("Hello World\nHello World\n");
 	});
+	it("sets cursor", function() {
+		var t = newTermBuffer(10, 10);
+		t.inject("1234567890");
+		expect(t.cursor.x).to.be(10);
+		expect(t.cursor.y).to.be(0);
+	});
 	it("breaks lines", function() {
 		var t = newTermBuffer(10, 10);
 		t.inject("1234567890abcdefghi");
