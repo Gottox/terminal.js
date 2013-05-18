@@ -221,7 +221,7 @@ describe('TermBuffer', function() {
 		t.inject("1Line1234567890\n2\n3\n4\n5\n6\n7\n8\n9");
 		t.setCursor(1,0);
 		t.eraseInDisplay('below');
-		expect(t.toString()).to.be("1");
+		expect(t.toString()).to.be("1\n\n\n\n\n\n\n\n\n");
 	});
 	it("erases above", function() {
 		var t = newTermBuffer(10, 10);

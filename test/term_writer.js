@@ -35,9 +35,9 @@ describe('TermWriter', function() {
 		expect(t.toString()).to.be("");
 	});
 	it("should clear", function() {
-		var t = newTermWriter();
+		var t = newTermWriter(80,10);
 		t.write("ABCDEF\n\nFOO\n\x1b[H\x1b[2J");
-		expect(t.toString()).to.be("");
+		expect(t.toString()).to.be("\n\n\n\n\n\n\n\n\n");
 	});
 	it("moves down and to beginning of line (NEL)", function() {
 		var t = newTermWriter();
