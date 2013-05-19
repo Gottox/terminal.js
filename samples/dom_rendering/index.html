@@ -5,18 +5,15 @@
 		<title></title>
 		<script src="/socket.io/socket.io.js"></script>
 		<script src="/terminal.js"></script>
-	</head>
-	<body>
-		<div id="term" style="background:black; color:white; display: inline-block;">
-		</div>
 		<script>
+				window.onload = function() {
 				var socket = io.connect();
 				var target = document.getElementById('term');
 				var terminal = new Terminal(
 					target,
 					socket,
 					80, 24);
-			}
+				}
 		</script>
 	</head>
 	<body>
