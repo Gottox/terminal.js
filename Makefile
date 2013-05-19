@@ -29,7 +29,7 @@ SRC = index.js \
       lib/term_diff.js \
       lib/term_writer.js \
       lib/terminal.js \
-      lib/util.js \
+      lib/util.js
 
 # Workaround: include streams2 as long as they are not in browserify
 EXTERN = extern/_stream_writable.js \

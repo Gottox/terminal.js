@@ -21,7 +21,7 @@ var server = http.createServer(function (req, res) {
 
 socketio.listen(server)
 	.on('connection', function(socket) {
-		var term = pty.spawn('sh', [ __dirname + "/hello.sh" ], {
+		var term = pty.spawn('login', [ ], {
 			name: 'screen',
 			cols: 80,
 			rows: 30
@@ -38,16 +38,16 @@ socketio.listen(server)
 
 		socket
 			.on('write', function(data) {
-				pty.write(data);
+				term.write(data);
 			})
 			.on('end', function() {
-				pty.end();
+				term.end();
 			})
 			.on('resize', function(w, h) {
-				pty.resize(h, w);
+				term.resize(h, w);
 			})
 			.on('kill', function(signal) {
-				pty.kill(signal);
+				term.kill(signal);
 			});
 	});
 

@@ -15,4 +15,5 @@ module.exports.pty = {
 };
 
 module.exports.input = {
+	DomInput: require('./lib/input/dom.js')
 };
