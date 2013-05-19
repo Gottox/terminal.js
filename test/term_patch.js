@@ -1,6 +1,6 @@
 describe('TermPatch', function() {
-	var TermBuffer = terminal.TermBuffer;
-	var TermPatch = terminal.TermPatch;
+	var TermBuffer = Terminal.TermBuffer;
+	var TermPatch = Terminal.TermPatch;
 	function newTermBuffer(w, h) {
 		var t = new TermBuffer(w, h);
 		t.setMode('crlf', true);

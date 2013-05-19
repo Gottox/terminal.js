@@ -5,12 +5,14 @@
 		<title></title>
 		<script src="/socket.io/socket.io.js"></script>
 		<script src="/terminal.js"></script>
+	</head>
+	<body>
+		<div id="term" style="background:black; color:white; display: inline-block;">
+		</div>
 		<script>
-			window.onload = function() {
 				var socket = io.connect();
 				var target = document.getElementById('term');
 				var terminal = new Terminal(target, 80, 24);
-
 				socket
 					.on('data', function (data) {
 						terminal.writer.write(data);
@@ -19,11 +21,6 @@
 						alert("Terminal has closed.");
 						target.style.opacity = "0.5";
 					})
-			}
 		</script>
-	</head>
-	<body>
-		<div id="term" style="background:black; color:white; display: inline-block;">
-		</div>
 	</body>
 </html>

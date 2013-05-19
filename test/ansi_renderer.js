@@ -12,6 +12,6 @@ describe('AnsiRenderer', function() {
 		var r = new AnsiRenderer(t.buffer);
 		t.write("Hello");
 
-		expect(r.toString()).to.be('\u001b[22;24;25;27mHello\u001b[0m');
+		expect(r.toString()).to.be('\u001b[22;23;24;25;27mHello\u001b[0m');
 	});
 });
