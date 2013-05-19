@@ -12,15 +12,15 @@
 		<script>
 				var socket = io.connect();
 				var target = document.getElementById('term');
-				var terminal = new Terminal(target, 80, 24);
-				socket
-					.on('data', function (data) {
-						terminal.writer.write(data);
-					})
-					.on('exit', function (data) {
-						alert("Terminal has closed.");
-						target.style.opacity = "0.5";
-					})
+				var terminal = new Terminal(
+					target,
+					socket,
+					80, 24);
+			}
 		</script>
+	</head>
+	<body>
+		<div id="term" style="background:black; color:white; display: inline-block; font-family: Courier">
+		</div>
 	</body>
 </html>

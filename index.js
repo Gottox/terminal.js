@@ -10,3 +10,10 @@ module.exports.renderer = {
 	HtmlRenderer: require("./lib/renderer/html.js"),
 	DomRenderer: require("./lib/renderer/dom.js")
 };
+
+module.exports.pty = {
+	EmitterPty: require("./lib/pty/emitter.js")
+};
+
+module.exports.input = {
+};
