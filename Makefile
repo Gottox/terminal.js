@@ -17,14 +17,14 @@ SRC = index.js \
       lib/handler/sgr.js \
       lib/input/base.js \
       lib/input/dom.js \
-      lib/pty/base.js \
-      lib/pty/emitter.js \
-      lib/renderer/ansi.js \
-      lib/renderer/base.js \
-      lib/renderer/dom.js \
-      lib/renderer/html.js \
-      lib/renderer/live_base.js \
-      lib/renderer/plain.js \
+      lib/source/base.js \
+      lib/source/emitter.js \
+      lib/output/ansi.js \
+      lib/output/base.js \
+      lib/output/dom.js \
+      lib/output/html.js \
+      lib/output/live_base.js \
+      lib/output/plain.js \
       lib/term_buffer.js \
       lib/term_diff.js \
       lib/term_writer.js \
