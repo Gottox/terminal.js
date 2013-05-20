@@ -4,16 +4,17 @@ module.exports.TermBuffer = require("./lib/term_buffer.js");
 module.exports.TermDiff = require("./lib/term_diff.js");
 module.exports.TermPatch = require("./lib/term_patch.js");
 module.exports.TermWriter = require("./lib/term_writer.js");
-module.exports.renderer = {
-	PlainRenderer: require("./lib/renderer/plain.js"),
-	AnsiRenderer: require("./lib/renderer/ansi.js"),
-	HtmlRenderer: require("./lib/renderer/html.js"),
-	DomRenderer: require("./lib/renderer/dom.js")
+module.exports.output = {
+	PlainOutput: require("./lib/output/plain.js"),
+	AnsiOutput: require("./lib/output/ansi.js"),
+	HtmlOutput: require("./lib/output/html.js"),
+	DomOutput: require("./lib/output/dom.js")
 };
 
-module.exports.pty = {
-	EmitterPty: require("./lib/pty/emitter.js")
+module.exports.source = {
+	EmitterSource: require("./lib/source/emitter.js")
 };
 
 module.exports.input = {
+	DomInput: require('./lib/input/dom.js')
 };
