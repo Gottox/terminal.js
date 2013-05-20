@@ -174,4 +174,19 @@ describe('TermWriter', function() {
 		t.write("foo");
 		t.end();
 	});
+
+	it("should handle all escapes without barfing", function() {
+		for (var i=0;i<2048;i++) {
+		var t = newTermWriter(80,24);
+			t.write("\x1b"+String.fromCharCode(i));
+		}
+	});
+
+	it("should handle all csi without barfing", function() {
+		for (var i=0;i<2048;i++) {
+		var t = newTermWriter(80,24);
+			t.write("\x1b["+String.fromCharCode(i));
+		}
+	});
 });
+
