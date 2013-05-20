@@ -2,7 +2,7 @@ var Terminal = require("../../index.js");
 var http = require('http');
 var fs = require('fs');
 
-var terminal = new Terminal('html', null, 80, 24);
+var terminal = new Terminal(80, 24, 'html');
 terminal.buffer.setMode('crlf',true);
 
 var vt100 = fs.readFileSync(process.argv[2]);

@@ -10,9 +10,9 @@
 				var socket = io.connect();
 				var target = document.getElementById('term');
 				var terminal = new Terminal(
+					80, 24,
 					target,
-					socket,
-					80, 24);
+					socket);
 			}
 		</script>
 	</head>
