@@ -27,7 +27,6 @@ SRC = index.js \
       lib/output/plain.js \
       lib/term_buffer.js \
       lib/term_diff.js \
-      lib/term_patch.js \
       lib/term_writer.js \
       lib/terminal.js \
       lib/util.js

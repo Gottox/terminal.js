@@ -41,26 +41,10 @@ It is written from scratch and supports most commonly used escape sequences.
     var terminal1 = new TermWriter(buffer1);
     var terminal2 = new TermWriter(buffer2);
 
+    terminal1.write("test me");
     var diff = new TermDiff(terminal1.buffer,terminal2.buffer);
 
-### TermPatch Usage
-
-    var TermDiff = require('terminal').TermDiff;
-    var TermPatch = require('terminal').TermPatch;
-    var TermBuffer = require('terminal').TermBuffer;
-
-    var buffer1 = new TermBuffer(80,24);
-    var buffer2 = new TermBuffer(80,24);
-
-    var terminal1 = new TermWriter(buffer1);
-    var terminal2 = new TermWriter(buffer2);
-
-    terminal1.write('terminal1');
-    terminal2.write('terminal2');
-
-    var diff = new TermDiff(terminal1.buffer,terminal2.buffer);
-    var patch = new TermPatch(terminal2);
-    patch.apply(diff.toJSON());
+    diff.apply(terminal1);
 
 ## TermBuffer Functions
 
