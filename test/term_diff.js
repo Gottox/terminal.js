@@ -230,16 +230,17 @@ describe('TermDiff', function() {
 		var gmode2 = t1._modes.graphic;
 		expect(gmode2).to.be(true);
 	});
-	/*
 
 	it("correctly applies remove Line", function() {
 		var t1 = newTermBuffer(80,24);
-		var d = { changes: [ { '0': true }] };
-		var p = new TermPatch(t1);
-		p.apply(d);
-		expect(t1._leds[0]).to.be(true);
-		expect(t1._leds[1]).to.be(false);
+		t1.inject('line'); t1.inject('\n');
+		t1.inject('line'); t1.inject('\n');
+		t1.inject('line'); t1.inject('\n');
+		t1.inject('line');
+		var d = { changes: [ { 'l': 0 , '-': 3 }] };
+		var p = new TermDiff(d);
+		p.apply(t1);
+		expect(t1.getBufferHeight()).to.be(1);
 	});
-	*/
 
 });
