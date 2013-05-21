@@ -103,10 +103,12 @@ It is written from scratch and supports most commonly used escape sequences.
         { l: 2, '-': 3 }, // On line2 remove 3 lines
       ],
       cursor: [ { from: { 'x': 0, 'y':10 }, to: { 'x': 0, 'y':12 } } ],
+      savedcursor: [ { from: { 'x': 0, 'y':10 }, to: { 'x': 0, 'y':12 } } ],
       size: [ { from: { 'height': 80, 'width':24 }, to: { 'height': 30, 'width':12 } } ],
       scrollregion: [ {from: [ 0, 10 ], to: [ 0, 12 ] } ],
       modes: [ { 'graphics': true }, { 'insert': false } ],
-      leds: [ { '0': true }]
+      modes: [ { 'graphics': true }, { 'insert': false } ],
+      tabs: [ { from: [] , to: [ 1 ] }]
     }
 
 ## Alternatives & Related
