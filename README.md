@@ -34,11 +34,17 @@ It is written from scratch and supports most commonly used escape sequences.
 
     var TermDiff = require('terminal').TermDiff;
     var TermBuffer = require('terminal').TermBuffer;
+
     var buffer1 = new TermBuffer(80,24);
     var buffer2 = new TermBuffer(80,24);
+
     var terminal1 = new TermWriter(buffer1);
     var terminal2 = new TermWriter(buffer2);
+
+    terminal1.write("test me");
     var diff = new TermDiff(terminal1.buffer,terminal2.buffer);
+
+    diff.apply(terminal1);
 
 ## TermBuffer Functions
 
@@ -80,21 +86,21 @@ It is written from scratch and supports most commonly used escape sequences.
 
     diff = {
       changes: [
-        { l: 0, '.': {
-          str: 'test',
+        { l: 0, '.': { // On line0 replace the line
+          str: 'test', // With string test
           attr{
-          '0': { fg: null, bg:null, bold:false , underline: false, blink: false, inverse: false },
-          '2': { fg: null, bg:null, bold:false , underline: false, blink: false, inverse: true  }
+          '0': { fg: null, bg:null, bold:false , underline: false, blink: false, inverse: false }, // Change Attributes on Pos0
+          '2': { fg: null, bg:null, bold:false , underline: false, blink: false, inverse: true  }  // Change Attributes on Pos2
           }
         },
-        { l: 1, '+': {
-          str: 'test',
+        { l: 1, '+': { // Online 1 add a line
+          str: 'test', // With String test
           attr{
-          '0': { fg: null, bg:null, bold:false , underline: false, blink: false, inverse: false },
-          '2': { fg: null, bg:null, bold:false , underline: false, blink: false, inverse: true  }
+          '0': { fg: null, bg:null, bold:false , underline: false, blink: false, inverse: false }, // Change Attributes on Pos0
+          '2': { fg: null, bg:null, bold:false , underline: false, blink: false, inverse: true  }  // Change Attributes on Pos2
           }
         },
-        { l: 2, '-': 3 },
+        { l: 2, '-': 3 }, // On line2 remove 3 lines
       ],
       cursor: [ { from: { 'x': 0, 'y':10 }, to: { 'x': 0, 'y':12 } } ],
       size: [ { from: { 'height': 80, 'width':24 }, to: { 'height': 30, 'width':12 } } ],
