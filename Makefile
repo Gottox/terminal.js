@@ -9,27 +9,28 @@ UGLIFYJS ?= ./node_modules/.bin/uglifyjs
 GLOBAL ?= Terminal
 
 SRC = index.js \
-      lib/handler/chr.js \
-      lib/handler/csi.js \
-      lib/handler/dcs.js \
-      lib/handler/esc.js \
-      lib/handler/mode.js \
-      lib/handler/sgr.js \
-      lib/input/base.js \
-      lib/input/dom.js \
-      lib/source/base.js \
-      lib/source/emitter.js \
-      lib/output/ansi.js \
-      lib/output/base.js \
-      lib/output/dom.js \
-      lib/output/html.js \
-      lib/output/live_base.js \
-      lib/output/plain.js \
-      lib/term_buffer.js \
-      lib/term_diff.js \
-      lib/term_writer.js \
-      lib/terminal.js \
-      lib/util.js
+      ./lib/handler/chr.js \
+      ./lib/handler/csi.js \
+      ./lib/handler/dcs.js \
+      ./lib/handler/esc.js \
+      ./lib/handler/mode.js \
+      ./lib/handler/osc.js \
+      ./lib/handler/sgr.js \
+      ./lib/input/base.js \
+      ./lib/input/dom.js \
+      ./lib/output/ansi.js \
+      ./lib/output/base.js \
+      ./lib/output/dom.js \
+      ./lib/output/html.js \
+      ./lib/output/live_base.js \
+      ./lib/output/plain.js \
+      ./lib/source/base.js \
+      ./lib/source/emitter.js \
+      ./lib/term_buffer.js \
+      ./lib/term_diff.js \
+      ./lib/term_writer.js \
+      ./lib/terminal.js \
+      ./lib/util.js
 
 # Workaround: include streams2 as long as they are not in browserify
 EXTERN = extern/_stream_writable.js \
