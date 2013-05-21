@@ -69,6 +69,29 @@ describe('TermDiff', function() {
 		expect(d.toJSON().cursor[0].to.y).to.be(0);
 	});
 
+	it("detects no saved cursor changes if the terminals are not different", function() {
+		var t1 = newTermBuffer();
+		var t2 = newTermBuffer();
+		t1.inject('a');
+		var d = new TermDiff(t1, t2);
+		expect(d.toJSON().savedcursor.length).to.be(0);
+	});
+
+	it("detects saved cursor changes if the terminals are different", function() {
+		var t1 = newTermBuffer();
+		var t2 = newTermBuffer();
+		t1.inject('a');
+		t1.inject('\n');
+		t1.inject('a');
+		t1.saveCursor();
+		var d = new TermDiff(t1, t2);
+		expect(d.toJSON().savedcursor.length).to.be(1);
+		expect(d.toJSON().savedcursor[0].from.x).to.be(1);
+		expect(d.toJSON().savedcursor[0].from.y).to.be(1);
+		expect(d.toJSON().savedcursor[0].to.x).to.be(0);
+		expect(d.toJSON().savedcursor[0].to.y).to.be(0);
+	});
+
 	it("detects line changes in second buffer", function() {
 		var t1 = newTermBuffer();
 		var t2 = newTermBuffer();
