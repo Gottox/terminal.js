@@ -277,4 +277,13 @@ describe('TermBuffer', function() {
 		expect(a[6].bold).to.be(true);  // G
 		expect(a[7]).to.be(undefined);  // H
 	});
+
+	it("should remove characters correctly", function() {
+		var t= newTermBuffer(80,24);
+		t.inject("ABCDEFGHI");
+		t.setCursor(0,0);
+		t.removeChar(3);
+		expect(t._buffer.str[0]).to.be("DEFGHI");
+		expect(t._buffer.attr[0]["DEFGHI".length]).to.be.a("object");
+	});
 });
