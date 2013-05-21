@@ -6,13 +6,15 @@
 		<script src="/socket.io/socket.io.js"></script>
 		<script src="/terminal.js"></script>
 		<script>
-				window.onload = function() {
-				var socket = io.connect();
-				var target = document.getElementById('term');
-				var terminal = new Terminal(
+			var socket, target, target;
+			window.onload = function() {
+				socket = io.connect();
+				target = document.getElementById('term');
+				terminal = new Terminal(
 					80, 24,
 					target,
-					socket);
+					socket
+				);
 			}
 		</script>
 	</head>
