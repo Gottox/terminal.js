@@ -166,6 +166,15 @@ describe('TermDiff', function() {
 		expect(t1.cursor.y).to.be(12);
 	});
 
+	it("correctly applies savedCursor", function() {
+		var t1 = newTermBuffer(80,24);
+		var d = { savedcursor: [ { from: { 'x': 0, 'y':10 }, to: { 'x': 10, 'y':12 } } ] };
+		var p = new TermDiff(d);
+		p.apply(t1);
+		expect(t1._savedCursor.x).to.be(10);
+		expect(t1._savedCursor.y).to.be(12);
+	});
+
 	it("correctly applies scrollRegion", function() {
 		var t1 = newTermBuffer(80,24);
 		var d = { scrollregion: [ {from: [ 0, 23 ], to: [ 0, 12 ] } ] };
