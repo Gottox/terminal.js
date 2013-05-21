@@ -219,6 +219,17 @@ describe('TermDiff', function() {
 		expect(t1.tabs.length).to.be(1);
 		expect(t1.tabs[0]).to.be(1);
 	});
+
+	it("correctly applies mode changes", function() {
+		var t1 = newTermBuffer();
+		var gmode1 = t1._modes.graphic;
+		expect(gmode1).to.be(false);
+		var d = { modes: [ { 'graphic': true }] };
+		var p = new TermDiff(d);
+		p.apply(t1);
+		var gmode2 = t1._modes.graphic;
+		expect(gmode2).to.be(true);
+	});
 	/*
 
 	it("correctly applies remove Line", function() {
