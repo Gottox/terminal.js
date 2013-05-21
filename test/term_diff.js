@@ -148,6 +148,24 @@ describe('TermDiff', function() {
 		expect(d.toJSON().size[0].to.width).to.be(12);
 	});
 
+	it("detects no tabs differences if the terminals are the same", function() {
+		var t1 = newTermBuffer();
+		var t2 = newTermBuffer();
+		var d = new TermDiff(t1, t2);
+		expect(d.toJSON().tabs.length).to.be(0);
+	});
+
+	it("detects tabs differences if the terminals are different", function() {
+		var t1 = newTermBuffer(10,20);
+		var t2 = newTermBuffer(12,30);
+		t1.inject("a");
+		t1.setTab();
+		var d = new TermDiff(t1, t2);
+		expect(d.toJSON().tabs.length).to.be(1);
+		expect(d.toJSON().tabs[0].from[0]).to.equal(1);
+		expect(d.toJSON().tabs[0].to.length).to.be(0);
+	});
+
 	it("correctly applies size", function() {
 		var t1 = newTermBuffer(80,24);
 		var d = { size: [ { from: { 'height': 80, 'width':24 }, to: { 'height': 30, 'width':12 } } ] };
