@@ -175,17 +175,31 @@ describe('TermWriter', function() {
 		t.end();
 	});
 
-	it("should handle all escapes without barfing", function() {
+	it("should handle all escapes with defaults without barfing", function() {
 		for (var i=0;i<2048;i++) {
 		var t = newTermWriter(80,24);
 			t.write("\x1b"+String.fromCharCode(i));
 		}
 	});
 
-	it("should handle all csi without barfing", function() {
+	it("should handle all escapes with extra params without barfing", function() {
+		for (var i=0;i<2048;i++) {
+		var t = newTermWriter(80,24);
+			t.write("\x1b0;2"+String.fromCharCode(i));
+		}
+	});
+
+	it("should handle all csi with defaults without barfing", function() {
 		for (var i=0;i<2048;i++) {
 		var t = newTermWriter(80,24);
 			t.write("\x1b["+String.fromCharCode(i));
+		}
+	});
+
+	it("should handle all csi with extra params without barfing", function() {
+		for (var i=0;i<2048;i++) {
+		var t = newTermWriter(80,24);
+			t.write("\x1b[0;3"+String.fromCharCode(i));
 		}
 	});
 });
