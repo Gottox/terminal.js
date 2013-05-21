@@ -210,6 +210,15 @@ describe('TermDiff', function() {
 		expect(t1._leds[0]).to.be(true);
 		expect(t1._leds[1]).to.be(false);
 	});
+
+	it("correctly applies tabs", function() {
+		var t1 = newTermBuffer(80,24);
+		var d = { tabs: [ { 'from': [] , 'to': [1] }] };
+		var p = new TermDiff(d);
+		p.apply(t1);
+		expect(t1.tabs.length).to.be(1);
+		expect(t1.tabs[0]).to.be(1);
+	});
 	/*
 
 	it("correctly applies remove Line", function() {
