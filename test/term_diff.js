@@ -69,6 +69,29 @@ describe('TermDiff', function() {
 		expect(d.toJSON().cursor[0].to.y).to.be(0);
 	});
 
+	it("detects no saved cursor changes if the terminals are not different", function() {
+		var t1 = newTermBuffer();
+		var t2 = newTermBuffer();
+		t1.inject('a');
+		var d = new TermDiff(t1, t2);
+		expect(d.toJSON().savedcursor.length).to.be(0);
+	});
+
+	it("detects saved cursor changes if the terminals are different", function() {
+		var t1 = newTermBuffer();
+		var t2 = newTermBuffer();
+		t1.inject('a');
+		t1.inject('\n');
+		t1.inject('a');
+		t1.saveCursor();
+		var d = new TermDiff(t1, t2);
+		expect(d.toJSON().savedcursor.length).to.be(1);
+		expect(d.toJSON().savedcursor[0].from.x).to.be(1);
+		expect(d.toJSON().savedcursor[0].from.y).to.be(1);
+		expect(d.toJSON().savedcursor[0].to.x).to.be(0);
+		expect(d.toJSON().savedcursor[0].to.y).to.be(0);
+	});
+
 	it("detects line changes in second buffer", function() {
 		var t1 = newTermBuffer();
 		var t2 = newTermBuffer();
@@ -125,6 +148,24 @@ describe('TermDiff', function() {
 		expect(d.toJSON().size[0].to.width).to.be(12);
 	});
 
+	it("detects no tabs differences if the terminals are the same", function() {
+		var t1 = newTermBuffer();
+		var t2 = newTermBuffer();
+		var d = new TermDiff(t1, t2);
+		expect(d.toJSON().tabs.length).to.be(0);
+	});
+
+	it("detects tabs differences if the terminals are different", function() {
+		var t1 = newTermBuffer(10,20);
+		var t2 = newTermBuffer(12,30);
+		t1.inject("a");
+		t1.setTab();
+		var d = new TermDiff(t1, t2);
+		expect(d.toJSON().tabs.length).to.be(1);
+		expect(d.toJSON().tabs[0].from[0]).to.equal(1);
+		expect(d.toJSON().tabs[0].to.length).to.be(0);
+	});
+
 	it("correctly applies size", function() {
 		var t1 = newTermBuffer(80,24);
 		var d = { size: [ { from: { 'height': 80, 'width':24 }, to: { 'height': 30, 'width':12 } } ] };
@@ -143,6 +184,15 @@ describe('TermDiff', function() {
 		expect(t1.cursor.y).to.be(12);
 	});
 
+	it("correctly applies savedCursor", function() {
+		var t1 = newTermBuffer(80,24);
+		var d = { savedcursor: [ { from: { 'x': 0, 'y':10 }, to: { 'x': 10, 'y':12 } } ] };
+		var p = new TermDiff(d);
+		p.apply(t1);
+		expect(t1._savedCursor.x).to.be(10);
+		expect(t1._savedCursor.y).to.be(12);
+	});
+
 	it("correctly applies scrollRegion", function() {
 		var t1 = newTermBuffer(80,24);
 		var d = { scrollregion: [ {from: [ 0, 23 ], to: [ 0, 12 ] } ] };
@@ -159,6 +209,15 @@ describe('TermDiff', function() {
 		p.apply(t1);
 		expect(t1._leds[0]).to.be(true);
 		expect(t1._leds[1]).to.be(false);
+	});
+
+	it("correctly applies tabs", function() {
+		var t1 = newTermBuffer(80,24);
+		var d = { tabs: [ { 'from': [] , 'to': [1] }] };
+		var p = new TermDiff(d);
+		p.apply(t1);
+		expect(t1.tabs.length).to.be(1);
+		expect(t1.tabs[0]).to.be(1);
 	});
 	/*
 
