@@ -14,6 +14,6 @@ describe('HtmlOutput', function() {
 		var r = new HtmlOutput(t.buffer);
 		t.write("\x1b[31mHello\x1b[m World");
 
-		expect(r.toString()).to.contain('<span style="color:#ff0000;">Hello</span><span style="">');
+		expect(r.toString()).to.contain('<span style="color:#cc0000;">Hello</span><span style="">');
 	});
 });

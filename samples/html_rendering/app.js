@@ -2,21 +2,19 @@ var Terminal = require("../../index.js");
 var http = require('http');
 var fs = require('fs');
 
-var terminal = new Terminal('html', null, 80, 24);
+var terminal = new Terminal(80, 24, 'html');
 terminal.buffer.setMode('crlf',true);
 
-var vt100 = fs.readFileSync(__dirname + '/../data/vt100test.txt');
+var vt100 = fs.readFileSync(process.argv[2]);
 terminal.writer.write(vt100);
 
 
 http.createServer(function (request, response) {
 	response.writeHead(200, {"Content-Type": "text/html; charset=utf-8"});
 	response.end(
-		"<body style='background:silver;'>"+
-		"<div style='display:inline-block;background:black;color:white;'>"+
+		"<div style='display:inline-block;background:black;color:white;font-family:monospace'>"+
 		terminal.toString()+
-		"</div>"+
-		"</body>"
+		"</div>"
 	);
 }).listen(8000);
 
