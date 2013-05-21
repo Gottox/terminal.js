@@ -24,7 +24,7 @@ socketio.listen(server)
 		var term = pty.spawn('login', [ ], {
 			name: 'screen',
 			cols: 80,
-			rows: 30
+			rows: 24
 		});
 
 		term.setEncoding('utf8');
