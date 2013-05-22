@@ -152,7 +152,17 @@ describe('TermBuffer', function() {
 		t.inject("AA");
 		expect(t.toString()).to.be("ABCDEAA");
 	});
-	it("resize correctly to smaller size", function() {
+	it("resize correctly to smaller size, cut off right", function() {
+		var t = newTermBuffer(80,24);
+		t.setCursor(0,23);
+		t.inject("line1");
+		t.resize(2,2);
+		t.mvCursor(-10,0);
+		t.inject("\nab");
+		expect(t.toString()).to.be("li\nab");
+	});
+
+	it("resize correctly to smaller size, cut off top", function() {
 		var t = newTermBuffer(80,24);
 		t.inject("line1\n");
 		t.resize(2,2);
