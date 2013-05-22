@@ -106,8 +106,7 @@ It is written from scratch and supports most commonly used escape sequences.
       savedcursor: [ { from: { 'x': 0, 'y':10 }, to: { 'x': 0, 'y':12 } } ],
       size: [ { from: { 'height': 80, 'width':24 }, to: { 'height': 30, 'width':12 } } ],
       scrollregion: [ {from: [ 0, 10 ], to: [ 0, 12 ] } ],
-      modes: [ { 'graphics': true }, { 'insert': false } ],
-      modes: [ { 'graphics': true }, { 'insert': false } ],
+      modes: [ { 'graphic': true }, { 'insert': false } ],
       tabs: [ { from: [] , to: [ 1 ] }]
     }
 
