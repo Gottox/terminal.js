@@ -202,5 +202,11 @@ describe('TermWriter', function() {
 			t.write("\x1b[0;3"+String.fromCharCode(i));
 		}
 	});
+
+	it("should scroll on reverse index", function() {
+		var t = newTermWriter(80,4);
+		t.write("A\nB\nC\nD\x1b[H\x1bM");
+		expect(t.buffer.toString()).to.be("\nA\nB\nC");
+	});
 });
 
