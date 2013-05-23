@@ -15,6 +15,10 @@
 					target,
 					socket
 				);
+				terminal.buffer.on('metachange', function(name, value) {
+					if(name === 'title')
+						document.title = value;
+				})
 			}
 		</script>
 	</head>
