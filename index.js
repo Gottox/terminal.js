@@ -15,5 +15,6 @@ module.exports.source = {
 };
 
 module.exports.input = {
-	DomInput: require('./lib/input/dom.js')
+	DomInput: require('./lib/input/dom.js'),
+	TtyInput: require('./lib/input/tty.js'),
 };

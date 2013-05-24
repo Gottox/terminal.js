@@ -18,6 +18,7 @@ SRC = index.js \
       ./lib/handler/sgr.js \
       ./lib/input/base.js \
       ./lib/input/dom.js \
+      ./lib/input/tty.js \
       ./lib/output/ansi.js \
       ./lib/output/base.js \
       ./lib/output/dom.js \
