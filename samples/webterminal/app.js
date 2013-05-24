@@ -21,7 +21,8 @@ var server = http.createServer(function (req, res) {
 
 socketio.listen(server)
 	.on('connection', function(socket) {
-		var term = pty.spawn(__dirname + "/samply.sh", [ ], {
+		//var term = pty.spawn(__dirname + "/samply.sh", [ ], {
+		var term = pty.spawn('login', [ ], {
 			name: 'xterm',
 			cols: 80,
 			rows: 24
