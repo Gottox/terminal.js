@@ -97,8 +97,8 @@ lint: $(SRC)
 	@$(JSHINT) lib index.js
 	@echo "LINT       test"
 	@$(JSHINT) test/*.js
-	@echo "LINT       samples"
-	@$(JSHINT) samples/*/*.js
+	@echo "LINT       examples"
+	@$(JSHINT) examples/*/*.js
 
 clean:
 	@echo "RM         dist lib-cov index-cov.js coverage.html"
