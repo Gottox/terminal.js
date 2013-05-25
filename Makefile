@@ -25,6 +25,7 @@ SRC = index.js \
       ./lib/output/html.js \
       ./lib/output/live_base.js \
       ./lib/output/plain.js \
+      ./lib/output/tty.js \
       ./lib/source/base.js \
       ./lib/source/emitter.js \
       ./lib/term_buffer.js \
