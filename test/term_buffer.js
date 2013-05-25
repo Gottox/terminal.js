@@ -201,12 +201,12 @@ describe('TermBuffer', function() {
 	});
 	it("emits cursor move", function(done) {
 		var t = newTermBuffer();
+		t.inject("Hello World\nHow are you?");
 		t.on("cursormove", function(x, y) {
 			expect(x).to.be(12);
 			expect(y).to.be(1);
 			done();
 		});
-		t.inject("Hello World\nHow are you?");
 	});
 	it("emits line insert events on inject", function(done) {
 		var t = newTermBuffer();
