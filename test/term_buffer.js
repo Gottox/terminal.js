@@ -289,11 +289,18 @@ describe('TermBuffer', function() {
 	});
 
 	it("should remove characters correctly", function() {
-		var t= newTermBuffer(80,24);
+		var t = newTermBuffer(80,24);
 		t.inject("ABCDEFGHI");
 		t.setCursor(0,0);
 		t.removeChar(3);
 		expect(t._buffer.str[0]).to.be("DEFGHI");
 		expect(t._buffer.attr[0]["DEFGHI".length]).to.be.a("object");
+	});
+
+	it("should print normal characters when theres no graphical representation", function() {
+		var t = newTermBuffer(80,24);
+		t.setMode('graphic', true);
+		t.inject(" lqwqk");
+		expect(t._buffer.str[0].length).to.be(" lqwqk".length);
 	});
 });
