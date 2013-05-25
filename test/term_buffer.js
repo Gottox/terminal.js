@@ -303,4 +303,10 @@ describe('TermBuffer', function() {
 		t.inject(" lqwqk");
 		expect(t._buffer.str[0].length).to.be(" lqwqk".length);
 	});
+
+	it("can't set beyond 4 leds", function() {
+		var t = newTermBuffer();
+		t.setLed(4,true);
+		expect(t._leds.length).to.be(4);
+	});
 });

@@ -1,7 +1,6 @@
 describe('TermWriter', function() {
 	var TermBuffer = Terminal.TermBuffer;
 	var TermWriter = Terminal.TermWriter;
-	var TermDiff = Terminal.TermDiff;
 	function newTermWriter(w, h) {
 		var t = new TermBuffer(w, h), tw = new TermWriter(t);
 		t.setMode('crlf', true);
@@ -85,12 +84,15 @@ describe('TermWriter', function() {
 	});
 
 	it("should reset (RIS)", function() {
-		var t1 = newTermWriter();
-		var t2 = newTermWriter();
+		var t = newTermWriter();
 		//change mode, led and write a char
-		t1.write("\x1b[?5h\x1b[1qABCD\x1bc");
-		var d = new TermDiff(t1.buffer,t2.buffer);
-		expect(d.toJSON().changes.length).to.be(0);
+		t.write("\x1b[?5h\x1b[1qABCD\x1bc");
+		expect(t.toString()).to.be("");
+		expect(t.buffer._leds[0]).to.be(false);
+		expect(t.buffer._leds[1]).to.be(false);
+		expect(t.buffer._leds[2]).to.be(false);
+		expect(t.buffer._leds[3]).to.be(false);
+		expect(t.buffer._attributes.bold).to.be(false);
 	});
 
 	it("moves down and to beginning of line (NEL)", function() {
