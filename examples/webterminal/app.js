@@ -17,7 +17,7 @@ var server = http.createServer(function (req, res) {
 		res.writeHead(404, {"Content-Type": "text/plain; charset=utf-8"});
 		res.end("Not found");
 	}
-}).listen(8000, '127.0.0.1');
+}).listen(8000);
 
 socketio.listen(server)
 	.on('connection', function(socket) {
