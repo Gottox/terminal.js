@@ -143,7 +143,6 @@ describe('TermDiff', function() {
 		expect(d._tabs).to.be.a(Array);
 	});
 
-	/*
 	it("correctly applies size", function() {
 		var t1 = newTermBuffer(80,24);
 		var d = { height: 30, width:12 };
@@ -155,7 +154,7 @@ describe('TermDiff', function() {
 
 	it("correctly applies cursor", function() {
 		var t1 = newTermBuffer(80,24);
-		var d = { cursor: [ { from: { 'x': 0, 'y':10 }, to: { 'x': 10, 'y':12 } } ] };
+		var d = { cursor: { 'x': 10, 'y':12 } };
 		var p = new TermDiff(d);
 		p.apply(t1);
 		expect(t1.cursor.x).to.be(10);
@@ -164,7 +163,7 @@ describe('TermDiff', function() {
 
 	it("correctly applies savedCursor", function() {
 		var t1 = newTermBuffer(80,24);
-		var d = { savedcursor: { 'x': 10, 'y':12 } };
+		var d = { savedCursor: { 'x': 10, 'y':12 } };
 		var p = new TermDiff(d);
 		p.apply(t1);
 		expect(t1._savedCursor.x).to.be(10);
@@ -173,7 +172,7 @@ describe('TermDiff', function() {
 
 	it("correctly applies scrollRegion", function() {
 		var t1 = newTermBuffer(80,24);
-		var d = { scrollregion: [ 0, 12 ] };
+		var d = { scrollRegion: [ 0, 12 ] };
 		var p = new TermDiff(d);
 		p.apply(t1);
 		expect(t1._scrollRegion[0]).to.be(0);
@@ -182,7 +181,7 @@ describe('TermDiff', function() {
 
 	it("correctly applies leds", function() {
 		var t1 = newTermBuffer(80,24);
-		var d = { leds: [ { 0: true }] };
+		var d = { leds: { 0: true } };
 		var p = new TermDiff(d);
 		p.apply(t1);
 		expect(t1._leds[0]).to.be(true);
@@ -220,5 +219,4 @@ describe('TermDiff', function() {
 		p.apply(t1);
 		expect(t1.getBufferHeight()).to.be(1);
 	});
-	*/
 });
