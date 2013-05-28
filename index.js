@@ -6,6 +6,7 @@ module.exports.TermWriter = require("./lib/term_writer.js");
 module.exports.output = {
 	PlainOutput: require("./lib/output/plain.js"),
 	AnsiOutput: require("./lib/output/ansi.js"),
+	TtyOutput: require("./lib/output/tty.js"),
 	HtmlOutput: require("./lib/output/html.js"),
 	DomOutput: require("./lib/output/dom.js")
 };
