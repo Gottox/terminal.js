@@ -315,5 +315,12 @@ describe('TermBuffer', function() {
 		t.inject("1234");
 		t.inject("\rabcd\rABCD");
 		expect(t.toString()).to.be("ABCD");
+		t.setAttribute('bold', true);
+		t.inject("\rbb");
+		expect(t.toString()).to.be("bbCD");
+		var a = t.getLine(0).attr;
+		// TODO fix attributes for \r
+		//expect(a[0].bold).to.be(true);  // bb
+		//expect(a[2].bold).to.be(false);  // CB
 	});
 });

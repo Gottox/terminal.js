@@ -1,1 +1,1 @@
-../../node_modules/expect.js/expect.js
+../../node_modules/expect.js/index.js
