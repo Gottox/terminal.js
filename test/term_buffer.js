@@ -310,7 +310,7 @@ describe('TermBuffer', function() {
 		expect(t._leds.length).to.be(4);
 	});
 
-	it("Handles \r correctly with terminal bounds", function() {
+	it("Handles \\r correctly with terminal bounds", function() {
 		var t = newTermBuffer(6, 4);
 		t.inject("1234");
 		t.inject("\rabcd\rABCD");
