@@ -38,11 +38,6 @@ describe('TermBuffer', function() {
 		t.inject("j");
 		expect(t.toString()).to.be("1234567890\nabcdefghij");
 	});
-	it("handles carriage returns", function() {
-		var t = newTermBuffer(10, 10);
-		t.inject("1234\r56\r789");
-		expect(t.toString()).to.be("7894");
-	});
 	it("scrolls", function() {
 		var t = newTermBuffer(10, 10);
 		t.inject("1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20");
@@ -308,19 +303,5 @@ describe('TermBuffer', function() {
 		var t = newTermBuffer();
 		t.setLed(4,true);
 		expect(t._leds.length).to.be(4);
-	});
-
-	it("Handles \\r correctly with terminal bounds", function() {
-		var t = newTermBuffer(6, 4);
-		t.inject("1234");
-		t.inject("\rabcd\rABCD");
-		expect(t.toString()).to.be("ABCD");
-		t.setAttribute('bold', true);
-		t.inject("\rbb");
-		expect(t.toString()).to.be("bbCD");
-		var a = t.getLine(0).attr;
-		// TODO fix attributes for \r
-		//expect(a[0].bold).to.be(true);  // bb
-		//expect(a[2].bold).to.be(false);  // CB
 	});
 });

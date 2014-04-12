@@ -210,5 +210,24 @@ describe('TermWriter', function() {
 		t.write("A\nB\nC\nD\x1b[H\x1bM");
 		expect(t.buffer.toString()).to.be("\nA\nB\nC");
 	});
+
+	it("handles \\r correctly with terminal bounds", function() {
+		var t = newTermWriter(6, 4);
+		t.write("1234");
+		t.write("\rabcd\rABCD");
+		expect(t.toString()).to.be("ABCD");
+		t.buffer.setAttribute('bold', true);
+		t.write("\rbb");
+		expect(t.toString()).to.be("bbCD");
+		var a = t.buffer.getLine(0).attr;
+		expect(a[0].bold).to.be(true);  // bb
+		expect(a[2].bold).to.be(false);  // CB
+	});
+
+	it("handles carriage returns", function() {
+		var t = newTermWriter(10, 10);
+		t.write("1234\r56\r789");
+		expect(t.toString()).to.be("7894");
+	});
 });
 
