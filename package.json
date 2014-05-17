@@ -1,38 +1,35 @@
 {
-    "name": "terminal.js"
-  , "version": "0.1.2"
-  , "author": "Enno Boland <eb@s01.de>"
-  , "description": "terminal emulation library for javascript."
-  , "private": false
-  , "scripts": {
-      "install": "make BROWSERIFY=browserify UGLIFY=uglify"
-    , "prepublish": "make BROWSERIFY=browserify UGLIFY=uglify"
-    , "test": "make MOCHA=mocha JSHINT=jshint test"
-  }
-  , "main": "./index"
-  , "repository": {
-      "type": "git"
-    , "url": "https://github.com/c3ks/terminal.js.git"
-  }
-  , "keywords": [
-      "vt100"
-    , "xterm"
-    , "vt"
-    , "terminal"
-  ]
-  , "dependencies": {
-      "browserify": "2.13.x"
-    , "uglify-js": "*"
-  }
-  , "devDependencies": {
-      "mocha": "*"
-    , "jscoverage": "*"
-    , "should": "0.5.1"
-    , "expect.js": "*"
-    , "jshint": "*"
-  }
-  , "license": "MIT"
-  , "engine": {
+  "name": "terminal.js",
+  "version": "0.1.2",
+  "author": "Enno Boland <eb@s01.de>",
+  "description": "terminal emulation library for javascript.",
+  "private": false,
+  "scripts": {
+    "install": "make BROWSERIFY=browserify UGLIFY=uglify",
+    "prepublish": "make BROWSERIFY=browserify UGLIFY=uglify",
+    "test": "make MOCHA=mocha JSHINT=jshint test"
+  },
+  "main": "./index",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/c3ks/terminal.js.git"
+  },
+  "keywords": [
+    "vt100",
+    "xterm",
+    "vt",
+    "terminal"
+  ],
+  "devDependencies": {
+    "expect.js": "*",
+    "grunt": "^0.4.5",
+    "grunt-browserify": "^2.1.0",
+    "grunt-contrib-uglify": "^0.4.0",
+    "grunt-mocha-cov": "^0.2.1",
+    "grunt-mocha-test": "^0.10.2"
+  },
+  "license": "MIT",
+  "engine": {
     "node": ">=0.6"
   }
 }
