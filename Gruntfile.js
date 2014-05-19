@@ -1,4 +1,5 @@
 var GLOBAL = "Terminal";
+var REPORTER="dot"
 var SRC = [ "lib/**/*.js" ];
 
 module.exports = function(grunt) {
@@ -38,7 +39,7 @@ module.exports = function(grunt) {
 			all: {
 				src: [ "test/*.js" ],
 				options: {
-					reporter: "spec",
+					reporter: REPORTER,
 					require: ["test/common.js"]
 				}
 			}
@@ -50,7 +51,8 @@ module.exports = function(grunt) {
 			all: {
 				src: SRC,
 				options: {
-					destination: "doc"
+					destination: "doc",
+					private: false
 				}
 			}
 		},
