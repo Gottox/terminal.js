@@ -20,7 +20,7 @@ It is written from scratch and supports most commonly used escape sequences.
 
     var TermBuffer = require('terminal').TermBuffer;
     var buffer = new TermBuffer(80,24);
-    buffer.inject("first test\n");
+    buffer.write("first test\n");
 
 ### TermDiff Usage
 
@@ -44,9 +44,8 @@ It is written from scratch and supports most commonly used escape sequences.
 - createLine
 - getLine
 
-- write
 - escapeWrite
-- inject
+- write
 - lineFeed
 - mvCur : moves to relative coordinates
 - setCur : move to absolute coordinates

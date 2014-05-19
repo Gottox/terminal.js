@@ -18,8 +18,8 @@ describe('TermDiff', function() {
 		// Not Correct, must investigate
 		var t1 = newTermBuffer();
 		var t2 = newTermBuffer();
-		t1.inject("_FFFFFF".replace(/(.)/g,'$1\n'));
-		t2.inject("_ADDE".replace(/(.)/g,'$1\n'));
+		t1.write("_FFFFFF".replace(/(.)/g,'$1\n'));
+		t2.write("_ADDE".replace(/(.)/g,'$1\n'));
 		var d = new TermDiff(t1, t2);
 		expect(d.toJSON().changes.length).to.be(4);
 	});
@@ -53,9 +53,9 @@ describe('TermDiff', function() {
 	it("detects cursor changes if the terminals are different", function() {
 		var t1 = newTermBuffer();
 		var t2 = newTermBuffer();
-		t1.inject('a');
-		t1.inject('\n');
-		t1.inject('a');
+		t1.write('a');
+		t1.write('\n');
+		t1.write('a');
 		var d = new TermDiff(t1, t2);
 		expect(d._cursor).to.only.have.keys('x','y');
 		expect(d._savedCursor).to.be(null);
@@ -64,9 +64,9 @@ describe('TermDiff', function() {
 	it("detects saved cursor changes if the terminals are different", function() {
 		var t1 = newTermBuffer();
 		var t2 = newTermBuffer();
-		t2.inject('a');
-		t2.inject('\n');
-		t2.inject('a');
+		t2.write('a');
+		t2.write('\n');
+		t2.write('a');
 		t2.saveCursor();
 		var d = new TermDiff(t1, t2);
 		expect(d._cursor).to.only.have.keys('x','y');
@@ -76,7 +76,7 @@ describe('TermDiff', function() {
 	it("detects line changes in second buffer", function() {
 		var t1 = newTermBuffer();
 		var t2 = newTermBuffer();
-		t1.inject('lalal');
+		t1.write('lalal');
 		var d = new TermDiff(t1, t2);
 		expect(d.toJSON().changes.length).to.be(1);
 		expect(d.toJSON().changes[0]['.'].str).to.be('');
@@ -85,7 +85,7 @@ describe('TermDiff', function() {
 	it("detects line changes in first buffer", function() {
 		var t1 = newTermBuffer();
 		var t2 = newTermBuffer();
-		t2.inject('lalal');
+		t2.write('lalal');
 		var d = new TermDiff(t1, t2);
 		expect(d.toJSON().changes[0]['.'].str).to.be('lalal');
 		expect(d.toJSON().changes.length).to.be(1);
@@ -94,8 +94,8 @@ describe('TermDiff', function() {
 	it("detects line removed in the second buffer", function() {
 		var t1 = newTermBuffer();
 		var t2 = newTermBuffer();
-		t1.inject('lalal\n');
-		t2.inject('lalal');
+		t1.write('lalal\n');
+		t2.write('lalal');
 		var d = new TermDiff(t1, t2);
 		expect(d.toJSON().changes[0]['-']).to.be(1); // Remove of line
 		expect(d.toJSON().changes.length).to.be(1);
@@ -104,8 +104,8 @@ describe('TermDiff', function() {
 	it("detects line added in the second buffer", function() {
 		var t1 = newTermBuffer();
 		var t2 = newTermBuffer();
-		t1.inject('lalal');
-		t2.inject('lalal\n');
+		t1.write('lalal');
+		t2.write('lalal\n');
 		var d = new TermDiff(t1, t2);
 		expect(d.toJSON().changes[0]['+'].str).to.be(''); // Remove of line
 		expect(d.toJSON().changes.length).to.be(1);
@@ -137,7 +137,7 @@ describe('TermDiff', function() {
 	it("detects tabs differences if the terminals are different", function() {
 		var t1 = newTermBuffer(10,20);
 		var t2 = newTermBuffer(12,30);
-		t1.inject("a");
+		t1.write("a");
 		t1.setTab();
 		var d = new TermDiff(t1, t2);
 		expect(d._tabs).to.be.a(Array);
@@ -210,10 +210,10 @@ describe('TermDiff', function() {
 
 	it("correctly applies remove Line", function() {
 		var t1 = newTermBuffer(80,24);
-		t1.inject('line'); t1.inject('\n');
-		t1.inject('line'); t1.inject('\n');
-		t1.inject('line'); t1.inject('\n');
-		t1.inject('line');
+		t1.write('line'); t1.write('\n');
+		t1.write('line'); t1.write('\n');
+		t1.write('line'); t1.write('\n');
+		t1.write('line');
 		var d = { changes: [ { 'l': 0 , '-': 3 }] };
 		var p = new TermDiff(d);
 		p.apply(t1);
