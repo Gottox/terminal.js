@@ -49,15 +49,16 @@ module.exports = function(grunt) {
 		clean: ["dist"]
 	});
 
-	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-browserify');
-	grunt.loadNpmTasks('grunt-mocha-test');
 	grunt.loadNpmTasks('grunt-contrib-clean');
+	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks('grunt-mocha-test');
 
 	grunt.registerTask('default', ['browserify:release', 'uglify']);
 	grunt.registerTask('test', ['jshint', 'mochaTest' ]);
-	grunt.registerTask('test-browser', ['jshint', 'browserify:debug', 'test-browser:inform' ]);
+	grunt.registerTask('test-browser', ['jshint', 'browserify:debug',
+			'test-browser:inform' ]);
 	grunt.registerTask('test-browser:inform', function() {
 		grunt.log.write('Open file://' + __dirname + "/test/index.html in your browser.").ok();
 	});
