@@ -49,7 +49,7 @@ module.exports = function(grunt) {
 		},
 		jsdoc : {
 			all: {
-				src: SRC,
+				src: [].concat.apply([ 'README.md' ], SRC),
 				options: {
 					destination: "doc",
 					private: false
