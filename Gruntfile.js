@@ -1,5 +1,5 @@
 var GLOBAL = "Terminal";
-var SRC = [ 'lib/**/*.js' ]
+var SRC = [ 'lib/**/*.js' ];
 
 module.exports = function(grunt) {
 	grunt.initConfig({
@@ -57,7 +57,8 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('default', ['browserify:release', 'uglify']);
 	grunt.registerTask('test', ['jshint', 'mochaTest' ]);
-	grunt.registerTask('test-browser', ['jshint', 'browserify:debug' ], function() {
+	grunt.registerTask('test-browser', ['jshint', 'browserify:debug', 'test-browser:inform' ]);
+	grunt.registerTask('test-browser:inform', function() {
 		grunt.log.write('Open file://' + __dirname + "/test/index.html in your browser.").ok();
 	});
-}
+};
