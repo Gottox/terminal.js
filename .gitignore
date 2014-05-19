@@ -1,4 +1,6 @@
 node_modules
 dist
+doc
+npm-debug.log
 *.swp
 .DS_Store
