@@ -53,7 +53,7 @@ module.exports = function(grunt) {
 					destination: "doc"
 				}
 			}
-		}
+		},
 		clean: [ "dist", "doc" ]
 	});
 
