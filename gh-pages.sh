@@ -1,7 +1,7 @@
 #! /bin/sh -x
 #
 # gh-pages.sh
-# Copyright (C) 2014 Enno Boland <eb@s01.de>
+# Copyright © 2014 Enno Boland <eb@s01.de>
 #
 # Distributed under terms of the MIT license.
 #
