@@ -1,5 +1,5 @@
 var GLOBAL = "Terminal";
-var REPORTER="dot"
+var REPORTER="dot";
 var SRC = [ "lib/**/*.js" ];
 
 module.exports = function(grunt) {
@@ -66,7 +66,11 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks("grunt-jsdoc");
 	grunt.loadNpmTasks("grunt-mocha-test");
 
-	grunt.registerTask("test-browser:inform", function() {
+	grunt.registerTask("test-browser", function() {
+		grunt.task.run([
+				"jshint",
+				"browserify:debug"
+		]);
 		grunt.log.write("Open file://" + __dirname +
 				"/test/index.html in your browser.").ok();
 	});
@@ -80,10 +84,5 @@ module.exports = function(grunt) {
 	grunt.registerTask("test", [
 			"jshint",
 			"mochaTest"
-	]);
-	grunt.registerTask("test-browser", [
-			"jshint",
-			"browserify:debug",
-			"test-browser:inform"
 	]);
 };
