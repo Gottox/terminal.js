@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: handler/csi.js</title>
+    
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+    
+    <h1 class="page-title">Source: handler/csi.js</h1>
+    
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source"><code>// function(cmd, n, m, args, mod);
+
+/**
+* csi command handlers
+* @enum {Function|string}
+* @readonly
+*/
+var csi = {
+	/**
+	* CSI Ps @ &lt;br>
+	* Insert Ps (Blank) Character(s) (default = 1) (ICH)
+	*/
+	'@': function(cmd, n, m, args, mod) {
+		this.buffer.insertBlank(n || 1);
+	},
+
+	/**
+	* CSI Ps A &lt;br>
+	* Cursor Up Ps Times (default = 1) (CUU)
+	*/
+	'A': function(cmd, n, m, args, mod) {
+		this.buffer.mvCursor(0, -(n || 1));
+	},
+
+	/**
+	* CSI Ps B &lt;br>
+	* Cursor Down Ps Times (default = 1) (CUD)
+	*/
+	'B': function(cmd, n, m, args, mod) {
+		this.buffer.mvCursor(0, n || 1);
+	},
+
+	/**
+	* CSI Ps C &lt;br>
+	* Cursor Forward Ps Times (default = 1) (CUF)
+	*/
+	'C': function(cmd, n, m, args, mod) {
+		this.buffer.mvCursor(n || 1, 0);
+	},
+
+	/**
+	* CSI Ps D &lt;br>
+	* Cursor backward Ps Times (default = 1) (CUB)
+	*/
+	'D': function(cmd, n, m, args, mod) {
+		this.buffer.mvCursor(-(n || 1), 0);
+	},
+
+	/**
+	* CSI Ps E &lt;br>
+	* Cursor down Ps Rows, to column 1 (default = 1) (CNL , NEL)
+	*/
+	'E': function(cmd, n, m, args, mod) {
+		this.buffer.mvCursor(0, n || 1).setCursor(0, null);
+	},
+
+	/**
+	* CSI Ps F &lt;br>
+	* Cursor Preceding Line PS Times (default = 1) (CPL)
+	*/
+	'F': function(cmd, n, m, args, mod) {
+		// (vt52 compatibility mode - Use special graphics character set? )
+		this.buffer.mvCursor(0, -n || 1).setCursor(0, null);
+	},
+
+	/**
+	* CSI Ps G &lt;br>
+	* Cursor Character Absolute  [column] (default = [row,1]) (CHA)
+	*/
+	'G': function(cmd, n, m, args, mod) {
+		//vt52 compatibility mode - Use normal US/UK character set )
+		this.buffer.setCursor((n || 1) - 1);
+	},
+
+	/**
+	* CSI Ps ; Ps H &lt;br>
+	* Cursor Position [row;column] (default = [1,1]) (CUP)
+	*/
+	'H': function(cmd, n, m, args, mod) {
+		this.buffer.setCursor((m || 1) - 1, (n || 1) - 1);
+	},
+
+	/**
+	* CSI Ps I &lt;br>
+	* Cursor Forward Tabulation Ps tab stops (default = 1) (CHT)
+	*/
+	'I': function(cmd, n, m, args, mod) {
+		this.buffer.mvTab(n || 1);
+	},
+
+	/**
+	* CSI Ps J &lt;br>
+	* Erase in Display (default = 0) (ED)
+	* &lt;ul>
+	* &lt;li>J  - erase from cursor to end of display&lt;/li>
+	* &lt;li>0J - erase from cursor to end of display&lt;/li>
+	* &lt;li>1J - erase from start to cursor&lt;/li>
+	* &lt;li>2J - erase whole display&lt;/li>
+	* &lt;/ul>
+	*/
+	'J': function(cmd, n, m, args, mod) {
+		this.buffer.eraseInDisplay(n || 0);
+	},
+
+	/**
+	* CSI Ps K &lt;br>
+	* Erase in Line (default = 0) (EL)
+	* &lt;ul>
+	* &lt;li>K  - erase from cursor to end of line&lt;/li>
+	* &lt;li>0K - erase from cursor to end of line&lt;/li>
+	* &lt;li>1K - erase from start of line to cursor&lt;/li>
+	* &lt;li>2K - erase whole line&lt;/li>
+	* &lt;/ul>
+	*/
+	'K': function(cmd, n, m, args, mod) {
+		this.buffer.eraseInLine(n || 0);
+	},
+
+	/**
+	* CSI Ps L &lt;br>
+	* Insert Ps Line(s) (default = 1) (IL)
+	*/
+	'L': function(cmd, n, m, args, mod) {
+		this.buffer.insertLine(n || 1);
+	},
+
+	/**
+	* CSI Ps M &lt;br>
+	* Delete Ps Line(s) (default = 1) (DL)
+	*/
+	'M': function(cmd, n, m, args, mod) {
+		this.buffer.removeLine(n || 1);
+	},
+
+	/**
+	* CSI Ps P &lt;br>
+	* Delete Ps Character(s) (default = 1) (DCH)
+	*/
+	'P': function(cmd, n, m, args, mod) {
+		this.buffer.removeChar(n || 1);
+	},
+
+	/**
+	* CSI Pl ; Pc R &lt;br>
+	* Report cursor pAosition (CPR)&lt;br>
+	* &lt;ul>
+	* &lt;li>Pl indicates what line the cursor is on&lt;/li>
+	* &lt;li>Pr indicated what row the cursor is on&lt;/li>
+	* &lt;/ul>
+	* @todo implement
+	*/
+	'R': function(cmd, n, m, args, mod) {
+		// TODO
+	},
+
+	/**
+	* CSI Ps S &lt;br>
+	* Scroll up Ps lines (default = 1) (SU)
+	*/
+	'S': function(cmd, n, m, args, mod) {
+		this.buffer.scroll(n || 1);
+	},
+
+	/**
+	* CSI Ps T &lt;br>
+	* Scroll down Ps lines (default = 1) (SD) &lt;br>
+	* CSI Ps ; Ps ; Ps ; Ps ; Ps T &lt;br>
+	* Initiate highlight mouse tracking &lt;br>
+	* CSI > Ps; Ps T &lt;br>
+	* @todo handle '>' mode
+	*/
+	'T': function(cmd, n, m, args, mod) {
+		if(args.length &lt;= 1)
+			this.buffer.scroll(-n || -1);
+	},
+
+	/**
+	* CSI Ps X &lt;br>
+	* Erase Ps Character(s) (default = 1) (ECH)
+	*/
+	'X': function(cmd, n, m, args, mod) {
+		this.buffer.eraseCharacters(n || 1);
+	},
+
+	/**
+	* CSI Ps Z &lt;br>
+	* Cursor Backward Tabulation Ps tab stops (default = 1) (CBT)
+	*/
+	'Z': function(cmd, n, m, args, mod) {
+		this.buffer.mvTab(-(n || 1));
+	},
+
+	/**
+	* CSI Ps a &lt;br>
+	* Move cursor right the indicated # of columns (default = 1) (HPR)
+	*/
+	'a': function(cmd, n, m, args, mod) {
+		this.buffer.mvCursor(n || 1, 0);
+	},
+
+	/**
+	* CSI Ps b &lt;br>
+	* Repeat the preceding graphic character Ps times (REP)
+	*/
+	'b': function(cmd, n, m, args, mod) {
+		// TODO
+	},
+
+	/**
+	* CSI P s c &lt;br>
+	* Send Device Attributes (Primary DA) &lt;br>
+	* CSI > P s c &lt;br>
+	* Send Device Attributes (Secondary DA) &lt;br>
+	*/
+	'c': function(cmd, n, m, args, mod) {
+		// TODO
+		this.emit("request", "\x1b>0;95;c");
+	},
+
+	/**
+	* CSI Pm d &lt;br>
+	* Line Position Absolute  [row] (default = [1,column]) (VPA)
+	*/
+	'd': function(cmd, n, m, args, mod) {
+		this.buffer.setCursor(null, (n || 1) - 1);
+	},
+
+	/**
+	* CSI Pm e &lt;br>
+	* Vertical position relative.
+	* Move cursor down the indicated # of rows (default = 1) (VPR)
+	*/
+	'e': function(cmd, n, m, args, mod) {
+		this.buffer.mvCursor(0, n || 1);
+	},
+
+	/**
+	* CSI Ps ; Ps f &lt;br>
+	* Horizontal and Vertical Position [row;column] (default =  [1,1]) (HVP)
+	*/
+	'f': function(cmd, n, m, args, mod) {
+		this.buffer.setCursor((m || 1) - 1, (n || 1) - 1);
+	},
+
+	/**
+	* CSI Ps g &lt;br>
+	* Tab Clear (default = 0) (TBC)
+	*/
+	'g': function(cmd, n, m, args, mod) {
+		// 0g = clear tab stop at the current position
+		// 3g = delete all tab stops
+		// TODO
+		this.buffer.tabClear(n || 0);
+	},
+
+	/**
+	* CSI Pm h &lt;br>
+	* Set Mode (SM) &lt;br>
+	* CSI ? Pm h - mouse escape codes, cursor escape codes &lt;br>
+	*/
+	'h': function(cmd, n, m, args, mod) {
+		for(i = 0; i &lt; args.length; i++)
+			this.callHandler('mode', mod+args[i], true);
+	},
+
+	/**
+	* CSI Pm i  Media Copy (MC) &lt;br>
+	* CSI ? Pm i &lt;br>
+	*/
+	'i': function(cmd, n, m, args, mod) {
+		// TODO
+	},
+
+	/**
+	* CSI Pm l  Reset Mode (RM) &lt;br>
+	* CSI ? Pm l &lt;br>
+	*/
+	'l': function(cmd, n, m, args, mod) {
+		for(i = 0; i &lt; args.length; i++)
+			this.callHandler('mode', mod+args[i], false);
+	},
+
+	/**
+	* CSI Pm m &lt;br>
+	* Character Attributes (SGR) &lt;br>
+	* CSI > Ps; Ps m &lt;br>
+	*/
+	'm': function(cmd, n, m, args, mod) {
+		// Set graphic rendition
+		if(args[1] === 5 && args[0] === 38)
+			this.buffer.setAttribute('fg', args[2]);
+		else if(args[1] === 5 && args[0] === 48)
+			this.buffer.setAttribute('bg', args[2]);
+		else {
+			for(i = 0; i &lt; args.length; i++)
+				this.callHandler('sgr', args[i]);
+			if(i === 0)
+				this.callHandler('sgr', 0);
+		}
+	},
+
+	/**
+	* CSI Ps n  Device Status Report (DSR) &lt;br>
+	* CSI > Ps n &lt;br>
+	* &lt;ul>
+	* &lt;li>5n - Device Status report&lt;/li>
+	* &lt;li>0n - Response: terminal is OK&lt;/li>
+	* &lt;li>3n - Response: terminal is not OK&lt;/li>
+	* &lt;li>6n - Request cursor position (CPR)&lt;/li>
+	* &lt;/ul>
+	* @todo implement
+	*/
+	'n': function(cmd, n, m, args, mod) {
+		// TODO
+	},
+
+	/**
+	* CSI > Ps p  Set pointer mode &lt;br>
+	* CSI ! p   Soft terminal reset (DECSTR) &lt;br>
+	* CSI Ps$ p &lt;br>
+	*   Request ANSI mode (DECRQM) &lt;br>
+	* CSI ? Ps$ p &lt;br>
+	* Request DEC private mode (DECRQM) &lt;br>
+	* CSI Ps ; Ps " p &lt;br>
+	*/
+	'p': function(cmd, n, m, args, mod) {
+		// TODO
+	},
+
+	/**
+	* CSI Ps q &lt;br>
+	* Load LEDs (DECLL) &lt;br>
+	* CSI Ps SP q &lt;br>
+	* CSI Ps " q &lt;br>
+	* &lt;ul>
+	* &lt;li>0q - turn off all four leds&lt;/li>
+	* &lt;li>1q - turn on Led #1&lt;/li>
+	* &lt;li>2q - turn on Led #2&lt;/li>
+	* &lt;li>3q - turn on Led #3&lt;/li>
+	* &lt;li>4q - turn on Led #4&lt;/li>
+	* &lt;/ul>
+	*/
+	'q': function(cmd, n, m, args, mod) {
+		this.buffer.setLed(n);
+	},
+
+	/**
+	* CSI Ps ; Ps r &lt;br>
+	* Set Scrolling Region [top;bottom] (default = full size of window)
+	* (DECSTBM) &lt;br>
+	* CSI ? Pm r &lt;br>
+	* CSI Pt; Pl; Pb; Pr; Ps$ r &lt;br>
+	*/
+	'r': function(cmd, n, m, args, mod) {
+		// TODO handle ? prefix, $ ends
+		this.buffer.setScrollRegion((n || 1) -1 , (m || (this.buffer.height) ) -1);
+	},
+
+	/**
+	* CSI ? Pm s &lt;br>
+	* Save cursor (ANSI.SYS)
+	*/
+	's': function(cmd, n, m, args, mod) {
+		this.buffer.saveCursor();
+	},
+
+	/**
+	* CSI t &lt;br>
+	* unknown
+	* @todo implement
+	*/
+	't': function(cmd, n, m, args, mod) {
+		// TODO
+	},
+
+	/**
+	* CSI Ps SP u &lt;br>
+	* Restore cursor (ANSI.SYS)
+	*/
+	'u': function(cmd, n, m, args, mod) {
+		this.buffer.restoreCursor();
+	},
+
+	/**
+	* CSI Pt; Pl; Pb; Pr; Pp; Pt; Pl; Pp$ v &lt;br>
+	* (DECCRA)
+	* @todo implement
+	*/
+	'v': function(cmd, n, m, args, mod) {
+		// TODO
+	},
+
+	/**
+	* CSI Pt ; Pl ; Pb ; Pr ' w &lt;br>
+	* (DECEFR)
+	* @todo implement
+	*/
+	'w': function(cmd, n, m, args, mod) {
+		// TODO
+	},
+
+	/**
+	* CSI Ps x  Request Terminal Parameters (DECREQTPARM) &lt;br>
+	* CSI Ps x  Select Attribute Change Extent (DECSACE) &lt;br>
+	* CSI Pc; Pt; Pl; Pb; Pr$ x &lt;br>
+	* @todo implement
+	*/
+	'x': function(cmd, n, m, args, mod) {
+		// TODO
+	},
+
+	/**
+	* Request Checksum of Rectangular Area
+	* DECRQCRA
+	* @todo implement
+	*/
+	'y': function(cmd, n, m, args, mod) {
+		// TODO
+	},
+
+	/**
+	* CSI Ps ; Pu ' z &lt;br>
+	* CSI Pt; Pl; Pb; Pr$ z &lt;br>
+	* (DECELR) / (DECERA)
+	* Erase rectangular area
+	*/
+	'z': function(cmd, n, m, args, mod) {
+		// TODO
+	},
+
+	/**
+	* CSI Pm `  Character Position Absolute &lt;br>
+	*   [column] (default = [row,1]) (HPA)
+	*/
+	'`': function(cmd, n, m, args, mod) {
+		this.buffer.setCursor((n || 1) - 1);
+	},
+
+	/**
+	* CSI Pm ' { &lt;br>
+	* CSI Pt; Pl; Pb; Pr$ { &lt;br>
+	* Selectively erase retangular area (DECSLE) / (DECSERA)
+	* @todo implement
+	*/
+	'{': function(cmd, n, m, args, mod) {
+		// TODO
+	},
+
+
+	/**
+	* CSI Ps ' | &lt;br>
+	* Request locator position (DECRQLP)
+	* @todo implement
+	*/
+	'|': function(cmd, n, m, args, mod) {
+		// TODO
+	},
+
+	/**
+	* CSI P m SP } &lt;br>
+	* Insert P s Column(s) (default = 1) (DECIC), VT420 and up
+	* @todo implement
+	*/
+	'}': function(cmd, n, m, args, mod) {
+		// TODO
+	},
+
+	/**
+	* CSI P m SP ~ &lt;br>
+	* Delete P s Column(s) (default = 1) (DECDC), VT420 and up
+	* @todo implement
+	*/
+	'~': function(cmd, n, m, args, mod) {
+		// TODO
+	}
+};
+module.exports = csi;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="TermBuffer.html">TermBuffer</a></li><li><a href="Terminal.html">Terminal</a></li><li><a href="TermWriter.html">TermWriter</a></li></ul><h3>Global</h3><ul><li><a href="global.html#chr">chr</a></li><li><a href="global.html#csi">csi</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Tue May 20 2014 19:23:29 GMT+0200 (CEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

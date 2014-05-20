@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Index</title>
+    <title>JSDoc: Source: handler/chr.js</title>
     
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,39 +17,79 @@
 
 <div id="main">
     
-    <h1 class="page-title">Index</h1>
+    <h1 class="page-title">Source: handler/chr.js</h1>
     
     
 
 
     
-
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
     <section>
-        <article><h1>terminal.js</h1>
-<p>Terminal.js is a rendering engine for vt100-like terminals.
-It is written from scratch and supports most commonly used escape sequences.</p>
-<p><a href="https://travis-ci.org/Gottox/terminal.js"><img src="https://travis-ci.org/Gottox/terminal.js.png" alt="Build Status"></a></p>
-<h2>Support</h2>
-<p>Find us on Freenode: #terminal.js</p></article>
+        <article>
+            <pre class="prettyprint source"><code>// function(cmd, chunk);
+/**
+* handlers for command characters
+* @enum {Function|string}
+* @readonly
+*/
+var chr = {
+	/**
+	* BELL
+	*/
+	'\x07': function(cmd, chunk) { // BELL
+		this.emit("bell");
+	},
+	/**
+	* BACKSPACE
+	*/
+	'\x08': function(cmd, chunk) { // BACKSPACE
+		this.buffer.mvCursor(-1, 0);
+	},
+	/**
+	* TAB
+	*/
+	'\x09': function(cmd, chunk) { // TAB
+		this.buffer.mvTab(1);
+	},
+	/**
+	* DELETE
+	*/
+	'\x7f': function(cmd, chunk) { // DELETE
+		this.buffer.removeChar(1);
+	},
+	/**
+	* TABSET
+	*/
+	'\x88': function(cmd, chunk) { // TABSET
+		this.buffer.setTab();
+	},
+	/**
+	* SO
+	*/
+	'\x0e': function() { }, // SO
+	/**
+	* SI
+	*/
+	'\x0f': function() { }, // SI
+
+	/**
+	* ESCAPE
+	*/
+	'\x1b': function(cmd, chunk) {
+		return chunk[1] !== undefined ?
+			this.callHandler('esc', chunk[1], chunk) :
+			0;
+	},
+	/**
+	* CARRIAGE RETURN
+	*/
+	'\r': function(cmd, chunk) {
+		this.buffer.setCursor(0, null);
+	}
+};
+module.exports = chr;
+</code></pre>
+        </article>
     </section>
-
-
 
 
 
