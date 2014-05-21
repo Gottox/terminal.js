@@ -76,11 +76,34 @@ describe('TermWriter', function() {
 		expect(t1.buffer.getLed(1)).to.be(false);
 		expect(t1.buffer.getLed(2)).to.be(false);
 		expect(t1.buffer.getLed(3)).to.be(false);
-		t1.write("\x1b[0q\x1b[1q\x1b[2q\x1b[3q");
+		// enable every single Led and one not existing
+		for(var i = 0; i < 5; i++) {
+			t1.write("\x1b["+(i+1)+"q");
+			expect(t1.buffer.getLed(0)).to.be(i==0);
+			expect(t1.buffer.getLed(1)).to.be(i==1);
+			expect(t1.buffer.getLed(2)).to.be(i==2);
+			expect(t1.buffer.getLed(3)).to.be(i==3);
+			expect(t1.buffer.getLed(4)).to.be(undefined);
+
+			t1.write("\x1b[0q");
+
+			expect(t1.buffer.getLed(0)).to.be(false);
+			expect(t1.buffer.getLed(1)).to.be(false);
+			expect(t1.buffer.getLed(2)).to.be(false);
+			expect(t1.buffer.getLed(3)).to.be(false);
+		}
+		t1.write("\x1b[1q\x1b[2q\x1b[3q\x1b[4q");
 		expect(t1.buffer.getLed(0)).to.be(true);
 		expect(t1.buffer.getLed(1)).to.be(true);
 		expect(t1.buffer.getLed(2)).to.be(true);
 		expect(t1.buffer.getLed(3)).to.be(true);
+
+		t1.write("\x1b[0q");
+
+		expect(t1.buffer.getLed(0)).to.be(false);
+		expect(t1.buffer.getLed(1)).to.be(false);
+		expect(t1.buffer.getLed(2)).to.be(false);
+		expect(t1.buffer.getLed(3)).to.be(false);
 	});
 
 	it("should reset (RIS)", function() {
