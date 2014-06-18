@@ -1,16 +1,15 @@
 describe('HtmlOutput', function() {
 	var TermBuffer = Terminal.TermBuffer;
-	var TermWriter = Terminal.TermWriter;
 	var HtmlOutput = Terminal.output.HtmlOutput;
 
-	function newTermWriter(w, h) {
-		var t = new TermBuffer(w, h), tw = new TermWriter(t);
+	function newTerminal(w, h) {
+		var t = new TermBuffer(w, h), tw = new Terminal(t);
 		t.setMode('crlf', true);
 		return tw;
 	}
 
 	it("basic write test", function() {
-		var t = newTermWriter();
+		var t = newTerminal();
 		var r = new HtmlOutput(t.buffer);
 		t.write("\x1b[31mHello\x1b[m World");
 

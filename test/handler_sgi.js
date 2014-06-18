@@ -1,13 +1,12 @@
 var TermBuffer = Terminal.TermBuffer;
-var TermWriter = Terminal.TermWriter;
-function newTermWriter(w, h) {
-	var t = new TermBuffer(w, h), tw = new TermWriter(t);
+function newTerminal(w, h) {
+	var t = new TermBuffer(w, h), tw = new Terminal(t);
 	t.setMode('crlf', true);
 	return tw;
 }
-describe('TermWriter SGI', function() {
+describe('Terminal SGI', function() {
 	it("resets attributes", function() {
-		var t = newTermWriter();
+		var t = newTerminal();
 		t.write("\x1b[1mbb\x1b[mn");
 		var line = t.buffer.getLine(0);
 		expect(line.str).to.be('bbn');
@@ -16,7 +15,7 @@ describe('TermWriter SGI', function() {
 		expect(line.attr[2].bold).to.be(false);
 	});
 	it("sets bold", function() {
-		var t = newTermWriter();
+		var t = newTerminal();
 		t.write("\x1b[1mb");
 		var line = t.buffer.getLine(0);
 		expect(line.str).to.be('b');

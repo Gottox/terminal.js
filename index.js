@@ -2,7 +2,6 @@ module.exports = require("./lib/terminal.js");
 
 module.exports.TermBuffer = require("./lib/term_buffer.js");
 module.exports.TermDiff = require("./lib/term_diff.js");
-module.exports.TermWriter = require("./lib/term_writer.js");
 module.exports.output = {
 	PlainOutput: require("./lib/output/plain.js"),
 	AnsiOutput: require("./lib/output/ansi.js"),

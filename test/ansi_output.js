@@ -1,14 +1,13 @@
 var TermBuffer = Terminal.TermBuffer;
-var TermWriter = Terminal.TermWriter;
 var AnsiOutput = Terminal.output.AnsiOutput;
-function newTermWriter(w, h) {
-	var t = new TermBuffer(w, h), tw = new TermWriter(t);
+function newTerminal(w, h) {
+	var t = new TermBuffer(w, h), tw = new Terminal(t);
 	t.setMode('crlf', true);
 	return tw;
 }
 describe('AnsiOutput', function() {
 	it("basic write test", function() {
-		var t = newTermWriter();
+		var t = newTerminal();
 		var r = new AnsiOutput(t.buffer);
 		t.write("Hello");
 
