@@ -56,6 +56,13 @@ module.exports = function(grunt) {
 				}
 			}
 		},
+		copy: {
+			doc: {
+				expand:true,
+				src: "dist",
+				dest: "doc"
+			}
+		},
 		clean: [ "dist", "doc" ]
 	});
 
@@ -65,6 +72,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks("grunt-contrib-uglify");
 	grunt.loadNpmTasks("grunt-jsdoc");
 	grunt.loadNpmTasks("grunt-mocha-test");
+	grunt.loadNpmTasks('grunt-contrib-copy');
 
 	grunt.registerTask("test-browser", function() {
 		grunt.task.run([
@@ -79,7 +87,8 @@ module.exports = function(grunt) {
 			"browserify:release",
 			"uglify" ]);
 	grunt.registerTask("doc", [
-			"jsdoc"
+			"jsdoc",
+			"copy:doc"
 	]);
 	grunt.registerTask("test", [
 			"jshint",
