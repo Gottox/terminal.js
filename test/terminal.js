@@ -1,9 +1,9 @@
 describe('Terminal', function() {
 	var TermBuffer = Terminal.TermBuffer;
 	function newTerminal(w, h) {
-		var t = new TermBuffer(w, h), tw = new Terminal(t);
-		t.setMode('crlf', true);
-		return tw;
+		var t = new Terminal({width: w, height: h});
+		t.buffer.setMode('crlf', true);
+		return t;
 	}
 	it("can handle splitted escape sequences", function() {
 		var t = newTerminal();

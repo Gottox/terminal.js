@@ -1,9 +1,9 @@
 var TermBuffer = Terminal.TermBuffer;
 var PlainOutput = Terminal.output.PlainOutput;
 function newTerminal(w, h) {
-	var t = new TermBuffer(w, h), tw = new Terminal(t);
-	t.setMode('crlf', true);
-	return tw;
+	var t = new Terminal({width: w, height: h});
+	t.buffer.setMode('crlf', true);
+	return t;
 }
 describe('PlainOutput', function() {
 	it("basic write test", function() {
