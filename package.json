@@ -21,7 +21,7 @@
     , "terminal"
   ]
   , "dependencies": {
-      "browserify": "2.13.x"
+      "browserify": "^4.0.0"
     , "uglify-js": "*"
   }
   , "devDependencies": {

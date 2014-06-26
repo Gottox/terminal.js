@@ -3,7 +3,7 @@ REPORTER = dot
 BROWSERIFY ?= ./node_modules/browserify/bin/cmd.js
 MOCHA ?= ./node_modules/.bin/mocha
 JSCOVERAGE ?= ./node_modules/.bin/jscoverage
-JSHINT ?= ./node_modules/.bin/jshint
+JSHINT ?= ./node_modules/jshint/bin/jshint
 UGLIFYJS ?= ./node_modules/.bin/uglifyjs
 
 GLOBAL ?= Terminal
