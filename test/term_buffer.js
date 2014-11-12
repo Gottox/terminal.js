@@ -151,7 +151,7 @@ describe('TermBuffer', function() {
 		var t = newTermBuffer(80,24);
 		t.setCursor(0,23);
 		t.write("line1");
-		t.resize(2,2);
+		t.resize({height: 2, width: 2 });
 		t.mvCursor(-10,0);
 		t.write("\nab");
 		expect(t.toString()).to.be("li\nab");
@@ -160,14 +160,14 @@ describe('TermBuffer', function() {
 	it("resize correctly to smaller size, cut off top", function() {
 		var t = newTermBuffer(80,24);
 		t.write("line1\n");
-		t.resize(2,2);
+		t.resize({height: 2, width: 2 });
 		t.write("ab\n");
 		expect(t.toString()).to.be("ab\n");
 	});
 	it("resize correctly to bigger size", function() {
 		var t = newTermBuffer(80,24);
 		t.write("line1\n");
-		t.resize(80,28);
+		t.resize({height: 28, width: 80 });
 		expect(t.toString()).to.be("line1\n");
 	});
 	it("emits a linechange event", function(done) {
