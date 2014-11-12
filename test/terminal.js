@@ -1,7 +1,7 @@
 describe('Terminal', function() {
 	var TermBuffer = Terminal.TermBuffer;
 	function newTerminal(w, h) {
-		var t = new Terminal({width: w, height: h});
+		var t = new Terminal({columns: w, rows: h});
 		t.buffer.setMode('crlf', true);
 		return t;
 	}
@@ -160,7 +160,7 @@ describe('Terminal', function() {
 	it("keeps correct size", function() {
 		var t = newTerminal(80,24);
 		t.write("\x1b[24;1Hline1\nline2");
-		expect(t.buffer.getBufferHeight()).to.be(24);
+		expect(t.buffer.getBufferRowCount()).to.be(24);
 	});
 
 	it("enters graphicsmode", function() {

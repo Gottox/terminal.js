@@ -1,7 +1,7 @@
 var TermBuffer = Terminal.TermBuffer;
 var PlainOutput = Terminal.output.PlainOutput;
 function newTerminal(w, h) {
-	var t = new Terminal({width: w, height: h});
+	var t = new Terminal({columns: w, rows: h});
 	t.buffer.setMode('crlf', true);
 	return t;
 }

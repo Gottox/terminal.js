@@ -13,8 +13,8 @@ describe('TermBuffer', function() {
 	});
 	it("creates TermBuffer with dimension", function() {
 		var t = newTermBuffer(100, 200);
-		expect(t.width).to.be(100);
-		expect(t.height).to.be(200);
+		expect(t.columns).to.be(100);
+		expect(t.rows).to.be(200);
 	});
 	it("writes to TermBuffer", function() {
 		var t = newTermBuffer();
@@ -151,7 +151,7 @@ describe('TermBuffer', function() {
 		var t = newTermBuffer(80,24);
 		t.setCursor(0,23);
 		t.write("line1");
-		t.resize({height: 2, width: 2 });
+		t.resize({rows: 2, columns: 2 });
 		t.mvCursor(-10,0);
 		t.write("\nab");
 		expect(t.toString()).to.be("li\nab");
@@ -160,14 +160,14 @@ describe('TermBuffer', function() {
 	it("resize correctly to smaller size, cut off top", function() {
 		var t = newTermBuffer(80,24);
 		t.write("line1\n");
-		t.resize({height: 2, width: 2 });
+		t.resize({rows: 2, columns: 2 });
 		t.write("ab\n");
 		expect(t.toString()).to.be("ab\n");
 	});
 	it("resize correctly to bigger size", function() {
 		var t = newTermBuffer(80,24);
 		t.write("line1\n");
-		t.resize({height: 28, width: 80 });
+		t.resize({rows: 28, columns: 80 });
 		expect(t.toString()).to.be("line1\n");
 	});
 	it("emits a linechange event", function(done) {
@@ -238,7 +238,7 @@ describe('TermBuffer', function() {
 	it("keeps correct size", function() {
 		var t = newTermBuffer(80,24);
 		t.setCursor(0,23).write("line1\nline2");
-		expect(t.getBufferHeight()).to.be(24);
+		expect(t.getBufferRowCount()).to.be(24);
 	});
 	it("keeps correct attributes", function() {
 		var t = newTermBuffer(80,24);

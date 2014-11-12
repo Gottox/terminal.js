@@ -115,16 +115,16 @@ describe('TermDiff', function() {
 		var t1 = newTermBuffer();
 		var t2 = newTermBuffer();
 		var d = new TermDiff(t1, t2);
-		expect(d._width).to.be(null);
-		expect(d._height).to.be(null);
+		expect(d._columns).to.be(null);
+		expect(d._rows).to.be(null);
 	});
 
 	it("detects size differences if the terminals are different", function() {
 		var t1 = newTermBuffer(10,20);
 		var t2 = newTermBuffer(12,30);
 		var d = new TermDiff(t1, t2);
-		expect(d._width).to.be(12);
-		expect(d._height).to.be(30);
+		expect(d._columns).to.be(12);
+		expect(d._rows).to.be(30);
 	});
 
 	/*it("detects no tabs differences if the terminals are the same", function() {
@@ -145,11 +145,11 @@ describe('TermDiff', function() {
 
 	it("correctly applies size", function() {
 		var t1 = newTermBuffer(80,24);
-		var d = { height: 30, width:12 };
+		var d = { rows: 30, columns:12 };
 		var p = new TermDiff(d);
 		p.apply(t1);
-		expect(t1.height).to.be(30);
-		expect(t1.width).to.be(12);
+		expect(t1.rows).to.be(30);
+		expect(t1.columns).to.be(12);
 	});
 
 	it("correctly applies cursor", function() {
@@ -217,6 +217,6 @@ describe('TermDiff', function() {
 		var d = { changes: [ { 'l': 0 , '-': 3 }] };
 		var p = new TermDiff(d);
 		p.apply(t1);
-		expect(t1.getBufferHeight()).to.be(1);
+		expect(t1.getBufferRowCount()).to.be(1);
 	});
 });
