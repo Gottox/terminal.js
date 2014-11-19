@@ -45,7 +45,8 @@ module.exports = function(grunt) {
 			}
 		},
 		jshint: {
-			all: SRC
+			all: SRC,
+			options: grunt.file.readJSON("package.json").jshintConfig,
 		},
 		jsdoc : {
 			all: {
