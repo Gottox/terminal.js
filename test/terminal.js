@@ -1,8 +1,7 @@
 describe('Terminal', function() {
-	var TermBuffer = Terminal.TermBuffer;
 	function newTerminal(w, h) {
 		var t = new Terminal({columns: w, rows: h});
-		t.buffer.setMode('crlf', true);
+		t.state.setMode('crlf', true);
 		return t;
 	}
 	it("can handle splitted escape sequences", function() {
@@ -14,8 +13,8 @@ describe('Terminal', function() {
 		t.write("2");
 		t.write("0");
 		t.write("H");
-		expect(t.buffer.cursor.x).to.be(19);
-		expect(t.buffer.cursor.y).to.be(9);
+		expect(t.state.cursor.x).to.be(19);
+		expect(t.state.cursor.y).to.be(9);
 	});
 	it("should handle mode changes correctly", function() {
 		var t = newTerminal();
@@ -57,52 +56,52 @@ describe('Terminal', function() {
 		var t = newTerminal(80,24);
 		t.write("\x1b[0;1mBold\x1b[0m\n\x1b[A\n");
 		expect(t.toString()).to.be("Bold\n");
-		expect(t.buffer.getLine(0).attr['0'].bold).to.be(true);
+		expect(t.state.getLine(0).attr['0'].bold).to.be(true);
 	}); */
 	it("should reverse the terminal correctly", function() {
 		var t = newTerminal(80,24);
-		expect(t.buffer._modes.reverse).to.be(false);
+		expect(t.state._modes.reverse).to.be(false);
 		t.write("\x1b[?5hABCDEFGH");
-		expect(t.buffer._modes.reverse).to.be(true);
+		expect(t.state._modes.reverse).to.be(true);
 		t.write("\x1b[?5l");
-		expect(t.buffer._modes.reverse).to.be(false);
+		expect(t.state._modes.reverse).to.be(false);
 		expect(t.toString()).to.be("ABCDEFGH");
 	});
 
 	it("should set Leds", function() {
 		var t1 = newTerminal();
-		expect(t1.buffer.getLed(0)).to.be(false);
-		expect(t1.buffer.getLed(1)).to.be(false);
-		expect(t1.buffer.getLed(2)).to.be(false);
-		expect(t1.buffer.getLed(3)).to.be(false);
+		expect(t1.state.getLed(0)).to.be(false);
+		expect(t1.state.getLed(1)).to.be(false);
+		expect(t1.state.getLed(2)).to.be(false);
+		expect(t1.state.getLed(3)).to.be(false);
 		// enable every single Led and one not existing
 		for(var i = 0; i < 5; i++) {
 			t1.write("\x1b["+(i+1)+"q");
-			expect(t1.buffer.getLed(0)).to.be(i==0);
-			expect(t1.buffer.getLed(1)).to.be(i==1);
-			expect(t1.buffer.getLed(2)).to.be(i==2);
-			expect(t1.buffer.getLed(3)).to.be(i==3);
-			expect(t1.buffer.getLed(4)).to.be(undefined);
+			expect(t1.state.getLed(0)).to.be(i==0);
+			expect(t1.state.getLed(1)).to.be(i==1);
+			expect(t1.state.getLed(2)).to.be(i==2);
+			expect(t1.state.getLed(3)).to.be(i==3);
+			expect(t1.state.getLed(4)).to.be(undefined);
 
 			t1.write("\x1b[0q");
 
-			expect(t1.buffer.getLed(0)).to.be(false);
-			expect(t1.buffer.getLed(1)).to.be(false);
-			expect(t1.buffer.getLed(2)).to.be(false);
-			expect(t1.buffer.getLed(3)).to.be(false);
+			expect(t1.state.getLed(0)).to.be(false);
+			expect(t1.state.getLed(1)).to.be(false);
+			expect(t1.state.getLed(2)).to.be(false);
+			expect(t1.state.getLed(3)).to.be(false);
 		}
 		t1.write("\x1b[1q\x1b[2q\x1b[3q\x1b[4q");
-		expect(t1.buffer.getLed(0)).to.be(true);
-		expect(t1.buffer.getLed(1)).to.be(true);
-		expect(t1.buffer.getLed(2)).to.be(true);
-		expect(t1.buffer.getLed(3)).to.be(true);
+		expect(t1.state.getLed(0)).to.be(true);
+		expect(t1.state.getLed(1)).to.be(true);
+		expect(t1.state.getLed(2)).to.be(true);
+		expect(t1.state.getLed(3)).to.be(true);
 
 		t1.write("\x1b[0q");
 
-		expect(t1.buffer.getLed(0)).to.be(false);
-		expect(t1.buffer.getLed(1)).to.be(false);
-		expect(t1.buffer.getLed(2)).to.be(false);
-		expect(t1.buffer.getLed(3)).to.be(false);
+		expect(t1.state.getLed(0)).to.be(false);
+		expect(t1.state.getLed(1)).to.be(false);
+		expect(t1.state.getLed(2)).to.be(false);
+		expect(t1.state.getLed(3)).to.be(false);
 	});
 
 	it("should reset (RIS)", function() {
@@ -110,11 +109,11 @@ describe('Terminal', function() {
 		//change mode, led and write a char
 		t.write("\x1b[?5h\x1b[1qABCD\x1bc");
 		expect(t.toString()).to.be("");
-		expect(t.buffer._leds[0]).to.be(false);
-		expect(t.buffer._leds[1]).to.be(false);
-		expect(t.buffer._leds[2]).to.be(false);
-		expect(t.buffer._leds[3]).to.be(false);
-		expect(t.buffer._attributes.bold).to.be(false);
+		expect(t.state._leds[0]).to.be(false);
+		expect(t.state._leds[1]).to.be(false);
+		expect(t.state._leds[2]).to.be(false);
+		expect(t.state._leds[3]).to.be(false);
+		expect(t.state._attributes.bold).to.be(false);
 	});
 
 	it("moves down and to beginning of line (NEL)", function() {
@@ -143,43 +142,43 @@ describe('Terminal', function() {
 	it("should set ScrollRegion correctly if no params specified", function() {
 		var t = newTerminal(80,13);
 		t.write("ABCDEF\n\x1b[1;r");
-		expect(t.buffer._scrollRegion[1]).to.be(12);
+		expect(t.state._scrollRegion[1]).to.be(12);
 	});
 	it("should set ScrollRegion correctly if params specified", function() {
 		var t = newTerminal(80,24);
 		t.write("ABCDEF\n\x1b[1;20r");
-		expect(t.buffer._scrollRegion[0]).to.be(0);
-		expect(t.buffer._scrollRegion[1]).to.be(19);
+		expect(t.state._scrollRegion[0]).to.be(0);
+		expect(t.state._scrollRegion[1]).to.be(19);
 	});
 	it("should scroll correctly when scrollregion is set", function() {
 		var t = newTerminal(80,24);
 		t.write("line1\nline2\nline3\nline4\n\x1b[4;5r");
 		t.write("\n\n\n\n\n\n");
-		expect(t.buffer.toString()).to.be('line1\nline2\nline3\n\n');
+		expect(t.state.toString()).to.be('line1\nline2\nline3\n\n');
 	});
 	it("keeps correct size", function() {
 		var t = newTerminal(80,24);
 		t.write("\x1b[24;1Hline1\nline2");
-		expect(t.buffer.getBufferRowCount()).to.be(24);
+		expect(t.state.getBufferRowCount()).to.be(24);
 	});
 
 	it("enters graphicsmode", function() {
 		var t = newTerminal(10,10);
 		t.write('\x1b(0');
-		expect(t.buffer.getMode('graphic')).to.be(true);
+		expect(t.state.getMode('graphic')).to.be(true);
 	});
 
 	it("leaves graphicsmode", function() {
 		var t = newTerminal(10,10);
 		t.write('\x1b(0a\x1b(B');
-		expect(t.buffer.getMode('graphic')).to.be(false);
+		expect(t.state.getMode('graphic')).to.be(false);
 	});
 
 	it("should convert chars graphicsmode", function() {
 		var t = newTerminal(10,10);
 		t.write('\x1b(0a\x1b(Ba');
-		expect(t.buffer.getMode('graphic')).to.be(false);
-		expect(t.buffer.toString()).to.be('▒a');
+		expect(t.state.getMode('graphic')).to.be(false);
+		expect(t.state.toString()).to.be('▒a');
 	});
 
 	it("emits ready after write", function(done) {
@@ -230,7 +229,7 @@ describe('Terminal', function() {
 	it("should scroll on reverse index", function() {
 		var t = newTerminal(80,4);
 		t.write("A\nB\nC\nD\x1b[H\x1bM");
-		expect(t.buffer.toString()).to.be("\nA\nB\nC");
+		expect(t.state.toString()).to.be("\nA\nB\nC");
 	});
 
 	it("handles \\r correctly with terminal bounds", function() {
@@ -238,10 +237,10 @@ describe('Terminal', function() {
 		t.write("1234");
 		t.write("\rabcd\rABCD");
 		expect(t.toString()).to.be("ABCD");
-		t.buffer.setAttribute('bold', true);
+		t.state.setAttribute('bold', true);
 		t.write("\rbb");
 		expect(t.toString()).to.be("bbCD");
-		var a = t.buffer.getLine(0).attr;
+		var a = t.state.getLine(0).attr;
 		expect(a[0].bold).to.be(true);  // bb
 		expect(a[2].bold).to.be(false);  // CB
 	});

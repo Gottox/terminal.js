@@ -1,6 +1,6 @@
-var TermBuffer = Terminal.TermBuffer;
+var TermState = Terminal.TermState;
 function newTerminal(w, h) {
-	var t = new TermBuffer(w, h), tw = new Terminal(t);
+	var t = new TermState(w, h), tw = new Terminal(t);
 	t.setMode('crlf', true);
 	return tw;
 }
@@ -8,7 +8,7 @@ describe('Terminal SGI', function() {
 	it("resets attributes", function() {
 		var t = newTerminal();
 		t.write("\x1b[1mbb\x1b[mn");
-		var line = t.buffer.getLine(0);
+		var line = t.state.getLine(0);
 		expect(line.str).to.be('bbn');
 		expect(line.attr[0].bold).to.be(true);
 		expect(line.attr[1]).to.be(undefined);
@@ -17,7 +17,7 @@ describe('Terminal SGI', function() {
 	it("sets bold", function() {
 		var t = newTerminal();
 		t.write("\x1b[1mb");
-		var line = t.buffer.getLine(0);
+		var line = t.state.getLine(0);
 		expect(line.str).to.be('b');
 		expect(line.attr[0].bold).to.be(true);
 	});

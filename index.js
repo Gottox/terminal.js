@@ -1,6 +1,6 @@
 module.exports = require("./lib/terminal.js");
 
-module.exports.TermBuffer = require("./lib/term_buffer.js");
+module.exports.TermState = require("./lib/term_state.js");
 module.exports.TermDiff = require("./lib/term_diff.js");
 module.exports.output = {
 	PlainOutput: require("./lib/output/plain.js"),

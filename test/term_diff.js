@@ -1,23 +1,23 @@
 describe('TermDiff', function() {
-	var TermBuffer = Terminal.TermBuffer;
+	var TermState = Terminal.TermState;
 	var TermDiff = Terminal.TermDiff;
-	function newTermBuffer(w, h) {
-		var t = new TermBuffer(w, h);
+	function newTermState(w, h) {
+		var t = new TermState(w, h);
 		t.setMode('crlf', true);
 		return t;
 	}
 
 	it("creates TermDiff", function() {
-		var t1 = newTermBuffer();
-		var t2 = newTermBuffer();
+		var t1 = newTermState();
+		var t2 = newTermState();
 		var d = new TermDiff(t1, t2);
 		expect(d.toJSON().changes.length).to.be(0);
 	});
 
 	it("diffs two terminals", function() {
 		// Not Correct, must investigate
-		var t1 = newTermBuffer();
-		var t2 = newTermBuffer();
+		var t1 = newTermState();
+		var t2 = newTermState();
 		t1.write("_FFFFFF".replace(/(.)/g,'$1\n'));
 		t2.write("_ADDE".replace(/(.)/g,'$1\n'));
 		var d = new TermDiff(t1, t2);
@@ -25,8 +25,8 @@ describe('TermDiff', function() {
 	});
 
 	it("detects led changes", function() {
-		var t1 = newTermBuffer();
-		var t2 = newTermBuffer();
+		var t1 = newTermState();
+		var t2 = newTermState();
 		t2.setLed(3,true);
 		var d = new TermDiff(t1, t2);
 		expect(d._leds).to.only.have.keys('3');
@@ -34,8 +34,8 @@ describe('TermDiff', function() {
 	});
 
 	it("detect mode changes", function() {
-		var t1 = newTermBuffer();
-		var t2 = newTermBuffer();
+		var t1 = newTermState();
+		var t2 = newTermState();
 		t2.setMode('graphic',true);
 		var d = new TermDiff(t1, t2);
 		expect(d._modes).to.only.have.keys('graphic');
@@ -43,16 +43,16 @@ describe('TermDiff', function() {
 	});
 
 	it("detects no cursor changes if the terminals are the same", function() {
-		var t1 = newTermBuffer();
-		var t2 = newTermBuffer();
+		var t1 = newTermState();
+		var t2 = newTermState();
 		var d = new TermDiff(t1, t2);
 		expect(d._cursor).to.be(null);
 		expect(d._savedCursor).to.be(null);
 	});
 
 	it("detects cursor changes if the terminals are different", function() {
-		var t1 = newTermBuffer();
-		var t2 = newTermBuffer();
+		var t1 = newTermState();
+		var t2 = newTermState();
 		t1.write('a');
 		t1.write('\n');
 		t1.write('a');
@@ -62,8 +62,8 @@ describe('TermDiff', function() {
 	});
 
 	it("detects saved cursor changes if the terminals are different", function() {
-		var t1 = newTermBuffer();
-		var t2 = newTermBuffer();
+		var t1 = newTermState();
+		var t2 = newTermState();
 		t2.write('a');
 		t2.write('\n');
 		t2.write('a');
@@ -74,8 +74,8 @@ describe('TermDiff', function() {
 	});
 
 	it("detects line changes in second buffer", function() {
-		var t1 = newTermBuffer();
-		var t2 = newTermBuffer();
+		var t1 = newTermState();
+		var t2 = newTermState();
 		t1.write('lalal');
 		var d = new TermDiff(t1, t2);
 		expect(d.toJSON().changes.length).to.be(1);
@@ -83,8 +83,8 @@ describe('TermDiff', function() {
 	});
 
 	it("detects line changes in first buffer", function() {
-		var t1 = newTermBuffer();
-		var t2 = newTermBuffer();
+		var t1 = newTermState();
+		var t2 = newTermState();
 		t2.write('lalal');
 		var d = new TermDiff(t1, t2);
 		expect(d.toJSON().changes[0]['.'].str).to.be('lalal');
@@ -92,8 +92,8 @@ describe('TermDiff', function() {
 	});
 
 	it("detects line removed in the second buffer", function() {
-		var t1 = newTermBuffer();
-		var t2 = newTermBuffer();
+		var t1 = newTermState();
+		var t2 = newTermState();
 		t1.write('lalal\n');
 		t2.write('lalal');
 		var d = new TermDiff(t1, t2);
@@ -102,8 +102,8 @@ describe('TermDiff', function() {
 	});
 
 	it("detects line added in the second buffer", function() {
-		var t1 = newTermBuffer();
-		var t2 = newTermBuffer();
+		var t1 = newTermState();
+		var t2 = newTermState();
 		t1.write('lalal');
 		t2.write('lalal\n');
 		var d = new TermDiff(t1, t2);
@@ -112,31 +112,31 @@ describe('TermDiff', function() {
 	});
 
 	it("detects no size differences if the terminals are the same", function() {
-		var t1 = newTermBuffer();
-		var t2 = newTermBuffer();
+		var t1 = newTermState();
+		var t2 = newTermState();
 		var d = new TermDiff(t1, t2);
 		expect(d._columns).to.be(null);
 		expect(d._rows).to.be(null);
 	});
 
 	it("detects size differences if the terminals are different", function() {
-		var t1 = newTermBuffer(10,20);
-		var t2 = newTermBuffer(12,30);
+		var t1 = newTermState(10,20);
+		var t2 = newTermState(12,30);
 		var d = new TermDiff(t1, t2);
 		expect(d._columns).to.be(12);
 		expect(d._rows).to.be(30);
 	});
 
 	/*it("detects no tabs differences if the terminals are the same", function() {
-		var t1 = newTermBuffer();
-		var t2 = newTermBuffer();
+		var t1 = newTermState();
+		var t2 = newTermState();
 		var d = new TermDiff(t1, t2);
 		expect(d._tabs).to.be.empty();
 	});*/
 
 	it("detects tabs differences if the terminals are different", function() {
-		var t1 = newTermBuffer(10,20);
-		var t2 = newTermBuffer(12,30);
+		var t1 = newTermState(10,20);
+		var t2 = newTermState(12,30);
 		t1.write("a");
 		t1.setTab();
 		var d = new TermDiff(t1, t2);
@@ -144,7 +144,7 @@ describe('TermDiff', function() {
 	});
 
 	it("correctly applies size", function() {
-		var t1 = newTermBuffer(80,24);
+		var t1 = newTermState(80,24);
 		var d = { rows: 30, columns:12 };
 		var p = new TermDiff(d);
 		p.apply(t1);
@@ -153,7 +153,7 @@ describe('TermDiff', function() {
 	});
 
 	it("correctly applies cursor", function() {
-		var t1 = newTermBuffer(80,24);
+		var t1 = newTermState(80,24);
 		var d = { cursor: { 'x': 10, 'y':12 } };
 		var p = new TermDiff(d);
 		p.apply(t1);
@@ -162,7 +162,7 @@ describe('TermDiff', function() {
 	});
 
 	it("correctly applies savedCursor", function() {
-		var t1 = newTermBuffer(80,24);
+		var t1 = newTermState(80,24);
 		var d = { savedCursor: { 'x': 10, 'y':12 } };
 		var p = new TermDiff(d);
 		p.apply(t1);
@@ -171,7 +171,7 @@ describe('TermDiff', function() {
 	});
 
 	it("correctly applies scrollRegion", function() {
-		var t1 = newTermBuffer(80,24);
+		var t1 = newTermState(80,24);
 		var d = { scrollRegion: [ 0, 12 ] };
 		var p = new TermDiff(d);
 		p.apply(t1);
@@ -180,7 +180,7 @@ describe('TermDiff', function() {
 	});
 
 	it("correctly applies leds", function() {
-		var t1 = newTermBuffer(80,24);
+		var t1 = newTermState(80,24);
 		var d = { leds: { 0: true } };
 		var p = new TermDiff(d);
 		p.apply(t1);
@@ -189,7 +189,7 @@ describe('TermDiff', function() {
 	});
 
 	it("correctly applies tabs", function() {
-		var t1 = newTermBuffer(80,24);
+		var t1 = newTermState(80,24);
 		var d = { tabs: [1] };
 		var p = new TermDiff(d);
 		p.apply(t1);
@@ -198,7 +198,7 @@ describe('TermDiff', function() {
 	});
 
 	it("correctly applies mode changes", function() {
-		var t1 = newTermBuffer();
+		var t1 = newTermState();
 		var gmode1 = t1._modes.graphic;
 		expect(gmode1).to.be(false);
 		var d = { modes: { 'graphic': true } };
@@ -209,7 +209,7 @@ describe('TermDiff', function() {
 	});
 
 	it("correctly applies remove Line", function() {
-		var t1 = newTermBuffer(80,24);
+		var t1 = newTermState(80,24);
 		t1.write('line'); t1.write('\n');
 		t1.write('line'); t1.write('\n');
 		t1.write('line'); t1.write('\n');
