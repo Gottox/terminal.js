@@ -3,7 +3,7 @@ describe('HtmlOutput', function() {
 	var HtmlOutput = Terminal.output.HtmlOutput;
 
 	function newTerminal(w, h) {
-		var t = new TermState(w, h), tw = new Terminal(t);
+		var t = new TermState({rows:h, columns:w}), tw = new Terminal(t);
 		t.setMode('crlf', true);
 		return tw;
 	}

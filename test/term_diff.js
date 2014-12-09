@@ -2,7 +2,7 @@ describe('TermDiff', function() {
 	var TermState = Terminal.TermState;
 	var TermDiff = Terminal.TermDiff;
 	function newTermState(w, h) {
-		var t = new TermState(w, h);
+		var t = new TermState({rows:h, columns:w});
 		t.setMode('crlf', true);
 		return t;
 	}
