@@ -456,7 +456,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="chr.js.html">handler/chr.js</a>, <a href="chr.js.html#line7">line 7</a>
+        <a href="chr.js.html">handler/chr.js</a>, <a href="chr.js.html#line8">line 8</a>
     </li></ul></dd>
     
     
@@ -2188,7 +2188,1503 @@ Delete P s Column(s) (default = 1) (DECDC), VT420 and up</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="csi.js.html">handler/csi.js</a>, <a href="csi.js.html#line8">line 8</a>
+        <a href="csi.js.html">handler/csi.js</a>, <a href="csi.js.html#line9">line 9</a>
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="esc"><span class="type-signature">&lt;readonly> </span>esc<span class="type-signature"> :function|string</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        esc command handlers
+Currently we ignore all DCS codes
+    </div>
+    
+    
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+        
+        <h5 class="subsection-title">Properties:</h5>
+        
+        <dl>
+
+<table class="props">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		<th>Default</th>
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>c</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC c<br>
+Full Reset (RIS)</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>D</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC D<br>
+Index (IND is 0x84)
+Moves cursor down one line in same column. 
+If cursor is at bottom margin, screen performs a scroll-up.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>E</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC E<br>
+Next Line (NEL is 0x85)
+This sequence causes the active position to move to the first position on
+the next line downward
+If the active position is at the bottom margin, a scroll up is performed</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>H</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC H<br>
+Tab Set (HTS is 0x88)</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>M</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC M<br>
+Reverse Index (RI is 0x8d)
+Move the active position to the same horizontal position on the preceding line. 
+If the active position is at the top margin, a scroll down is performed</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>N</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC N<br>
+Single Shift Select of G2 Character Set (SS2 is 0x8e). This affects next character only</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>O</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC O<br>
+Single Shift Select of G3 Character Set (SS3 is 0x8f). This affects next character only</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>P</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC P<br>
+Device Control String (DCS is 0x90)</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>Q</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC Q<br>
+Private Use 1 (PU1)</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>R</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC R<br>
+Private Use 2 (PU2)</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>S</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC S<br>
+Set Transmit State (STS)</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>T</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC T<br>
+Cancel Character, ignore previous character (CCH)</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>U</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC U<br>
+Message Waiting, turns on an indicator on the terminal (MW)</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>V</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC V<br>
+Start of Protected Area (SPA)</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>W</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC W<br>
+End of Protected Area (EPA)</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>X</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC X<br>
+Reserved</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>Y</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC Y<br>
+Reserved</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>Z</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC Z<br>
+DECID Dec Private identification
+The kernel returns the string ESC [ ? 6 c , claiming it is a VT102</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>n</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC n<br>
+Invoke the G2 Character Set as GL (LS2)</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>o</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC o<br>
+Invoke the G3 Character Set as GL (LS3)</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>"7"</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC 7<br>
+Save Cursor (DECSC)</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>"8"</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC 8<br>
+Restore Cursor (DECRC)</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>"|"</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC |<br>
+Invoke the G3 Character Set as GR (LS3R)</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>"["</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC [<br>
+Control sequence introducer (CSI)</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>"\"</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC \<br>
+7-bit - File Separator (FS)
+8-bit - String Terminator (VT125 exits graphics) (ST)</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>"]"</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC ]<br>
+7-bit - Group Separator (GS)
+8-bit - Operating System Command (OSC is 0x9d)</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>"^"</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC ^<br>
+Privacy Message (password verification), terminaed by ST 
+(PM is 0x9e) (PM)</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>_</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC _<br>
+Application Program Command (to word processor), term by ST
+(APC is 0x9f) (APC)</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>"%"</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC %<br>
+Select default/utf-8 character set.
+@ = default, G = utf-8; 8 (Obsolete)</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>"}"</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC }<br>
+Invoke the G2 Character Set as GR (LS2R)</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>"~"</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC ~<br>
+Invoke the G1 Character Set as GR (LS1R)</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>"("</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC ( ) * + - .<br>
+TODO</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>")"</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    .
+                
+                </td>
+            
+            
+            <td class="description last"></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>"*"</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    .
+                
+                </td>
+            
+            
+            <td class="description last"></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>"+"</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    .
+                
+                </td>
+            
+            
+            <td class="description last"></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>"-"</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    .
+                
+                </td>
+            
+            
+            <td class="description last"></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>"."</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last"></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>"#"</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC #<br>
+3 DEC line height/width</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>g</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC g<br>
+Visual Bell</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>"<"</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC &lt;<br>
+The terminal interprets all sequences according to ANSI standards X3.64-1979 and X3.41-1974.
+The VT52 escape sequences described in this chapter are not recognized.
+(DECANM)</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>">"</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC &gt;<br>
+(set numeric keypad mode?)
+Normal Keypad (DECPNM)</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>"="</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+                <td class="default">
+                
+                    FUNCTION
+                
+                </td>
+            
+            
+            <td class="description last">ESC =<br>
+Application Keypad (DECPAM)
+Serial port requested application keyboard</td>
+        </tr>
+	
+	
+	</tbody>
+</table></dl>
+        
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="esc.js.html">handler/esc.js</a>, <a href="esc.js.html#line7">line 7</a>
     </li></ul></dd>
     
     
@@ -2221,13 +3717,13 @@ Delete P s Column(s) (default = 1) (DECDC), VT420 and up</td>
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="TermBuffer.html">TermBuffer</a></li><li><a href="Terminal.html">Terminal</a></li><li><a href="TermWriter.html">TermWriter</a></li></ul><h3>Global</h3><ul><li><a href="global.html#chr">chr</a></li><li><a href="global.html#csi">csi</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="Terminal.html">Terminal</a></li><li><a href="TermState.html">TermState</a></li></ul><h3>Global</h3><ul><li><a href="global.html#chr">chr</a></li><li><a href="global.html#csi">csi</a></li><li><a href="global.html#esc">esc</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Tue May 20 2014 19:23:29 GMT+0200 (CEST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Tue Dec 09 2014 12:09:08 GMT+0100 (CET)
 </footer>
 
 <script> prettyPrint(); </script>

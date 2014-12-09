@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: handler/esc.js</title>
+    
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+    
+    <h1 class="page-title">Source: handler/esc.js</h1>
+    
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source"><code>/**
+* esc command handlers
+* Currently we ignore all DCS codes
+* @enum {Function|string}
+* @readonly
+*/
+var esc = {
+	/**
+	* ESC c&lt;br>
+	* Full Reset (RIS)
+	*/
+	'c': function(cmd, chunk) {
+		this.state.reset();
+		return 2;
+	},
+
+	/**
+	* ESC D&lt;br>
+	* Index (IND is 0x84)
+	* Moves cursor down one line in same column. 
+	* If cursor is at bottom margin, screen performs a scroll-up.
+	*/
+	'D': function(cmd, chunk) {
+		this.state.nextLine();
+		return 2;
+	},
+
+	/**
+	* ESC E&lt;br>
+	* Next Line (NEL is 0x85)
+	* This sequence causes the active position to move to the first position on
+	* the next line downward
+	* If the active position is at the bottom margin, a scroll up is performed
+	*/
+	'E': function(cmd, chunk) {
+		this.state.nextLine().setCursor(0);
+		return 2;
+	},
+
+	/**
+	* ESC F&lt;br>
+	* Start of Selected Area to be sent to auxiliary output device (SSA)
+	*/
+
+	/**
+	* ESC G&lt;br>
+	* End of Selected Area to be sent to auxiliary output device (SSA)
+	*/
+
+	/**
+	* ESC H&lt;br>
+	* Tab Set (HTS is 0x88)
+	*/
+	'H': function(cmd, chunk) {
+		this.state.setTab();
+		return 2;
+	},
+
+	/**
+	* ESC I&lt;br>
+	* Horizontal Tab Justify, moves string to next tab position (HTJ)
+	*/
+
+	/**
+	* ESC J&lt;br>
+	* Vertical Tabulation Set at current line (VTS)
+	*/
+
+	/**
+	* ESC K&lt;br>
+	* Partial Line Down (subscript) (PLD)
+	*/
+
+	/**
+	* ESC L&lt;br>
+	* Partial Line Up (superscript) (PLU)
+	*/
+ 
+	/**
+	* ESC M&lt;br>
+	* Reverse Index (RI is 0x8d)
+	* Move the active position to the same horizontal position on the preceding line. 
+	* If the active position is at the top margin, a scroll down is performed
+	*/
+	'M': function(cmd, chunk) {
+		this.state.prevLine();
+		return 2;
+	},
+
+	/**
+	* ESC N&lt;br>
+	* Single Shift Select of G2 Character Set (SS2 is 0x8e). This affects next character only
+	*/
+	'N': function(cmd, chunk) {
+		return 2;
+	},
+
+	/**
+	* ESC O&lt;br>
+	* Single Shift Select of G3 Character Set (SS3 is 0x8f). This affects next character only
+	*/
+	'O': function(cmd, chunk) {
+		return 2;
+	},
+
+	/**
+	* ESC P&lt;br>
+	* Device Control String (DCS is 0x90)
+	* @todo function should return errors if it detects garbaged DCS sequences
+	*/
+	'P': function(cmd, chunk) {
+
+		var dcs = this.parseDcs(chunk);
+		if(dcs === null || dcs.cmd === '')
+			return 0;
+		else if(dcs.length !== chunk.length && dcs.cmd === '') {
+			// TODO Garbaged DCS. report error.
+			return 1;
+		}
+
+		var result = this.callHandler('dcs', dcs.cmd, +dcs.args[0],
+									  +dcs.args[1], dcs.args, dcs.mod);
+		return dcs.length;
+	},
+
+	/**
+	* ESC Q&lt;br>
+	* Private Use 1 (PU1)
+	*/
+	'Q': function(cmd, chunk) {
+		return 2;
+	},
+
+	/**
+	* ESC R&lt;br>
+	* Private Use 2 (PU2)
+	*/
+	'R': function(cmd, chunk) {
+		return 2;
+	},
+
+	/**
+	* ESC S&lt;br>
+	* Set Transmit State (STS)
+	*/
+	'S': function(cmd, chunk) {
+		return 2;
+	},
+
+	/**
+	* ESC T&lt;br>
+	* Cancel Character, ignore previous character (CCH)
+	* @todo implement
+	*/
+	'T': function(cmd, chunk) {
+		//TODO
+		return 2;
+	},
+
+	/**
+	* ESC U&lt;br>
+	* Message Waiting, turns on an indicator on the terminal (MW)
+	*/
+	'U': function(cmd, chunk) {
+		return 2;
+	},
+
+	/**
+	* ESC V&lt;br>
+	* Start of Protected Area (SPA)
+	*/
+	'V': function(cmd, chunk) {
+		return 2;
+	},
+
+	/**
+	* ESC W&lt;br>
+	* End of Protected Area (EPA)
+	*/
+	'W': function(cmd, chunk) {
+		return 2;
+	},
+
+	/**
+	* ESC X&lt;br>
+	* Reserved
+	*/
+	'X': function(cmd, chunk) {
+		return 2;
+	},
+
+	/**
+	* ESC Y&lt;br>
+	* Reserved
+	*/
+	'Y': function(cmd, chunk) {
+		return 2;
+	},
+
+	/**
+	* ESC Z&lt;br>
+	* DECID Dec Private identification
+	* The kernel returns the string ESC [ ? 6 c , claiming it is a VT102
+	*/
+	'Z': function(cmd, chunk) {
+		return 2;
+	},
+
+	/**
+	* ESC n&lt;br>
+	* Invoke the G2 Character Set as GL (LS2)
+	* @todo implement
+	*/
+	'n': function(cmd, chunk) {
+		// TODO
+		return 2;
+	},
+
+	/**
+	* ESC o&lt;br>
+	* Invoke the G3 Character Set as GL (LS3)
+	* @todo implement
+	*/
+	'o': function(cmd, chunk) {
+		// TODO
+		return 2;
+	},
+
+	/**
+	* ESC 7&lt;br>
+	* Save Cursor (DECSC)
+	*/
+	'7': function(cmd, chunk) {
+		this.state.saveCursor();
+		return 2;
+	},
+
+	/**
+	* ESC 8&lt;br>
+	* Restore Cursor (DECRC)
+	*/
+	'8': function(cmd, chunk) {
+		this.state.restoreCursor();
+		return 2;
+	},
+
+	/**
+	* ESC |&lt;br>
+	* Invoke the G3 Character Set as GR (LS3R)
+	*/
+	'|': function(cmd, chunk) {
+		// TODO
+		return 2;
+	},
+
+	/**
+	* ESC [&lt;br>
+	* Control sequence introducer (CSI)
+	* @todo function should return errors if it detects garbaged CSI sequences
+	*/
+	'[': function(cmd, chunk) {
+		var csi = this.parseCsi(chunk);
+		if(csi === null || csi.cmd === '')
+			return 0;
+		else if(csi.length !== chunk.length && csi.cmd === '') {
+			// TODO Garbaged CSI. report error.
+			return 1;
+		}
+
+		var result = this.callHandler('csi', csi.cmd, +csi.args[0], +csi.args[1], csi.args, csi.mod);
+		//if(result === null)
+		// TODO Unknown CSI. report error.
+		return csi.length;
+	},
+
+	/**
+	* ESC \&lt;br>
+	* 7-bit - File Separator (FS)
+	* 8-bit - String Terminator (VT125 exits graphics) (ST)
+	*/
+	'\\': function(cmd, chunk) {
+		return 2;
+	},
+
+	/**
+	* ESC ]&lt;br>
+	* 7-bit - Group Separator (GS)
+	* 8-bit - Operating System Command (OSC is 0x9d)
+	* @todo function should return errors if it detects garbaged OSC sequences
+	*/
+	']': function(cmd, chunk) {
+		var osc = this.parseOsc(chunk);
+		if(osc === null)
+			return 0;
+		else if(osc.length !== chunk.length && osc.terminated === false) {
+			// TODO Garbaged OSC. report error.
+			return 1;
+		}
+
+		var result = this.callHandler('osc', osc.cmd, osc.arg);
+		//if(result === null)
+		// TODO Unknown OSC. report error.
+		return osc.length;
+	},
+
+	/**
+	* ESC ^&lt;br>
+	* Privacy Message (password verification), terminaed by ST 
+	* (PM is 0x9e) (PM)
+	*/
+	'^': function(cmd, chunk) {
+		return 2;
+	},
+
+	/**
+	* ESC _&lt;br>
+	* Application Program Command (to word processor), term by ST
+	* (APC is 0x9f) (APC)
+	*/
+	'_': function(cmd, chunk) {
+		return 2;
+	},
+
+	/**
+	* ESC %&lt;br>
+	* Select default/utf-8 character set.
+	* @ = default, G = utf-8; 8 (Obsolete)
+	*/
+	'%': function(cmd, chunk) {
+		return 2;
+	},
+
+	/**
+	* ESC }&lt;br>
+	* Invoke the G2 Character Set as GR (LS2R)
+	*/
+	'}': function(cmd, chunk) {
+		// TODO
+		return 2;
+	},
+
+	/**
+	* ESC ~&lt;br>
+	* Invoke the G1 Character Set as GR (LS1R)
+	*/
+	'~': function(cmd, chunk) {
+		// TODO
+		return 2;
+	},
+
+	/**
+	* ESC ( ) * + - .&lt;br>
+	* TODO
+	*/
+	'(': function(cmd, chunk) {
+		if(chunk[2] === undefined)
+			return 0;
+		this.state.setMode('graphic', chunk[2] === '0');
+		return 3;
+	},
+	')': '.',
+	'*': '.',
+	'+': '.',
+	'-': '.',
+	'.': function(cmd, chunk) {
+		if(chunk[2] === undefined)
+			return 0;
+		this.state.setMode('graphic', false);
+		return 3;
+	},
+
+	/**
+	* ESC #&lt;br>
+	* 3 DEC line height/width
+	*/
+	'#': function(cmd, chunk) {
+		if(chunk[2] === undefined)
+			return 0;
+		var line = this.state.getLine();
+		switch(chunk[2]) {
+		case '3':
+			line.attr.doubleheight = 'top';
+			break;
+		case '4':
+			line.attr.doubleheight = 'bottom';
+			break;
+		case '5':
+			line.attr.doubleheight =
+			line.attr.doublewidth = false;
+			break;
+		case '6':
+			line.attr.doublewidth = true;
+			break;
+		}
+		this.state.setLine(line);
+		return 3;
+	},
+
+	/**
+	* ESC g&lt;br>
+	* Visual Bell
+	*/
+	'g': function(cmd, chunk) {
+		this.emit('bell', true);
+		return 2;
+	},
+
+	/**
+	* ESC &lt;&lt;br>
+	* The terminal interprets all sequences according to ANSI standards X3.64-1979 and X3.41-1974.
+	* The VT52 escape sequences described in this chapter are not recognized.
+	* (DECANM)
+	*/
+	'&lt;': function(cmd, chunk) {
+		return 2;
+	},
+
+	/**
+	* ESC &gt;&lt;br>
+	* (set numeric keypad mode?)
+	* Normal Keypad (DECPNM)
+	*/
+	'>': function(cmd, chunk) {
+		this.state.setMode('appKeypad', false);
+		return 2;
+	},
+
+	/**
+	* ESC =&lt;br>
+	* Application Keypad (DECPAM)
+	* Serial port requested application keyboard
+	*/
+	'=': function(cmd, chunk) {
+		this.state.setMode('appKeypad', true);
+		return 2;
+	}
+};
+module.exports = esc;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="Terminal.html">Terminal</a></li><li><a href="TermState.html">TermState</a></li></ul><h3>Global</h3><ul><li><a href="global.html#chr">chr</a></li><li><a href="global.html#csi">csi</a></li><li><a href="global.html#esc">esc</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Tue Dec 09 2014 12:09:08 GMT+0100 (CET)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

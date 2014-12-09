@@ -31,6 +31,7 @@
 * csi command handlers
 * @enum {Function|string}
 * @readonly
+* @this refers to calling {@link TermWriter}
 */
 var csi = {
 	/**
@@ -38,7 +39,7 @@ var csi = {
 	* Insert Ps (Blank) Character(s) (default = 1) (ICH)
 	*/
 	'@': function(cmd, n, m, args, mod) {
-		this.buffer.insertBlank(n || 1);
+		this.state.insertBlank(n || 1);
 	},
 
 	/**
@@ -46,7 +47,7 @@ var csi = {
 	* Cursor Up Ps Times (default = 1) (CUU)
 	*/
 	'A': function(cmd, n, m, args, mod) {
-		this.buffer.mvCursor(0, -(n || 1));
+		this.state.mvCursor(0, -(n || 1));
 	},
 
 	/**
@@ -54,7 +55,7 @@ var csi = {
 	* Cursor Down Ps Times (default = 1) (CUD)
 	*/
 	'B': function(cmd, n, m, args, mod) {
-		this.buffer.mvCursor(0, n || 1);
+		this.state.mvCursor(0, n || 1);
 	},
 
 	/**
@@ -62,7 +63,7 @@ var csi = {
 	* Cursor Forward Ps Times (default = 1) (CUF)
 	*/
 	'C': function(cmd, n, m, args, mod) {
-		this.buffer.mvCursor(n || 1, 0);
+		this.state.mvCursor(n || 1, 0);
 	},
 
 	/**
@@ -70,7 +71,7 @@ var csi = {
 	* Cursor backward Ps Times (default = 1) (CUB)
 	*/
 	'D': function(cmd, n, m, args, mod) {
-		this.buffer.mvCursor(-(n || 1), 0);
+		this.state.mvCursor(-(n || 1), 0);
 	},
 
 	/**
@@ -78,7 +79,7 @@ var csi = {
 	* Cursor down Ps Rows, to column 1 (default = 1) (CNL , NEL)
 	*/
 	'E': function(cmd, n, m, args, mod) {
-		this.buffer.mvCursor(0, n || 1).setCursor(0, null);
+		this.state.mvCursor(0, n || 1).setCursor(0, null);
 	},
 
 	/**
@@ -87,7 +88,7 @@ var csi = {
 	*/
 	'F': function(cmd, n, m, args, mod) {
 		// (vt52 compatibility mode - Use special graphics character set? )
-		this.buffer.mvCursor(0, -n || 1).setCursor(0, null);
+		this.state.mvCursor(0, -n || 1).setCursor(0, null);
 	},
 
 	/**
@@ -96,7 +97,7 @@ var csi = {
 	*/
 	'G': function(cmd, n, m, args, mod) {
 		//vt52 compatibility mode - Use normal US/UK character set )
-		this.buffer.setCursor((n || 1) - 1);
+		this.state.setCursor((n || 1) - 1);
 	},
 
 	/**
@@ -104,7 +105,7 @@ var csi = {
 	* Cursor Position [row;column] (default = [1,1]) (CUP)
 	*/
 	'H': function(cmd, n, m, args, mod) {
-		this.buffer.setCursor((m || 1) - 1, (n || 1) - 1);
+		this.state.setCursor((m || 1) - 1, (n || 1) - 1);
 	},
 
 	/**
@@ -112,7 +113,7 @@ var csi = {
 	* Cursor Forward Tabulation Ps tab stops (default = 1) (CHT)
 	*/
 	'I': function(cmd, n, m, args, mod) {
-		this.buffer.mvTab(n || 1);
+		this.state.mvTab(n || 1);
 	},
 
 	/**
@@ -126,7 +127,7 @@ var csi = {
 	* &lt;/ul>
 	*/
 	'J': function(cmd, n, m, args, mod) {
-		this.buffer.eraseInDisplay(n || 0);
+		this.state.eraseInDisplay(n || 0);
 	},
 
 	/**
@@ -140,7 +141,7 @@ var csi = {
 	* &lt;/ul>
 	*/
 	'K': function(cmd, n, m, args, mod) {
-		this.buffer.eraseInLine(n || 0);
+		this.state.eraseInLine(n || 0);
 	},
 
 	/**
@@ -148,7 +149,7 @@ var csi = {
 	* Insert Ps Line(s) (default = 1) (IL)
 	*/
 	'L': function(cmd, n, m, args, mod) {
-		this.buffer.insertLine(n || 1);
+		this.state.insertLine(n || 1);
 	},
 
 	/**
@@ -156,7 +157,7 @@ var csi = {
 	* Delete Ps Line(s) (default = 1) (DL)
 	*/
 	'M': function(cmd, n, m, args, mod) {
-		this.buffer.removeLine(n || 1);
+		this.state.removeLine(n || 1);
 	},
 
 	/**
@@ -164,7 +165,7 @@ var csi = {
 	* Delete Ps Character(s) (default = 1) (DCH)
 	*/
 	'P': function(cmd, n, m, args, mod) {
-		this.buffer.removeChar(n || 1);
+		this.state.removeChar(n || 1);
 	},
 
 	/**
@@ -185,7 +186,7 @@ var csi = {
 	* Scroll up Ps lines (default = 1) (SU)
 	*/
 	'S': function(cmd, n, m, args, mod) {
-		this.buffer.scroll(n || 1);
+		this.state.scroll(n || 1);
 	},
 
 	/**
@@ -198,7 +199,7 @@ var csi = {
 	*/
 	'T': function(cmd, n, m, args, mod) {
 		if(args.length &lt;= 1)
-			this.buffer.scroll(-n || -1);
+			this.state.scroll(-n || -1);
 	},
 
 	/**
@@ -206,7 +207,7 @@ var csi = {
 	* Erase Ps Character(s) (default = 1) (ECH)
 	*/
 	'X': function(cmd, n, m, args, mod) {
-		this.buffer.eraseCharacters(n || 1);
+		this.state.eraseCharacters(n || 1);
 	},
 
 	/**
@@ -214,7 +215,7 @@ var csi = {
 	* Cursor Backward Tabulation Ps tab stops (default = 1) (CBT)
 	*/
 	'Z': function(cmd, n, m, args, mod) {
-		this.buffer.mvTab(-(n || 1));
+		this.state.mvTab(-(n || 1));
 	},
 
 	/**
@@ -222,7 +223,7 @@ var csi = {
 	* Move cursor right the indicated # of columns (default = 1) (HPR)
 	*/
 	'a': function(cmd, n, m, args, mod) {
-		this.buffer.mvCursor(n || 1, 0);
+		this.state.mvCursor(n || 1, 0);
 	},
 
 	/**
@@ -241,7 +242,7 @@ var csi = {
 	*/
 	'c': function(cmd, n, m, args, mod) {
 		// TODO
-		this.emit("request", "\x1b>0;95;c");
+		this.emit('request', '\x1b>0;95;c');
 	},
 
 	/**
@@ -249,7 +250,7 @@ var csi = {
 	* Line Position Absolute  [row] (default = [1,column]) (VPA)
 	*/
 	'd': function(cmd, n, m, args, mod) {
-		this.buffer.setCursor(null, (n || 1) - 1);
+		this.state.setCursor(null, (n || 1) - 1);
 	},
 
 	/**
@@ -258,7 +259,7 @@ var csi = {
 	* Move cursor down the indicated # of rows (default = 1) (VPR)
 	*/
 	'e': function(cmd, n, m, args, mod) {
-		this.buffer.mvCursor(0, n || 1);
+		this.state.mvCursor(0, n || 1);
 	},
 
 	/**
@@ -266,7 +267,7 @@ var csi = {
 	* Horizontal and Vertical Position [row;column] (default =  [1,1]) (HVP)
 	*/
 	'f': function(cmd, n, m, args, mod) {
-		this.buffer.setCursor((m || 1) - 1, (n || 1) - 1);
+		this.state.setCursor((m || 1) - 1, (n || 1) - 1);
 	},
 
 	/**
@@ -277,7 +278,7 @@ var csi = {
 		// 0g = clear tab stop at the current position
 		// 3g = delete all tab stops
 		// TODO
-		this.buffer.tabClear(n || 0);
+		this.state.tabClear(n || 0);
 	},
 
 	/**
@@ -315,9 +316,9 @@ var csi = {
 	'm': function(cmd, n, m, args, mod) {
 		// Set graphic rendition
 		if(args[1] === 5 && args[0] === 38)
-			this.buffer.setAttribute('fg', args[2]);
+			this.state.setAttribute('fg', args[2]);
 		else if(args[1] === 5 && args[0] === 48)
-			this.buffer.setAttribute('bg', args[2]);
+			this.state.setAttribute('bg', args[2]);
 		else {
 			for(i = 0; i &lt; args.length; i++)
 				this.callHandler('sgr', args[i]);
@@ -368,7 +369,10 @@ var csi = {
 	* &lt;/ul>
 	*/
 	'q': function(cmd, n, m, args, mod) {
-		this.buffer.setLed(n);
+		if(n === 0)
+			this.state.resetLeds();
+		else
+			this.state.ledOn(n-1);
 	},
 
 	/**
@@ -380,7 +384,7 @@ var csi = {
 	*/
 	'r': function(cmd, n, m, args, mod) {
 		// TODO handle ? prefix, $ ends
-		this.buffer.setScrollRegion((n || 1) -1 , (m || (this.buffer.height) ) -1);
+		this.state.setScrollRegion((n || 1) -1 , (m || (this.state.rows) ) -1);
 	},
 
 	/**
@@ -388,7 +392,7 @@ var csi = {
 	* Save cursor (ANSI.SYS)
 	*/
 	's': function(cmd, n, m, args, mod) {
-		this.buffer.saveCursor();
+		this.state.saveCursor();
 	},
 
 	/**
@@ -405,7 +409,7 @@ var csi = {
 	* Restore cursor (ANSI.SYS)
 	*/
 	'u': function(cmd, n, m, args, mod) {
-		this.buffer.restoreCursor();
+		this.state.restoreCursor();
 	},
 
 	/**
@@ -460,7 +464,7 @@ var csi = {
 	*   [column] (default = [row,1]) (HPA)
 	*/
 	'`': function(cmd, n, m, args, mod) {
-		this.buffer.setCursor((n || 1) - 1);
+		this.state.setCursor((n || 1) - 1);
 	},
 
 	/**
@@ -512,13 +516,13 @@ module.exports = csi;
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="TermBuffer.html">TermBuffer</a></li><li><a href="Terminal.html">Terminal</a></li><li><a href="TermWriter.html">TermWriter</a></li></ul><h3>Global</h3><ul><li><a href="global.html#chr">chr</a></li><li><a href="global.html#csi">csi</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="Terminal.html">Terminal</a></li><li><a href="TermState.html">TermState</a></li></ul><h3>Global</h3><ul><li><a href="global.html#chr">chr</a></li><li><a href="global.html#csi">csi</a></li><li><a href="global.html#esc">esc</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Tue May 20 2014 19:23:29 GMT+0200 (CEST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Tue Dec 09 2014 12:09:08 GMT+0100 (CET)
 </footer>
 
 <script> prettyPrint(); </script>
