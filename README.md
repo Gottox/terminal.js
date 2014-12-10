@@ -8,8 +8,20 @@ It is written from scratch and supports most commonly used escape sequences.
 
 ## Example
 
-There's a demo project to show what's possible with terminal.js:
+a simple demo using the [colors](https://www.npmjs.com/package/colors) module:
 
+```javascript
+var colors = require('colors'),
+	Terminal = require('./index');
+
+var terminal = new Terminal({columns: 20, rows: 2});
+
+terminal.write("Terminal.js in rainbows".rainbow);
+
+console.log(terminal.toString('ansi'));
+```
+
+There's also a webterminal using terminal.js:
 [node-webterm](https://github.com/Gottox/node-webterm)
 
 ## Documentation

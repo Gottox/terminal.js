@@ -23,7 +23,6 @@
     "terminal"
   ],
   "devDependencies": {
-    "ansi-rainbow": "0.0.8",
     "expect.js": "*",
     "grunt": "^0.4.5",
     "grunt-browserify": "^2.1.0",
