@@ -1,6 +1,6 @@
 {
   "name": "terminal.js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Enno Boland <eb@s01.de>",
   "description": "terminal emulation library for javascript.",
   "scripts": {
