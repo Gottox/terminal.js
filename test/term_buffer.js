@@ -26,7 +26,7 @@ describe('TermState', function() {
 		expect(t.toString()).to.be("Hello World\nHello World\n");
 	});
 	it("sets cursor", function() {
-		var t = newTermState(10, 10);
+		var t = newTermState(11, 11);
 		t.write("1234567890");
 		expect(t.cursor.x).to.be(10);
 		expect(t.cursor.y).to.be(0);
@@ -36,7 +36,17 @@ describe('TermState', function() {
 		t.write("1234567890abcdefghi");
 		expect(t.toString()).to.be("1234567890\nabcdefghi");
 		t.write("j");
+		expect(t.toString()).to.be("1234567890\nabcdefghij\n");
+	});
+	it("dont break lines on no wrap", function() {
+		var t = newTermState(10, 10);
+		t.setMode("wrap", false);
+		t.write("1234567890\nabcdefghi");
+		expect(t.toString()).to.be("1234567890\nabcdefghi");
+		t.write("j");
 		expect(t.toString()).to.be("1234567890\nabcdefghij");
+		t.write("k");
+		expect(t.toString()).to.be("1234567890\nabcdefghik");
 	});
 	it("scrolls", function() {
 		var t = newTermState(10, 10);
@@ -149,6 +159,7 @@ describe('TermState', function() {
 	});
 	it("resize correctly to smaller size, cut off right", function() {
 		var t = newTermState(80,24);
+		t.setMode("wrap", false);
 		t.setCursor(0,23);
 		t.write("line1");
 		t.resize({rows: 2, columns: 2 });
@@ -159,6 +170,7 @@ describe('TermState', function() {
 
 	it("resize correctly to smaller size, cut off top", function() {
 		var t = newTermState(80,24);
+		t.setMode("wrap", false);
 		t.write("line1\n");
 		t.resize({rows: 2, columns: 2 });
 		t.write("ab\n");
@@ -303,5 +315,18 @@ describe('TermState', function() {
 		var t = newTermState();
 		t.setLed(4,true);
 		expect(t._leds.length).to.be(4);
+	});
+	it("cursor is set to new line if line is full", function() {
+		var t = newTermState(5, 5);
+		t.write("12345");
+		expect(t.toString()).to.be("12345\n");
+	});
+	it("cursor is not set to new line if wrap is off", function() {
+		var t = newTermState(5, 5);
+		t.setMode('wrap', false)
+		t.write("12345");
+		expect(t.toString()).to.be("12345");
+		t.write("abcdef");
+		expect(t.toString()).to.be("1234f");
 	});
 });
