@@ -304,4 +304,16 @@ describe('TermState', function() {
 		t.setLed(4,true);
 		expect(t._leds.length).to.be(4);
 	});
+
+	it("inserts whitespaces", function() {
+		var t = newTermState();
+		t.write("abc");
+		t.setAttribute('bold', true);
+		t.write("def");
+		t.setCursor(1,0);
+		t.insertBlank(2)
+		expect(t._buffer.str[0]).to.be("a  bcdef");
+		expect(t._buffer.attr[0][0].bold).to.be(false)
+		expect(t._buffer.attr[0][5].bold).to.be(true)
+	});
 });
