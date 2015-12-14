@@ -11,7 +11,7 @@ module.exports = function(grunt) {
 					"dist/terminal.js": [ "./index.js" ]
 				},
 				options: {
-					bundleOptions: {
+					browserifyOptions: {
 						standalone: "Terminal",
 					}
 				},
@@ -21,7 +21,7 @@ module.exports = function(grunt) {
 					"dist/terminal.dbg.js": [ "./index.js" ]
 				},
 				options: {
-					bundleOptions: {
+					browserifyOptions: {
 						standalone: "Terminal",
 						debug: true
 					}
