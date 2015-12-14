@@ -23,29 +23,31 @@
     "terminal"
   ],
   "devDependencies": {
-    "expect.js": "*",
+    "expect.js": "^0.3.1",
     "grunt": "^0.4.5",
-    "grunt-browserify": "^2.1.0",
+    "grunt-browserify": "^4.0.1",
     "grunt-cli": "^0.1.13",
-    "grunt-contrib-clean": "^0.5.0",
-    "grunt-contrib-copy": "^0.5.0",
-    "grunt-contrib-jshint": "^0.10.0",
-    "grunt-contrib-uglify": "^0.4.0",
-    "grunt-jsdoc": "^0.5.4",
-    "grunt-mocha-test": "^0.10.2",
-    "mocha": "*"
+    "grunt-contrib-clean": "^0.7.0",
+    "grunt-contrib-copy": "^0.8.2",
+    "grunt-contrib-jshint": "^0.11.3",
+    "grunt-contrib-uglify": "^0.11.0",
+    "grunt-jsdoc": "^1.1.0",
+    "grunt-mocha-test": "^0.12.7",
+    "mocha": "^2.3.4"
   },
   "engine": {
     "node": ">=0.8"
   },
   "license": "MIT",
   "jshintConfig": {
+    "strict": true,
     "eqeqeq": true,
     "quotmark": true,
     "nonew": true,
     "indent": true,
     "latedef": true,
     "noarg": true,
-    "node": true
+    "node": true,
+    "predef": [ "window" ]
   }
 }

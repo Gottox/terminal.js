@@ -1,10 +1,10 @@
-describe('HtmlOutput', function() {
+describe("HtmlOutput", function() {
 	var TermState = Terminal.TermState;
 	var HtmlOutput = Terminal.output.HtmlOutput;
 
 	function newTerminal(w, h) {
 		var t = new TermState({rows:h, columns:w}), tw = new Terminal(t);
-		t.setMode('crlf', true);
+		t.setMode("crlf", true);
 		return tw;
 	}
 
@@ -13,6 +13,6 @@ describe('HtmlOutput', function() {
 		var r = new HtmlOutput(t.state);
 		t.write("\x1b[31mHello\x1b[m World");
 
-		expect(r.toString()).to.contain('<span style="color:#cc0000;">Hello</span><span style="">');
+		expect(r.toString()).to.contain("<span style='color:#cc0000;'>Hello</span><span style=''>");
 	});
 });
