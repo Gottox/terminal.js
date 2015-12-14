@@ -1,8 +1,10 @@
 language: node_js
 node_js:
-  - "0.11"
   - "0.10"
+  - "0.12"
   - "4.2"
+  - "4.2"
+  - "5.2"
 sudo: false
 notifications:
   irc:
