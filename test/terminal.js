@@ -250,5 +250,17 @@ describe('Terminal', function() {
 		t.write("1234\r56\r789");
 		expect(t.toString()).to.be("7894");
 	});
+
+	it("handles OSC sequences (https://github.com/Gottox/terminal.js/issues/104)", function() {
+		var t = newTerminal();
+		t.write('\u001b]0;foo\u0007bar');
+		expect(t.toString()).to.be("bar");
+	});
+	it("handles chunked OSC sequences (https://github.com/Gottox/terminal.js/issues/104)", function() {
+		var t = newTerminal();
+		t.write('\u001b]0;');
+		t.write('foo\u0007bar');
+		expect(t.toString()).to.be("bar");
+	});
 });
 
