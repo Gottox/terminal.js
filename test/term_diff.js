@@ -15,7 +15,6 @@ describe('TermDiff', function() {
 	});
 
 	it("diffs two terminals", function() {
-		// Not Correct, must investigate
 		var t1 = newTermState();
 		var t2 = newTermState();
 		t1.write("_FFFFFF".replace(/(.)/g,'$1\n'));
