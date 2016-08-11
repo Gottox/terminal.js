@@ -48,6 +48,7 @@
     "latedef": true,
     "noarg": true,
     "node": true,
+    "undef":true,
     "predef": [ "window" ]
   }
 }

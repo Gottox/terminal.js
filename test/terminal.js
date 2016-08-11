@@ -262,5 +262,12 @@ describe('Terminal', function() {
 		t.write('foo\u0007bar');
 		expect(t.toString()).to.be("bar");
 	});
+
+	it("handles garbaged OSC", function() {
+		var t = newTerminal();
+		t.write('\u001b]0;');
+		t.write('foo\u0007bar');
+		expect(t.toString()).to.be("bar");
+	});
 });
 
