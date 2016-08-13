@@ -33,7 +33,8 @@
     "grunt-contrib-uglify": "^2.0.0",
     "grunt-jsdoc": "^2.1.0",
     "grunt-mocha-test": "^0.12.7",
-    "mocha": "^3.0.2"
+    "mocha": "^3.0.2",
+    "mocha-jsdom": "^1.1.0"
   },
   "engine": {
     "node": ">=0.8"
@@ -48,7 +49,9 @@
     "latedef": true,
     "noarg": true,
     "node": true,
-    "undef":true,
-    "predef": [ "window" ]
+    "undef": true,
+    "predef": [
+      "window"
+    ]
   }
 }
