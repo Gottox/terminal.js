@@ -2,7 +2,9 @@ describe("DomOutput", function() {
 	var TermState = Terminal.TermState;
 	var DomOutput = Terminal.output.DomOutput;
 
-	jsdom();
+	if(typeof document === 'undefined')
+		require('jsdom-global')();
+
 	function newTerminal(w, h) {
 		var t = new TermState({rows:h, columns:w}), tw = new Terminal(t);
 		t.setMode("crlf", true);
@@ -11,9 +13,7 @@ describe("DomOutput", function() {
 
 	it("should draw only one cursor in column one (#110)", function() {
 		var t = newTerminal();
-		var body = document.body;
-		body.innerHTML = "<pre id=term></pre>";
-		var container = document.getElementById("term");
+		var container = document.createElement("pre");
 
 		t.dom(container);
 		// Set cursor
