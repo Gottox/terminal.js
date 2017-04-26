@@ -27,15 +27,15 @@
     "grunt": "^1.0.1",
     "grunt-browserify": "^5.0.0",
     "grunt-cli": "^1.2.0",
-    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-clean": "^1.1.0",
     "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-jshint": "^1.0.0",
-    "grunt-contrib-uglify": "^2.0.0",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-uglify": "^2.3.0",
     "grunt-jsdoc": "^2.1.0",
-    "grunt-mocha-test": "^0.12.7",
-    "jsdom": "^9.4.2",
-    "jsdom-global": "^2.0.0",
-    "mocha": "^3.0.2"
+    "grunt-mocha-test": "^0.13.2",
+    "jsdom": "^10.0.0",
+    "jsdom-global": "^2.1.1",
+    "mocha": "^3.3.0"
   },
   "engine": {
     "node": ">=0.8"
