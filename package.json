@@ -35,7 +35,8 @@
     "grunt-mocha-test": "^0.13.2",
     "jsdom": "9.*",
     "jsdom-global": "^2.1.1",
-    "mocha": "^3.3.0"
+    "mocha": "^3.3.0",
+    "wcwidth": "^1.0.1"
   },
   "engine": {
     "node": ">=0.8"
