@@ -31,6 +31,13 @@ describe('TermState', function() {
 		expect(t.cursor.x).to.be(10);
 		expect(t.cursor.y).to.be(0);
 	});
+	it("breaks lines (issue #120)", function() {
+		var t = newTermState(10, 10);
+		t.write("1234567890");
+		expect(t.toString()).to.be("1234567890");
+		t.write("a");
+		expect(t.toString()).to.be("1234567890\na");
+	});
 	it("breaks lines", function() {
 		var t = newTermState(10, 10);
 		t.write("1234567890abcdefghi");
