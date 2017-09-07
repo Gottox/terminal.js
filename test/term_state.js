@@ -339,4 +339,28 @@ describe('TermState', function() {
 		t.write(ch_one);
 		expect(t.toString()).to.be("ab" + ch_one + "efgh" + ch_one);
 	});
+	it("wcwidth mode with insert mode", function() {
+		var t = newTermState(10, 10);
+		var ch_one = "\u4e00"; // "一"; one in chinese
+		t.setMode('wcwidth', true);
+		t.setMode('insert', true);
+		t.write("__");
+		t.setCursor(1,0);
+		t.write(ch_one + ch_one);
+		expect(t.toString()).to.be("_" + ch_one + ch_one + "_");
+  });
+	it("wcwidth mode with insert mode and linebreak", function() {
+		var t = newTermState(10, 10);
+		var ch_one = "\u4e00"; // "一"; one in chinese
+		t.setMode('wcwidth', true);
+		t.setMode('insert', true);
+		t.write("abcdefgh" + ch_one);
+    t.setCursor(6, 0);
+
+		t.write("!");
+		expect(t.toString()).to.be("abcdef!gh ");
+
+		t.write(ch_one + ch_one);
+		expect(t.toString()).to.be("abcdef!" + ch_one + " \n" + ch_one);
+	});
 });
