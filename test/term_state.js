@@ -311,9 +311,25 @@ describe('TermState', function() {
 		t.setAttribute('bold', true);
 		t.write("def");
 		t.setCursor(1,0);
-		t.insertBlank(2)
+		t.insertBlank(2);
 		expect(t._buffer.str[0]).to.be("a  bcdef");
 		expect(t._buffer.attr[0][0].bold).to.be(false)
 		expect(t._buffer.attr[0][5].bold).to.be(true)
+	});
+
+	it("wcwidth mode", function() {
+		var t = newTermState(10, 10);
+		var ch_one = "\u4e00"; // "一"; one in chinese
+		t.setMode('wcwidth', true);
+		t.write("abcdefgh");
+		t.write(ch_one);
+
+		expect(t.toString()).to.be("abcdefgh" + ch_one);
+		expect(t.cursor.x).to.be(10);
+		expect(t.cursor.y).to.be(0);
+
+		t.setCursor(2,0);
+		t.write(ch_one);
+		expect(t.toString()).to.be("ab" + ch_one + "efgh" + ch_one);
 	});
 });
