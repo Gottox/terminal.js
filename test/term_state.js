@@ -324,10 +324,10 @@ describe('TermState', function() {
 		expect(t._buffer.attr[0][5].bold).to.be(true)
 	});
 
-	it("wcwidth mode", function() {
+	it("stringWidth with wcwidth mode", function() {
 		var t = newTermState(10, 10);
 		var ch_one = "\u4e00"; // "一"; one in chinese
-		t.setMode('wcwidth', true);
+		t.setMode('stringWidth', 'wcwidth');
 		t.write("abcdefgh");
 		t.write(ch_one);
 
@@ -339,20 +339,20 @@ describe('TermState', function() {
 		t.write(ch_one);
 		expect(t.toString()).to.be("ab" + ch_one + "efgh" + ch_one);
 	});
-	it("wcwidth mode with insert mode", function() {
+	it("stringWidth with wcwidth mode with insert mode", function() {
 		var t = newTermState(10, 10);
 		var ch_one = "\u4e00"; // "一"; one in chinese
-		t.setMode('wcwidth', true);
+		t.setMode('stringWidth', 'wcwidth');
 		t.setMode('insert', true);
 		t.write("__");
 		t.setCursor(1,0);
 		t.write(ch_one + ch_one);
 		expect(t.toString()).to.be("_" + ch_one + ch_one + "_");
   });
-	it("wcwidth mode with insert mode and linebreak", function() {
+	it("stringWidth with wcwidth mode with insert mode and linebreak", function() {
 		var t = newTermState(10, 10);
 		var ch_one = "\u4e00"; // "一"; one in chinese
-		t.setMode('wcwidth', true);
+		t.setMode('stringWidth', 'wcwidth');
 		t.setMode('insert', true);
 		t.write("abcdefgh" + ch_one);
     t.setCursor(6, 0);
