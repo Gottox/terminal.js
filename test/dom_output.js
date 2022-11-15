@@ -4,7 +4,7 @@ describe("DomOutput", function() {
 
 	if(typeof document === 'undefined' && typeof process === 'object' &&
 			process.version.split(/[v.]/)[1] !== "0")
-		require('jsdom-global')();
+		require('global-jsdom/register');
 
 	function newTerminal(w, h) {
 		var t = new TermState({rows:h, columns:w}), tw = new Terminal(t);
