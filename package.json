@@ -34,7 +34,7 @@
     "grunt-contrib-uglify": "^5.2.2",
     "grunt-jsdoc": "^2.4.1",
     "grunt-mocha-test": "^0.13.2",
-    "jsdom": "^20.0.2",
+    "jsdom": "^28.1.0",
     "mocha": "^10.1.0",
     "wcwidth": "^1.0.1"
   },
